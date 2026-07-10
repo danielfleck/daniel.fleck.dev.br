@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog de transição de carreira de Daniel Fleck para Dados, SQL, indicadores, automação administrativa, requisitos e sistemas, com foco em avanço técnico em 2026 e aptidão ao mercado em 2027.">
+    <title>Daniel Fleck | Transição TI 2026-2027</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-soft: #f1f5f9;
+            --text: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --brand: #2563eb;
+            --brand-dark: #1d4ed8;
+            --brand-soft: #dbeafe;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --success: #16a34a;
+            --shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+            --radius: 24px;
+            --max: 1180px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #eff6ff 0, transparent 36rem), var(--bg);
+            color: var(--text);
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        button, input, select { font: inherit; }
+
+        .container {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .nav {
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 220px;
+        }
+
+        .brand-badge {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--brand), #0f172a);
+            color: white;
+            font-weight: 900;
+        }
+
+        .brand-title { font-weight: 900; letter-spacing: -0.03em; }
+        .brand-subtitle { display: block; color: var(--muted); font-size: 12px; font-weight: 600; }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .nav-btn {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover { background: var(--surface-soft); color: var(--text); }
+        .nav-btn.active { background: var(--brand); color: white; }
+
+        .hero {
+            background:
+                linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 64, 175, 0.96)),
+                radial-gradient(circle at 80% 30%, rgba(20, 184, 166, 0.4), transparent 20rem);
+            color: white;
+            padding: 74px 0 48px;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(219, 234, 254, 0.12);
+            border: 1px solid rgba(219, 234, 254, 0.2);
+            color: #bfdbfe;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 22px 0 18px;
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 0.96;
+            letter-spacing: -0.06em;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 760px;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 0;
+            border-radius: 14px;
+            padding: 13px 16px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary { background: white; color: #0f172a; box-shadow: 0 16px 38px rgba(255,255,255,0.12); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.18); }
+
+        .milestone-card {
+            background: rgba(15, 23, 42, 0.42);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+        }
+
+        .count-label {
+            color: #bfdbfe;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            font-weight: 900;
+        }
+
+        .count-title {
+            margin: 8px 0 18px;
+            font-size: 24px;
+            font-weight: 950;
+            letter-spacing: -0.04em;
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .count-box {
+            border-radius: 18px;
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 14px 8px;
+            text-align: center;
+        }
+
+        .count-box strong { display: block; font-size: 28px; letter-spacing: -0.04em; }
+        .count-box span { color: #94a3b8; font-size: 10px; text-transform: uppercase; font-weight: 800; }
+
+        .milestone-line {
+            margin-top: 18px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .milestone-mini {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #dbeafe;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .dot {
+            margin-top: 4px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 6px rgba(20,184,166,0.15);
+            flex: 0 0 auto;
+        }
+
+        main { padding: 42px 0 64px; }
+        .section { display: none; animation: fade 0.25s ease; }
+        .section.active { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-kicker {
+            color: var(--brand);
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 950;
+            letter-spacing: 0.14em;
+        }
+
+        .section-title {
+            margin: 6px 0 0;
+            font-size: clamp(28px, 4vw, 42px);
+            letter-spacing: -0.05em;
+            line-height: 1.06;
+        }
+
+        .section-desc {
+            color: var(--muted);
+            max-width: 720px;
+            line-height: 1.7;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .card.soft { background: rgba(255,255,255,0.74); backdrop-filter: blur(12px); }
+        .card h3 { margin: 0 0 10px; font-size: 19px; letter-spacing: -0.03em; }
+        .card p { margin: 0; color: var(--muted); line-height: 1.65; }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 6px 9px;
+            font-size: 12px;
+            font-weight: 850;
+            background: var(--surface-soft);
+            color: #334155;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tag.brand { background: var(--brand-soft); color: var(--brand-dark); border-color: #bfdbfe; }
+        .tag.success { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+        .tag.warn { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .metric {
+            padding: 16px;
+            border-radius: 18px;
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 30px;
+            letter-spacing: -0.06em;
+        }
+
+        .metric span {
+            color: var(--muted);
+            font-weight: 850;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .canvas-wrap {
+            height: 340px;
+            position: relative;
+        }
+
+        .canvas-wrap canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .roadmap {
+            display: grid;
+            gap: 14px;
+        }
+
+        .phase {
+            display: grid;
+            grid-template-columns: 118px 1fr auto;
+            gap: 16px;
+            align-items: start;
+            padding: 18px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            border-radius: 22px;
+            box-shadow: 0 10px 25px rgba(15,23,42,0.05);
+        }
+
+        .phase-date {
+            color: var(--brand);
+            font-weight: 950;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .phase h3 { margin: 0 0 8px; letter-spacing: -0.03em; }
+        .phase p { margin: 0; color: var(--muted); line-height: 1.55; }
+        .phase-status { font-size: 12px; font-weight: 950; padding: 8px 10px; border-radius: 999px; background: var(--brand-soft); color: var(--brand-dark); white-space: nowrap; }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 260px;
+        }
+
+        .project-card .number {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: var(--brand);
+            color: white;
+            font-weight: 950;
+            margin-bottom: 16px;
+        }
+
+        .project-card .foot {
+            margin-top: auto;
+            padding-top: 18px;
+        }
+
+
+        .portfolio-empty {
+            grid-column: 1 / -1;
+            padding: 28px;
+            border: 1px dashed #cbd5e1;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            border-radius: 24px;
+        }
+
+        .portfolio-empty h3 { margin: 0 0 10px; }
+        .portfolio-empty p { max-width: 760px; }
+
+        .project-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            margin-bottom: 16px;
+            background: var(--surface-soft);
+        }
+
+        .project-text {
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 11px;
+            border-radius: 999px;
+            background: var(--surface-soft);
+            color: #334155;
+            border: 1px solid var(--line);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .project-link:hover { background: var(--brand-soft); color: var(--brand-dark); border-color: #bfdbfe; }
+
+        .article-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line);
+        }
+
+        .tools-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 18px;
+        }
+
+        .tool-menu {
+            display: grid;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            width: 100%;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 13px 14px;
+            text-align: left;
+            cursor: pointer;
+            font-weight: 850;
+            color: #334155;
+        }
+
+        .tool-btn.active, .tool-btn:hover { background: var(--brand-soft); color: var(--brand-dark); border-color: #bfdbfe; }
+
+        .tool-content h3 { font-size: 26px; margin-top: 0; letter-spacing: -0.04em; }
+        .tool-content ul { margin: 12px 0 0; padding-left: 20px; color: var(--muted); line-height: 1.7; }
+
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .article-list {
+            display: grid;
+            gap: 8px;
+            position: sticky;
+            top: 88px;
+        }
+
+        .article-btn {
+            width: 100%;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 14px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .article-btn:hover, .article-btn.active { background: var(--brand-soft); border-color: #bfdbfe; }
+        .article-btn .date { color: var(--muted); font-size: 11px; text-transform: uppercase; font-weight: 950; letter-spacing: 0.1em; }
+        .article-btn .title { margin-top: 4px; font-weight: 950; line-height: 1.25; }
+
+        .article {
+            min-height: 540px;
+        }
+
+        .article h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.06;
+            letter-spacing: -0.055em;
+            margin: 0 0 16px;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .article p, .article li { color: #334155; line-height: 1.8; }
+        .article h3 { margin-top: 28px; font-size: 22px; letter-spacing: -0.03em; }
+        .article blockquote {
+            margin: 24px 0;
+            padding: 18px 20px;
+            border-left: 4px solid var(--brand);
+            background: #eff6ff;
+            border-radius: 14px;
+            color: #1e3a8a;
+            font-weight: 800;
+        }
+
+        .checklist {
+            display: grid;
+            gap: 10px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .checklist li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            display: inline-grid;
+            place-items: center;
+            width: 22px;
+            height: 22px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 13px;
+            font-weight: 950;
+            margin-top: 3px;
+        }
+
+        .footer {
+            border-top: 1px solid var(--line);
+            background: white;
+            padding: 34px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            font-weight: 850;
+            color: #334155;
+        }
+
+        .mobile-menu-label { display: none; }
+
+        @media (max-width: 920px) {
+            .hero-grid, .dashboard-grid, .grid-2, .tools-layout, .blog-layout { grid-template-columns: 1fr; }
+            .grid-3, .project-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-head { align-items: flex-start; flex-direction: column; }
+            .article-list { position: static; }
+            .brand { min-width: auto; }
+        }
+
+        @media (max-width: 640px) {
+            .nav { height: auto; align-items: flex-start; padding: 12px 0; flex-direction: column; }
+            .nav-actions { width: 100%; padding-bottom: 2px; }
+            .brand-subtitle { display: none; }
+            .hero { padding: 44px 0 32px; }
+            .countdown { grid-template-columns: repeat(2, 1fr); }
+            .grid-3, .project-grid, .metric-grid { grid-template-columns: 1fr; }
+            .phase { grid-template-columns: 1fr; }
+            .phase-status { width: max-content; }
+            .footer-inner { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="topbar">
+        <div class="container nav">
+            <a href="#" class="brand" onclick="showSection('painel'); return false;" aria-label="Início">
+                <span class="brand-badge">D</span>
+                <span>
+                    <span class="brand-title">daniel.fleck.dev.br</span>
+                    <span class="brand-subtitle">Transição TI • Dados • Automação • Requisitos</span>
+                </span>
+            </a>
+            <div class="nav-actions" aria-label="Navegação principal">
+                <button class="nav-btn active" id="btn-painel" onclick="showSection('painel')">Painel</button>
+                <button class="nav-btn" id="btn-roadmap" onclick="showSection('roadmap')">Plano 2026</button>
+                <button class="nav-btn" id="btn-projetos" onclick="showSection('projetos')">Portfólio</button>
+                <button class="nav-btn" id="btn-ferramentas" onclick="showSection('ferramentas')">Ferramentas</button>
+                <a class="nav-btn" href="/curriculo.html">Currículo</a>
+                <button class="nav-btn" id="btn-blog" onclick="showSection('blog')">Blog</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">Transição TI • execução em 2026</span>
+                <h1>De operação crítica para Dados, SQL e Automação aplicada.</h1>
+                <p>
+                    Este blog documenta uma transição profissional em execução: aproveitar experiência em sistemas,
+                    processos, SQL, documentação e operação para construir, ainda em 2026, base prática em
+                    <strong>Dados, SQL, indicadores, automação administrativa, requisitos, sustentação e sistemas</strong>.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" onclick="showSection('roadmap')">Ver plano 2026</button>
+                    <button class="btn btn-secondary" onclick="showSection('projetos')">Ver portfólio</button>
+                    <a class="btn btn-secondary" href="/curriculo.html">Ver currículo</a>
+                </div>
+            </div>
+            <aside class="milestone-card" aria-label="Marcos da transição">
+                <div class="count-label">Marco de mercado</div>
+                <div class="count-title">Aptidão civil em 16/12/2027</div>
+                <div class="countdown" id="countdown">
+                    <div class="count-box"><strong id="cd-days">00</strong><span>Dias</span></div>
+                    <div class="count-box"><strong id="cd-hours">00</strong><span>Horas</span></div>
+                    <div class="count-box"><strong id="cd-mins">00</strong><span>Min</span></div>
+                    <div class="count-box"><strong id="cd-secs">00</strong><span>Seg</span></div>
+                </div>
+                <div class="milestone-line">
+                    <div class="milestone-mini"><span class="dot"></span><span><strong>Dez/2026:</strong> base técnica em construção, estudos organizados e primeiros projetos públicos.</span></div>
+                    <div class="milestone-mini"><span class="dot"></span><span><strong>Dez/2027:</strong> portfólio demonstrável para vagas de Dados/SQL, Requisitos, Sistemas e Suporte N2.</span></div>
+                </div>
+            </aside>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section active" id="section-painel">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Painel de posicionamento</div>
+                    <h2 class="section-title">O foco não é recomeçar do zero. É reposicionar experiência.</h2>
+                </div>
+                <p class="section-desc">
+                    A estratégia deste blog é mostrar evolução técnica real: estudos, projetos, documentação,
+                    decisões, limitações, aprendizados e entregas. O eixo principal é SQL, dados, indicadores, automação administrativa e requisitos, com apoio de Jira, Confluence e GitHub.
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card soft">
+                    <h3>Identidade profissional em construção</h3>
+                    <p>
+                        Profissional em transição para o mercado civil de TI, com experiência em processos operacionais,
+                        sistemas críticos, banco de dados, documentação, gestão e análise administrativa.
+                    </p>
+                    <div class="metric-grid" style="margin-top: 18px;">
+                        <div class="metric"><strong>2027</strong><span>Ano de virada</span></div>
+                        <div class="metric"><strong>SQL</strong><span>Base técnica</span></div>
+                        <div class="metric"><strong>Python</strong><span>Automação e dados</span></div>
+                        <div class="metric"><strong>Indicadores</strong><span>Decisão e métricas</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag brand">Dados/SQL</span>
+                        <span class="tag brand">Automação</span>
+                        <span class="tag">Requisitos</span>
+                        <span class="tag">Suporte N2</span>
+                        <span class="tag">Sistemas</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Mapa de competências</h3>
+                    <p>Radar qualitativo para orientar estudo, não para vender domínio artificial.</p>
+                    <div class="canvas-wrap"><canvas id="radarCanvas" width="640" height="360"></canvas></div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 18px;">
+                <h3>Currículo profissional</h3>
+                <p>
+                    A versão HTML do currículo ficará publicada no mesmo nível do arquivo principal do site,
+                    em <strong>/curriculo.html</strong>. Essa página deve apresentar o resumo profissional, a experiência,
+                    as formações, cursos e a observação de que os conhecimentos técnicos anteriores estão em processo de atualização por estudos e portfólio.
+                </p>
+                <div class="project-links">
+                    <a class="project-link" href="/curriculo.html">Abrir currículo em HTML</a>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top: 18px;">
+                <div class="card">
+                    <h3>Trilha principal</h3>
+                    <p>Dados, SQL, indicadores e automação administrativa aplicada a processos operacionais.</p>
+                    <div class="tag-row"><span class="tag brand">SQL</span><span class="tag brand">Planilhas</span><span class="tag">Python em estudo</span></div>
+                </div>
+                <div class="card">
+                    <h3>Trilha complementar</h3>
+                    <p>Requisitos, BPMN, Jira, Confluence, documentação e análise funcional.</p>
+                    <div class="tag-row"><span class="tag">BPMN</span><span class="tag">Critérios de aceitação</span><span class="tag">Backlog</span></div>
+                </div>
+                <div class="card">
+                    <h3>Porta de entrada</h3>
+                    <p>Analista de Dados Jr., Automação Administrativa, Analista de Sistemas, Suporte N2 ou Requisitos.</p>
+                    <div class="tag-row"><span class="tag success">Empregabilidade</span><span class="tag warn">Portfólio obrigatório</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="section-roadmap">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Plano de avanço</div>
+                    <h2 class="section-title">Prioridade: avançar ainda em 2026.</h2>
+                </div>
+                <p class="section-desc">
+                    Antes de detalhar 2027, o foco é avançar de forma objetiva em 2026: organizar estudos, produzir entregas, publicar projetos pequenos e transformar aprendizado em evidência prática.
+                </p>
+            </div>
+            <div class="roadmap" id="roadmapList"></div>
+        </section>
+
+        <section class="section" id="section-projetos">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Portfólio</div>
+                    <h2 class="section-title">Portfólio demonstrável.</h2>
+                </div>
+                <p class="section-desc">
+                    Esta seção ficará reservada apenas para entregas já construídas e publicadas. Quando houver um projeto concluído, inclua título, descrição, texto, imagens, link do GitHub, link da página publicada e, se houver, artigo do blog relacionado.
+                </p>
+            </div>
+            <div class="project-grid" id="projectGrid"></div>
+        </section>
+
+        <section class="section" id="section-ferramentas">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Ferramentas de trabalho</div>
+                    <h2 class="section-title">Como o estudo será operado.</h2>
+                </div>
+                <p class="section-desc">
+                    O blog também serve como vitrine da forma de trabalho: backlog, documentação, código, banco de testes, automações e publicação somente de entregas concluídas.
+                </p>
+            </div>
+            <div class="tools-layout">
+                <div class="tool-menu" id="toolMenu"></div>
+                <div class="card tool-content" id="toolContent"></div>
+            </div>
+        </section>
+
+        <section class="section" id="section-blog">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Diário técnico</div>
+                    <h2 class="section-title">Notas de estudo e transição.</h2>
+                </div>
+                <p class="section-desc">
+                    Textos curtos para registrar decisões técnicas, aplicação no trabalho, projetos concluídos, links para GitHub e resultados publicados em páginas específicas.
+                </p>
+            </div>
+            <div class="blog-layout">
+                <aside class="article-list" id="articleList"></aside>
+                <article class="card article" id="articleViewer"></article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div>
+                <strong>Daniel Rodrigo Fleck</strong><br>
+                <span>Transição profissional para Dados, SQL, Automação e Sistemas • Curitiba/PR</span>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:danielfleck@gmail.com">E-mail</a>
+                <a href="https://www.linkedin.com/in/daniel-rodrigo-fleck/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="/curriculo.html">Currículo</a>
+                <a href="#" onclick="showSection('projetos'); return false;">Portfólio</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const roadmap = [
+            {
+                period: 'Jul 2026',
+                title: 'Ambiente profissional, Jira e rotina de estudo',
+                text: 'Consolidar Jira Cloud, GitHub, site pessoal e rotina semanal. Transformar estudo em tarefas com descrição, prioridade, bloqueios e critérios de aceitação.',
+                status: 'Fundação'
+            },
+            {
+                period: 'Ago 2026',
+                title: 'Retomada de lógica, SQL e Python básico',
+                text: 'Reabsorver fundamentos de programação, reforçar SQL e iniciar pequenos scripts em Python. Bibliotecas específicas só serão destacadas após prática documentada.',
+                status: 'Base técnica'
+            },
+            {
+                period: 'Set 2026',
+                title: 'SQL, PostgreSQL e modelagem relacional',
+                text: 'Retomar SELECT, JOIN, GROUP BY, CTE, views e modelagem com bases fictícias. Publicar consultas e explicações no GitHub quando houver material demonstrável.',
+                status: 'SQL'
+            },
+            {
+                period: 'Out 2026',
+                title: 'Indicadores, planilhas e análise de dados',
+                text: 'Criar indicadores simples, dicionário de métricas e relatórios com dados fictícios. Ferramentas específicas de BI só serão citadas como competência após estudo e projeto publicado.',
+                status: 'Indicadores'
+            },
+            {
+                period: 'Nov 2026',
+                title: 'Requisitos, critérios de aceitação e documentação',
+                text: 'Documentar processos, histórias de usuário, critérios de aceitação, regras de negócio, requisitos funcionais e não funcionais em exemplos publicáveis.',
+                status: 'Requisitos'
+            },
+            {
+                period: 'Dez 2026',
+                title: 'Primeiras entregas públicas e revisão do portfólio',
+                text: 'Publicar apenas projetos realmente construídos, com página própria, código no GitHub, descrição do problema, solução, limitações e próximos passos.',
+                status: 'Entrega'
+            }
+        ];
+
+        /*
+         * PORTFÓLIO
+         * Inclua aqui SOMENTE itens já construídos/publicados.
+         * Para adicionar um novo item, copie o modelo abaixo para dentro do array portfolioItems.
+         *
+         * Modelo:
+         * {
+         *     id: 'calculadora',
+         *     title: 'Calculadora em JavaScript',
+         *     description: 'Calculadora simples construída para treinar HTML, CSS e JavaScript.',
+         *     text: 'Explique o problema, o que foi construído, decisões técnicas, aprendizados e limites.',
+         *     date: 'Jul 2026',
+         *     image: 'assets/projetos/calculadora/capa.png',
+         *     tags: ['HTML', 'CSS', 'JavaScript'],
+         *     links: [
+         *         { label: 'Página publicada', url: 'https://daniel.fleck.dev.br/projetos/calculadora/index.html' },
+         *         { label: 'Código no GitHub', url: 'https://github.com/danielfleck/repositorio' },
+         *         { label: 'Artigo no blog', articleId: 'calculadora-javascript' }
+         *     ]
+         * }
+         */
+        const portfolioItems = [];
+
+        const tools = [
+            {
+                id: 'jira',
+                title: 'Jira Cloud: execução do plano',
+                body: '<p>O Jira Cloud está sendo usado de forma prática para organizar a transição de carreira.</p><ul><li>Épicos para grandes blocos de estudo.</li><li>Tarefas com descrição, objetivo e critérios de aceitação.</li><li>Bloqueios e dependências para reduzir ansiedade de escopo.</li><li>Filtros e categorias para acompanhar cronologia e prioridade.</li><li>Uso consciente: ferramenta corporativa real, aplicada a um projeto pessoal.</li></ul>'
+            },
+            {
+                id: 'confluence',
+                title: 'Confluence: documentação e base de conhecimento',
+                body: '<p>O Confluence é tratado como base de conhecimento, não como prova de domínio técnico avançado.</p><ul><li>Registro de decisões, conceitos, erros e aprendizados.</li><li>Páginas por tema somente quando houver estudo real.</li><li>Documentação de requisitos, critérios de aceitação e processos.</li><li>Backup periódico para evitar dependência de uma única plataforma.</li></ul>'
+            },
+            {
+                id: 'github',
+                title: 'GitHub: evidência pública',
+                body: '<p>O GitHub será usado para publicar apenas código, consultas, documentação e experimentos realmente produzidos.</p><ul><li>README claro em cada repositório.</li><li>Dados fictícios ou públicos.</li><li>Commits progressivos e descrição dos aprendizados.</li><li>Sem listar tecnologia como competência antes de haver prática mínima demonstrável.</li></ul>'
+            },
+            {
+                id: 'dados',
+                title: 'Dados e SQL: trilha de reabsorção',
+                body: '<p>A trilha de dados começa por SQL, modelagem e indicadores, aproveitando base técnica anterior sem superestimar domínio atual.</p><ul><li>Consultas SQL e modelagem relacional.</li><li>Indicadores e dicionário de métricas.</li><li>Relatórios simples com planilhas e dados fictícios.</li><li>Ferramentas específicas serão citadas somente após estudo e projeto publicado.</li></ul>'
+            },
+            {
+                id: 'site',
+                title: 'Site pessoal e currículo',
+                body: '<p>O site pessoal deve apresentar a transição de forma madura e objetiva.</p><ul><li>Currículo em <strong>/curriculo.html</strong>.</li><li>Itens de portfólio apenas quando houver projeto construído.</li><li>Artigos curtos de estudo e decisões técnicas.</li><li>Narrativa profissional sem exagerar senioridade atual.</li></ul>'
+            }
+        ];
+
+        /*
+         * BLOG
+         * Para inserir um novo texto, copie o modelo abaixo para dentro do array articles.
+         * O campo links é opcional e pode apontar para portfólio, GitHub ou página publicada do projeto.
+         *
+         * Modelo:
+         * {
+         *     id: 'calculadora-javascript',
+         *     title: 'Calculadora em JavaScript: primeiro projeto publicado',
+         *     date: 'Jul 2026',
+         *     category: 'Projeto',
+         *     html: '<h2>Calculadora em JavaScript</h2><p>Texto do artigo...</p>',
+         *     links: [
+         *         { label: 'Ver projeto publicado', url: 'https://daniel.fleck.dev.br/projetos/calculadora/index.html' },
+         *         { label: 'Código no GitHub', url: 'https://github.com/danielfleck/repositorio' }
+         *     ]
+         * }
+         */
+        const articles = [
+            {
+                id: 'confluence-diario-tecnico-transicao',
+                title: 'Confluence: diário técnico da transição',
+                date: '07 Jul 2026',
+                category: 'Documentação',
+                html: `
+                    <h2>Confluence como Diário Técnico: organização documental da transição de carreira</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Documentação</span>
+                        <span class="tag">Confluence</span>
+                        <span class="tag">Requisitos</span>
+                    </div>
+                    <p>Configurei o <strong>Confluence</strong> para apoiar meu projeto de estudo e transição de carreira, criando páginas para os principais tópicos técnicos e gerenciais da jornada. A intenção é manter um registro organizado dos estudos, decisões, dúvidas, evidências e aprendizados, sem depender apenas de anotações soltas.</p><br>
+                    <p>Nas páginas principais, configurei uma macro para exibir os links das páginas filhas, facilitando a navegação entre temas e a evolução cronológica da documentação. Também criei um template de espaço chamado <strong>Diário Técnico</strong>, voltado ao registro periódico da prática, e um template global chamado <strong>História de Usuário Global</strong>, para padronizar descrições, objetivos e critérios de aceitação.</p><br>
+                    <p>Embora seja uma configuração inicial, esse uso do Confluence reforça uma competência importante para funções de requisitos, análise de sistemas, suporte e gestão técnico-operacional: transformar estudo em documentação rastreável. A ferramenta passa a funcionar como base de conhecimento, conectando planejamento, execução no Jira, projetos publicados, código no GitHub e evolução profissional.</p>
+                    <blockquote>O template global <strong>História de Usuário Global</strong> também está disponível para consulta e reutilização: <a href="https://danielfleck.atlassian.net/wiki/external/NmFlZWE4NThiYzY5NDE3YmFiNzA3ODEwOThhNDY3MjY" target="_blank" rel="noopener">acessar o template no Confluence</a>.</blockquote>
+                `,
+                links: [
+                    { label: 'Template História de Usuário Global', url: 'https://danielfleck.atlassian.net/wiki/external/NmFlZWE4NThiYzY5NDE3YmFiNzA3ODEwOThhNDY3MjY' },
+                    { label: 'Ver Portfólio', section: 'projetos' }
+                ]
+            },
+            {
+                "id": "agilidade-autodesenvolvimento-jira-cloud",
+                "title": "Agilidade no Autodesenvolvimento: Jira Cloud na transição de carreira",
+                "date": "06 Jul 2026",
+                "category": "Método",
+                "html": "<h2>Agilidade no Autodesenvolvimento: Como configurei o Jira Cloud para gerenciar minha transição de carreira técnico-gerencial</h2>\n<div class=\"article-meta\"><span class=\"tag brand\">Método</span><span class=\"tag\">Jira Cloud</span><span class=\"tag\">Autodesenvolvimento</span></div>\n<p>Uso do Jira Cloud para organizar minha transição de carreira em tecnologia, estruturando épicos, tarefas, critérios de aceitação, dependências e sprints semanais de estudo.</p>\n<br /><p>Configurei um projeto no <strong>Jira Cloud</strong> para gerenciar minha transição de carreira técnico-gerencial, organizando os principais eixos de estudo em épicos: base de programação, SQL, requisitos, documentação, portfólio e cursos. Cada tarefa foi criada com descrição objetiva, finalidade prática e critérios de aceitação, evitando que o estudo ficasse limitado a listas genéricas como “estudar Python” ou “ver SQL”.</p>\n<br /><p>O quadro foi estruturado para garantir cronologia, fluxo e rastreabilidade das tarefas, utilizando categorias, filtros, bloqueios e dependências entre temas. Embora o Kanban não seja necessariamente o melhor modelo pedagógico para estudo individual, seu uso força a prática de uma ferramenta corporativa real, comum em times de tecnologia, produto, requisitos e suporte.</p>\n<figure style=\"margin: 24px 0;\">\n    <img src=\"images/jira1.png\" alt=\"Quadro de cronologia do Jira Cloud usado para organizar a transição de carreira em TI\" style=\"width: 100%; border-radius: 18px; border: 1px solid var(--line); box-shadow: var(--shadow);\">\n    <figcaption style=\"margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.5;\">\n        Cronologia dos épicos da transição de carreira técnico-gerencial, organizada no Jira Cloud para garantir sequência, dependências e visibilidade do escopo de estudo.\n    </figcaption>\n</figure>\n<p>Essa organização reduziu a ansiedade de escopo causada pelo volume de conteúdos a estudar. Ao transformar a transição em épicos, tarefas, critérios de aceitação e sprints semanais, ganhei uma direção clara sobre prioridades, dependências e entregas. Para recrutadores, esse processo demonstra familiaridade prática com Jira e evidencia um perfil orientado a organização, documentação, execução progressiva e gestão técnico-operacional.</p>",
+                "links": [
+                                {
+                                                "label": "Ver Plano 2026",
+                                                "section": "roadmap"
+                                },
+                                {
+                                                "label": "Ver Portfólio",
+                                                "section": "projetos"
+                                }
+                ]
+},
+            {
+                id: 'estrutura-blog-portfolio',
+                title: 'Como este blog será usado na transição de carreira',
+                date: '06 Jul 2026',
+                category: 'Método',
+                html: '<h2>Como este blog será usado na transição de carreira</h2><div class="article-meta"><span class="tag brand">Método</span><span class="tag">06 Jul 2026</span></div><p>Este espaço será usado para registrar estudos, decisões técnicas, projetos concluídos e evidências públicas da transição para dados, SQL, indicadores, automação, requisitos e sistemas.</p><p>A seção Portfólio exibirá apenas entregas já construídas e publicadas. Cada item poderá apontar para uma página específica do projeto, para o código no GitHub e para um artigo explicando a construção.</p><blockquote>O objetivo é registrar evolução real, sem simular experiência ou publicar projetos ainda não executados.</blockquote><h3>Fluxo de publicação</h3><ul class="checklist"><li>Construir o projeto.</li><li>Publicar o código no GitHub.</li><li>Publicar o resultado em uma página própria quando fizer sentido.</li><li>Escrever um artigo curto explicando problema, solução, tecnologias e aprendizado.</li><li>Adicionar o item na seção Portfólio.</li></ul>',
+                links: [
+                    { label: 'Ver Portfólio', section: 'projetos' },
+                    { label: 'GitHub', url: 'https://github.com/danielfleck' }
+                ]
+            }
+        ];
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            const targetSection = document.getElementById('section-' + id);
+            if (targetSection) targetSection.classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            const targetButton = document.getElementById('btn-' + id);
+            if (targetButton) targetButton.classList.add('active');
+
+            if (id === 'painel') {
+                window.requestAnimationFrame(drawRadar);
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderRoadmap() {
+            const list = document.getElementById('roadmapList');
+            list.innerHTML = roadmap.map(item => '<div class="phase"><div class="phase-date">' + item.period + '</div><div><h3>' + item.title + '</h3><p>' + item.text + '</p></div><div class="phase-status">' + item.status + '</div></div>').join('');
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('projectGrid');
+
+            if (!portfolioItems.length) {
+                grid.innerHTML = '<div class="portfolio-empty"><h3>Nenhum item de portfólio publicado ainda.</h3><p>Esta área foi mantida vazia de propósito. Quando um projeto estiver realmente construído, publique o resultado em uma página própria, suba o código no GitHub e adicione um novo objeto no array <strong>portfolioItems</strong> no JavaScript deste arquivo.</p><div class="project-links"><a class="project-link" href="https://github.com/danielfleck" target="_blank" rel="noopener">GitHub</a><a class="project-link" href="mailto:danielfleck@gmail.com">Contato</a></div></div>';
+                return;
+            }
+
+            grid.innerHTML = portfolioItems.map((project, index) => {
+                const image = project.image ? '<img class="project-image" src="' + project.image + '" alt="Imagem do projeto ' + project.title + '">' : '';
+                const tags = (project.tags || []).map(tag => '<span class="tag brand">' + tag + '</span>').join('');
+                const links = (project.links || []).map(link => {
+                    if (link.articleId) {
+                        return '<a class="project-link" href="#" onclick="showSection(\'blog\'); loadArticle(\'' + link.articleId + '\'); return false;">' + link.label + '</a>';
+                    }
+                    if (link.section) {
+                        return '<a class="project-link" href="#" onclick="showSection(\'' + link.section + '\'); return false;">' + link.label + '</a>';
+                    }
+                    return '<a class="project-link" href="' + link.url + '" target="_blank" rel="noopener">' + link.label + '</a>';
+                }).join('');
+
+                return '<div class="card project-card">' +
+                    image +
+                    '<div class="number">' + String(index + 1).padStart(2, '0') + '</div>' +
+                    '<h3>' + project.title + '</h3>' +
+                    '<p>' + project.description + '</p>' +
+                    (project.text ? '<div class="project-text">' + project.text + '</div>' : '') +
+                    '<div class="foot"><div class="tag-row">' + tags + '</div>' +
+                    '<div class="project-links">' + links + '</div></div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function renderTools() {
+            const menu = document.getElementById('toolMenu');
+            menu.innerHTML = tools.map((tool, index) => '<button class="tool-btn ' + (index === 0 ? 'active' : '') + '" id="tool-btn-' + tool.id + '" onclick="loadTool(\'' + tool.id + '\')">' + tool.title + '</button>').join('');
+            loadTool(tools[0].id);
+        }
+
+        function loadTool(id) {
+            const tool = tools.find(item => item.id === id);
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tool-btn-' + id).classList.add('active');
+            document.getElementById('toolContent').innerHTML = '<h3>' + tool.title + '</h3>' + tool.body;
+        }
+
+        function renderArticles() {
+            const list = document.getElementById('articleList');
+            list.innerHTML = articles.map((article, index) => '<button class="article-btn ' + (index === 0 ? 'active' : '') + '" id="article-btn-' + article.id + '" onclick="loadArticle(\'' + article.id + '\')"><div class="date">' + article.date + ' • ' + article.category + '</div><div class="title">' + article.title + '</div></button>').join('');
+            loadArticle(articles[0].id);
+        }
+
+        function loadArticle(id) {
+            const article = articles.find(item => item.id === id);
+            if (!article) return;
+
+            document.querySelectorAll('.article-btn').forEach(btn => btn.classList.remove('active'));
+            const activeButton = document.getElementById('article-btn-' + id);
+            if (activeButton) activeButton.classList.add('active');
+
+            const links = (article.links || []).map(link => {
+                if (link.section) {
+                    return '<a class="project-link" href="#" onclick="showSection(\'' + link.section + '\'); return false;">' + link.label + '</a>';
+                }
+                return '<a class="project-link" href="' + link.url + '" target="_blank" rel="noopener">' + link.label + '</a>';
+            }).join('');
+
+            document.getElementById('articleViewer').innerHTML = article.html + (links ? '<div class="article-links">' + links + '</div>' : '');
+        }
+
+        function initCountdown() {
+            const target = new Date('2027-12-16T00:00:00-03:00').getTime();
+            function update() {
+                const now = Date.now();
+                let diff = target - now;
+                if (diff < 0) diff = 0;
+                const days = Math.floor(diff / 86400000);
+                const hours = Math.floor((diff % 86400000) / 3600000);
+                const mins = Math.floor((diff % 3600000) / 60000);
+                const secs = Math.floor((diff % 60000) / 1000);
+                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+            }
+            update();
+            window.setInterval(update, 1000);
+        }
+
+        function drawRadar() {
+            const canvas = document.getElementById('radarCanvas');
+            if (!canvas || !canvas.getContext) return;
+
+            const wrapper = canvas.parentElement;
+            const rect = wrapper ? wrapper.getBoundingClientRect() : canvas.getBoundingClientRect();
+            const cssWidth = Math.max(320, Math.floor(rect.width || canvas.clientWidth || 640));
+            const cssHeight = Math.max(300, Math.floor(rect.height || canvas.clientHeight || 340));
+            const dpr = window.devicePixelRatio || 1;
+
+            canvas.style.width = cssWidth + 'px';
+            canvas.style.height = cssHeight + 'px';
+            canvas.width = Math.floor(cssWidth * dpr);
+            canvas.height = Math.floor(cssHeight * dpr);
+
+            const ctx = canvas.getContext('2d');
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            const labels = ['SQL', 'Python', 'Indicadores', 'Requisitos', 'Jira/Git', 'Linux/Suporte', 'Documentação'];
+            const current = [45, 20, 25, 50, 45, 35, 60];
+            const target = [75, 60, 60, 75, 70, 55, 80];
+            const w = cssWidth;
+            const h = cssHeight;
+            const cx = w / 2;
+            const cy = h / 2 + 8;
+            const radius = Math.min(w, h) * 0.32;
+            const levels = 5;
+
+            ctx.clearRect(0, 0, w, h);
+            ctx.lineWidth = 1;
+            ctx.font = '12px Inter, system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            for (let level = 1; level <= levels; level++) {
+                const r = radius * level / levels;
+                ctx.beginPath();
+                labels.forEach((_, i) => {
+                    const angle = -Math.PI / 2 + i * 2 * Math.PI / labels.length;
+                    const x = cx + Math.cos(angle) * r;
+                    const y = cy + Math.sin(angle) * r;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                });
+                ctx.closePath();
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.stroke();
+            }
+
+            labels.forEach((label, i) => {
+                const angle = -Math.PI / 2 + i * 2 * Math.PI / labels.length;
+                const labelDistance = radius + Math.min(46, Math.max(28, w * 0.055));
+                const x = cx + Math.cos(angle) * labelDistance;
+                const y = cy + Math.sin(angle) * labelDistance;
+
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.stroke();
+
+                ctx.fillStyle = '#334155';
+                ctx.font = w < 520 ? '10px Inter, system-ui, sans-serif' : '12px Inter, system-ui, sans-serif';
+                ctx.fillText(label, x, y);
+            });
+
+            function plot(values, fillStyle, strokeStyle) {
+                ctx.beginPath();
+                values.forEach((value, i) => {
+                    const angle = -Math.PI / 2 + i * 2 * Math.PI / labels.length;
+                    const r = radius * value / 100;
+                    const x = cx + Math.cos(angle) * r;
+                    const y = cy + Math.sin(angle) * r;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                });
+                ctx.closePath();
+                ctx.fillStyle = fillStyle;
+                ctx.fill();
+                ctx.strokeStyle = strokeStyle;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            plot(target, 'rgba(37, 99, 235, 0.10)', 'rgba(37, 99, 235, 0.35)');
+            plot(current, 'rgba(20, 184, 166, 0.26)', 'rgba(20, 184, 166, 1)');
+
+            const legendY = h - 18;
+            ctx.textAlign = 'left';
+            ctx.font = w < 520 ? '10px Inter, system-ui, sans-serif' : '12px Inter, system-ui, sans-serif';
+            ctx.fillStyle = '#64748b';
+            ctx.fillText('Azul: alvo de estudo • Verde: ponto atual estimado', 14, legendY);
+        }
+
+        window.addEventListener('load', () => {
+            renderRoadmap();
+            renderProjects();
+            renderTools();
+            renderArticles();
+            initCountdown();
+            window.requestAnimationFrame(drawRadar);
+        });
+
+        let radarResizeTimer;
+        window.addEventListener('resize', () => {
+            window.clearTimeout(radarResizeTimer);
+            radarResizeTimer = window.setTimeout(drawRadar, 120);
+        });
+    </script>
+</body>
+</html>
