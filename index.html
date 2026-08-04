@@ -322,38 +322,47 @@
         .tag.warn { background: #fef3c7; color: #92400e; border-color: #fde68a; }
 
         .word-cloud {
-            position: relative;
-            min-height: 250px;
+            min-height: 280px;
             margin-top: 16px;
+            padding: 34px 42px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+            gap: 12px 24px;
             overflow: hidden;
             border-radius: 22px;
             border: 1px solid var(--line);
             background:
-                radial-gradient(circle at 50% 50%, rgba(255,255,255,.96), rgba(248,250,252,.92)),
-                linear-gradient(135deg, #f8fafc, #eff6ff);
+                radial-gradient(ellipse at center, rgba(255,255,255,.98) 0%, rgba(248,250,252,.92) 58%, rgba(239,246,255,.88) 100%);
         }
 
         .word-cloud-item {
-            position: absolute;
+            position: static;
+            display: inline-block;
             border: 0;
             background: transparent;
-            padding: 0;
+            padding: 3px 5px;
             font-weight: 900;
-            line-height: 1;
+            line-height: 1.05;
             cursor: pointer;
             white-space: nowrap;
-            opacity: .92;
+            opacity: .9;
+            transform-origin: center;
+            transition: transform .15s ease, opacity .15s ease;
         }
 
         .word-cloud-item:hover {
             opacity: 1;
             text-decoration: underline;
+            transform: scale(1.07) !important;
         }
 
         .word-cloud-item.blue { color: #1f4e79; }
         .word-cloud-item.teal { color: #0f766e; }
         .word-cloud-item.orange { color: #d97706; }
-        .word-cloud-item.muted { color: rgba(100,116,139,.30); }
+        .word-cloud-item.muted { color: rgba(71,85,105,.58); }
 
         .word-cloud-links {
             display: grid;
@@ -529,6 +538,102 @@
 
         .project-link:hover { background: var(--brand-soft); color: var(--brand-dark); border-color: #bfdbfe; }
 
+        .project-grid .project-card.featured {
+            grid-column: 1 / -1;
+            min-height: 0;
+            padding: 30px;
+        }
+
+        .project-card.featured h3 {
+            font-size: clamp(24px, 3vw, 34px);
+        }
+
+        .project-card.featured .project-text {
+            max-width: 940px;
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        .link-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .link-preview {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: var(--surface);
+            box-shadow: 0 10px 24px rgba(15,23,42,.06);
+            transition: transform .15s ease, border-color .15s ease;
+        }
+
+        .link-preview:hover {
+            transform: translateY(-2px);
+            border-color: #bfdbfe;
+        }
+
+        .link-preview img {
+            display: block;
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            background: var(--surface-soft);
+        }
+
+        .link-preview-body {
+            padding: 16px;
+        }
+
+        .link-preview-site {
+            color: var(--brand);
+            font-size: 11px;
+            font-weight: 950;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+
+        .link-preview h4 {
+            margin: 7px 0 8px;
+            font-size: 18px;
+            line-height: 1.3;
+            letter-spacing: -.02em;
+        }
+
+        .link-preview p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .link-preview-meta {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .link-preview-url {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 11px;
+            border-top: 1px solid var(--line);
+            color: #475569;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .link-preview-url span:last-child {
+            color: var(--brand-dark);
+        }
+
+
         .article-links {
             display: flex;
             flex-wrap: wrap;
@@ -578,6 +683,11 @@
             gap: 8px;
             position: sticky;
             top: 88px;
+            max-height: calc(100vh - 108px);
+            overflow-y: auto;
+            padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
         }
 
         .article-btn {
@@ -591,6 +701,16 @@
         }
 
         .article-btn:hover, .article-btn.active { background: var(--brand-soft); border-color: #bfdbfe; }
+
+        .article-btn:focus-visible,
+        .link-preview:focus-visible,
+        .word-cloud-item:focus-visible,
+        .project-link:focus-visible,
+        .nav-btn:focus-visible {
+            outline: 3px solid rgba(37, 99, 235, .28);
+            outline-offset: 3px;
+        }
+
         .article-btn .date { color: var(--muted); font-size: 11px; text-transform: uppercase; font-weight: 950; letter-spacing: 0.1em; }
         .article-btn .title { margin-top: 4px; font-weight: 950; line-height: 1.25; }
 
@@ -681,7 +801,7 @@
             .hero-grid, .dashboard-grid, .grid-2, .tools-layout, .blog-layout { grid-template-columns: 1fr; }
             .grid-3, .project-grid { grid-template-columns: repeat(2, 1fr); }
             .section-head { align-items: flex-start; flex-direction: column; }
-            .article-list { position: static; }
+            .article-list { position: static; max-height: none; overflow: visible; padding-right: 0; }
             .brand { min-width: auto; }
         }
 
@@ -695,6 +815,9 @@
             .phase { grid-template-columns: 1fr; }
             .phase-status { width: max-content; }
             .footer-inner { flex-direction: column; align-items: flex-start; }
+            .word-cloud { min-height: 300px; padding: 24px 16px; gap: 10px 15px; }
+            .link-preview-grid { grid-template-columns: 1fr; }
+            .link-preview img { height: 170px; }
         }
     </style>
 </head>
@@ -716,7 +839,7 @@
                 <a class="nav-btn" href="/curriculo.html">Currículo</a>
                 <a class="nav-btn" href="https://github.com/danielfleck" target="_blank" rel="noopener">GitHub</a>
                 <a class="nav-btn" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">Roadmap GitHub</a>
-                <button class="nav-btn" id="btn-blog" onclick="showSection('blog')">Blog</button>
+                <button class="nav-btn" id="btn-blog" onclick="openBlog()">Blog</button>
             </div>
         </div>
     </nav>
@@ -866,7 +989,7 @@
                     <h2 class="section-title">Portfólio demonstrável.</h2>
                 </div>
                 <p class="section-desc">
-                    Esta seção ficará reservada apenas para entregas já construídas e publicadas. Quando houver um projeto concluído, inclua título, descrição, texto, imagens, link do GitHub, link da página publicada e, se houver, artigo do blog relacionado.
+                    Esta seção ficar reservada apenas para entregas já construídas e publicadas.
                 </p>
             </div>
             <div class="project-grid" id="projectGrid"></div>
@@ -892,7 +1015,7 @@
             <div class="section-head">
                 <div>
                     <div class="section-kicker">Diário técnico</div>
-                    <h2 class="section-title">Notas de estudo e transição.</h2>
+                    <h2 class="section-title" id="blogSectionTitle">Notas de estudo e transição.</h2>
                 </div>
                 <p class="section-desc">
                     Textos curtos para registrar decisões técnicas, aplicação no trabalho, projetos concluídos, links para GitHub e resultados publicados em páginas específicas.
@@ -998,7 +1121,20 @@
          *     ]
          * }
          */
-        const portfolioItems = [];
+        const portfolioItems = [
+            {
+                id: 'siscopweb-missao-critica',
+                title: 'Sustentação e evolução de sistema de missão crítica',
+                description: 'Experiência real, entre 2012 e 2018, na sustentação e modernização do sistema utilizado no atendimento 190, despacho de viaturas e controle operacional.',
+                text: 'Atuação em manutenção corretiva, adaptativa e evolutiva; migração de infraestrutura para Linux; bancos SQL Server e PostgreSQL/PostGIS; Apache; redundância por DNS Load Balance; geoprocessamento com Mapnik, OpenStreetMap e Leaflet; planejamento de implantação, rollback, monitoramento e ajuste de desempenho.',
+                date: '2012–2018',
+                featured: true,
+                tags: ['Sistemas Críticos', 'Sustentação', 'PostgreSQL', 'PostGIS', 'Linux', 'PHP'],
+                links: [
+                    { label: 'Ler estudo de caso completo', articleId: 'siscopweb-portfolio-historico' }
+                ]
+            }
+        ];
 
         const tools = [
             {
@@ -1047,6 +1183,93 @@
          * }
          */
         const articles = [
+            {
+                id: 'siscopweb-portfolio-historico',
+                title: 'Meu primeiro grande portfólio: sustentação e evolução do SiscopWeb em ambiente de missão crítica',
+                date: '04 Ago 2026',
+                category: 'Portfólio',
+                isPortfolio: true,
+                tags: ['SiscopWeb', 'Sistemas Críticos', 'Sustentação', 'PostgreSQL'],
+                html: `
+                    <h2>Meu primeiro grande portfólio: sustentação e evolução de sistema em ambiente de missão crítica</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Portfólio histórico</span>
+                        <span class="tag">SiscopWeb</span>
+                        <span class="tag">Sistemas críticos</span>
+                        <span class="tag">2012–2018</span>
+                    </div>
+                    <blockquote>Embora esta experiência tenha ocorrido há alguns anos, ela representa atuação real em produção contínua, sustentação, programação, bancos de dados, geoprocessamento, infraestrutura e implantação de mudanças em um serviço crítico.</blockquote>
+                    <p>Entre 2012 e 2018, atuei na sustentação e nas manutenções corretiva, adaptativa e evolutiva do <strong>Sistema de Controle Operacional</strong>. Desenvolvido pela área de tecnologia da Polícia Militar do Paraná em 2005, o sistema apoiava o atendimento 190, o despacho de viaturas, o controle operacional, o emprego de recursos, a análise e a auditoria das ocorrências em funcionamento contínuo.</p>
+                    <h3>Base tecnológica e sustentação</h3>
+                    <p>No início desse período, a aplicação utilizava <strong>HTML, JavaScript, PHP, SQL e stored procedures</strong>, com banco de dados Microsoft SQL Server e servidores web Microsoft. Minha atuação envolveu diagnóstico de falhas, correções, adequações funcionais, evolução da aplicação e acompanhamento do ambiente de produção.</p>
+                    <h3>Migração e modernização da infraestrutura</h3>
+                    <p>Participei da migração da aplicação para servidores Linux com redundância por <strong>DNS Load Balance</strong>, atualização da versão do PHP e reorganização dos serviços de aplicação. A mudança exigia especial cautela porque o sistema atendia uma operação crítica, responsável pelo registro de chamadas de emergência e pelo despacho de viaturas em grande parte do Estado.</p>
+                    <p>A implantação foi precedida por planejamento, definição de etapas, validações e <strong>plano de rollback</strong>. Após a entrada em produção, o ambiente permaneceu sob monitoramento para identificar falhas, gargalos e necessidades de ajuste.</p>
+                    <h3>Interface geográfica e dados operacionais</h3>
+                    <p>Em 2015 foi lançada uma versão com nova interface de registro de ocorrências e recursos geográficos. A solução passou a utilizar <strong>PostgreSQL com PostGIS</strong>, servidor próprio de mapas com <strong>Mapnik</strong>, dados do <strong>OpenStreetMap</strong> e visualização com <strong>Leaflet</strong>. Ocorrências, unidades e viaturas podiam ser representadas no mapa para apoiar o controle operacional.</p>
+                    <h3>Performance, disponibilidade e segurança</h3>
+                    <p>Após a implantação, acompanhei o funcionamento dos servidores Apache, dos bancos de dados e das consultas críticas. Foram realizados profiling, análise e refinamento de consultas e procedures, buscando desempenho compatível com o volume operacional e preservando os requisitos de <strong>integridade, disponibilidade e confidencialidade</strong>.</p>
+                    <h3>Competências demonstradas</h3>
+                    <ul class="checklist">
+                        <li>Sustentação e evolução de sistema de missão crítica em produção contínua.</li>
+                        <li>Programação e manutenção de aplicação web com PHP, JavaScript e SQL.</li>
+                        <li>Migração para Linux, Apache e ambiente com redundância.</li>
+                        <li>PostgreSQL/PostGIS, dados geográficos e visualização cartográfica.</li>
+                        <li>Planejamento de implantação, rollback, monitoramento e estabilização.</li>
+                        <li>Análise de desempenho de consultas, procedures e serviços.</li>
+                    </ul>
+                    <h3>Registros públicos relacionados</h3>
+                    <p>As reportagens abaixo registram a reinauguração e a operação do Centro Integrado de Comando e Controle do Paraná em agosto de 2015 com a presençado então Governador do Estado. Elas contextualizam o ambiente no qual a versão do sistema com interface com georeferenciamento foi apresentada.</p>
+                    <div class="link-preview-grid">
+                        <a class="link-preview" href="https://www.gazetadopovo.com.br/vida-e-cidadania/centro-reune-forcas-de-seguranca-e-ja-monitora-o-parana-por-cameras-8kqh3yjmw1kcwn969h0f1wul0/" target="_blank" rel="noopener">
+                            <img src="https://media.gazetadopovo.com.br/2015/08/10a8e5f20593596b06acfb75d4c3f7a1-full.jpg" alt="Centro Integrado de Comando e Controle do Paraná fotografado pela Gazeta do Povo" loading="lazy">
+                            <div class="link-preview-body">
+                                <div class="link-preview-site">Gazeta do Povo • Segurança pública</div>
+                                <h4>Centro reúne forças de segurança e já monitora o Paraná por câmeras</h4>
+                                <p>CICCR mudará o formato dos boletins de ocorrência. Governador promete diminuir a superlotação em presídios e elogia a polícia pela eficiência nos índices de prisões.</p>
+                                <div class="link-preview-meta">Daniel Zanella • 04/08/2015 às 15:31 • Foto: Brunno Covello/Gazeta do Povo</div>
+                                <div class="link-preview-url"><span>gazetadopovo.com.br</span><span>Abrir reportagem ↗</span></div>
+                            </div>
+                        </a>
+
+                        <a class="link-preview" href="https://www.cobrareporter.com.br/seguranca-passa-a-contar-com-o-centro-integrado-de-comando-e-controle/" target="_blank" rel="noopener">
+                            <img src="https://www.cobrareporter.com.br/wp-content/uploads/2015/08/centro_integrado_seguranca040815-2-1024x683.jpeg" alt="Ativação do Centro Integrado de Comando e Controle do Paraná" loading="lazy">
+                            <div class="link-preview-body">
+                                <div class="link-preview-site">Deputado Estadual Cobra Repórter • Segurança</div>
+                                <h4>Segurança passa a contar com o Centro Integrado de Comando e Controle</h4>
+                                <p>A ativação do CICCR colocou a estrutura em funcionamento contínuo, integrando forças de segurança, inteligência e cerca de duas mil câmeras públicas.</p>
+                                <div class="link-preview-meta">04 agosto 2015 • Com informações da Agência Estadual de Notícias</div>
+                                <div class="link-preview-url"><span>cobrareporter.com.br</span><span>Abrir reportagem ↗</span></div>
+                            </div>
+                        </a>
+
+                        <a class="link-preview" href="https://g1.globo.com/pr/parana/videos-meio-dia-parana/video/centro-integrado-de-comando-e-controle-do-parana-e-reinaugurado-em-curitiba-4368507.ghtml" target="_blank" rel="noopener">
+                            <img src="https://s04.video.glbimg.com/x720/4368507.jpg" alt="Vídeo do Meio Dia Paraná sobre a reinauguração do Centro Integrado de Comando e Controle" loading="lazy">
+                            <div class="link-preview-body">
+                                <div class="link-preview-site">G1 Paraná • Meio Dia Paraná</div>
+                                <h4>Centro Integrado de Comando e Controle do Paraná é reinaugurado em Curitiba</h4>
+                                <p>É possível acompanhar imagens de 2.000 câmeras instaladas em Curitiba e Região Metropolitana. O prédio já havia sido utilizado durante a Copa do Mundo de 2014.</p>
+                                <div class="link-preview-meta">RPC • 04/08/2015 • Vídeo de 43 segundos</div>
+                                <div class="link-preview-url"><span>g1.globo.com</span><span>Abrir vídeo ↗</span></div>
+                            </div>
+                        </a>
+
+                        <a class="link-preview" href="https://g1.globo.com/pr/parana/videos-boa-noite-parana/video/centro-integrado-de-comando-e-controle-do-parana-volta-a-funcionar-em-curitiba-4369926.ghtml" target="_blank" rel="noopener">
+                            <img src="https://s04.video.glbimg.com/x720/4369926.jpg" alt="Vídeo do Boa Noite Paraná sobre o retorno do Centro Integrado de Comando e Controle" loading="lazy">
+                            <div class="link-preview-body">
+                                <div class="link-preview-site">G1 Paraná • Boa Noite Paraná</div>
+                                <h4>Centro Integrado de Comando e Controle do Paraná volta a funcionar, em Curitiba</h4>
+                                <p>O vídeo registra a retomada do funcionamento do centro integrado, com videomonitoramento e compartilhamento de informações para apoiar as forças de segurança.</p>
+                                <div class="link-preview-meta">RPC • 04/08/2015 • Vídeo</div>
+                                <div class="link-preview-url"><span>g1.globo.com</span><span>Abrir vídeo ↗</span></div>
+                            </div>
+                        </a>
+                    </div>
+                `,
+                links: [
+                    { label: 'Ver Portfólio', section: 'projetos' }
+                ]
+            },
 {
                 "id": "roadmap-transicao-ti-github",
                 "title": "Roadmap de transição no GitHub: do branch dev ao merge na main",
@@ -1154,6 +1377,20 @@
             });
         }
 
+        function openBlog() {
+            showSection('blog', false);
+            loadArticle(articles[0].id);
+
+            window.requestAnimationFrame(() => {
+                smoothScrollToElement(document.getElementById('blogSectionTitle'));
+            });
+        }
+
+        function openArticle(articleId) {
+            showSection('blog', false);
+            loadArticle(articleId, true);
+        }
+
         function renderRoadmap() {
             const list = document.getElementById('roadmapList');
             list.innerHTML = roadmap.map(item => '<div class="phase"><div class="phase-date">' + item.period + '</div><div><h3>' + item.title + '</h3><p>' + item.text + '</p></div><div class="phase-status">' + item.status + '</div></div>').join('');
@@ -1172,7 +1409,7 @@
                 const tags = (project.tags || []).map(tag => '<span class="tag brand">' + tag + '</span>').join('');
                 const links = (project.links || []).map(link => {
                     if (link.articleId) {
-                        return '<a class="project-link" href="#" onclick="showSection(\'blog\'); loadArticle(\'' + link.articleId + '\'); return false;">' + link.label + '</a>';
+                        return '<a class="project-link" href="#post-' + encodeURIComponent(link.articleId) + '" onclick="openArticle(\'' + link.articleId + '\'); return false;">' + link.label + '</a>';
                     }
                     if (link.section) {
                         return '<a class="project-link" href="#" onclick="showSection(\'' + link.section + '\'); return false;">' + link.label + '</a>';
@@ -1180,7 +1417,7 @@
                     return '<a class="project-link" href="' + link.url + '" target="_blank" rel="noopener">' + link.label + '</a>';
                 }).join('');
 
-                return '<div class="card project-card">' +
+                return '<div class="card project-card' + (project.featured ? ' featured' : '') + '">' +
                     image +
                     '<div class="number">' + String(index + 1).padStart(2, '0') + '</div>' +
                     '<h3>' + project.title + '</h3>' +
@@ -1232,14 +1469,7 @@
         }
 
         function openArticleFromTag(articleId) {
-            showSection('blog', false);
-            loadArticle(articleId);
-
-            window.requestAnimationFrame(() => {
-                const viewer = document.getElementById('articleViewer');
-                const title = viewer ? viewer.querySelector('h1, h2, h3') : null;
-                smoothScrollToElement(title || viewer);
-            });
+            openArticle(articleId);
         }
 
         function showTaggedPosts(tag) {
@@ -1277,37 +1507,16 @@
             });
 
             const palette = ['blue', 'teal', 'orange', 'muted'];
-            const layout = [
-                { left: 48, top: 48, size: 4.7, rotate: 0 },
-                { left: 31, top: 34, size: 2.65, rotate: 0 },
-                { left: 68, top: 34, size: 2.55, rotate: 0 },
-                { left: 25, top: 64, size: 2.35, rotate: 0 },
-                { left: 71, top: 65, size: 2.25, rotate: 0 },
-                { left: 50, top: 22, size: 2.05, rotate: 0 },
-                { left: 49, top: 76, size: 1.95, rotate: 0 },
-                { left: 14, top: 46, size: 1.75, rotate: 0 },
-                { left: 86, top: 47, size: 1.70, rotate: 0 },
-                { left: 38, top: 18, size: 1.55, rotate: -90 },
-                { left: 61, top: 82, size: 1.45, rotate: -90 },
-                { left: 18, top: 22, size: 1.30, rotate: 0 },
-                { left: 82, top: 22, size: 1.30, rotate: 0 },
-                { left: 12, top: 78, size: 1.15, rotate: 0 },
-                { left: 88, top: 78, size: 1.15, rotate: 0 },
-                { left: 50, top: 90, size: 1.05, rotate: 0 }
-            ];
+            const sizeScale = [2.55, 1.55, 2.05, 1.25, 1.8, 1.12, 1.42, 1.05];
+            const rotations = [0, -5, 4, 0, -3, 5, 0, 2];
 
             cloud.innerHTML = tags.map((tag, index) => {
-                const pos = layout[index % layout.length];
+                const frequencyBoost = Math.min((tagMap[tag].length - 1) * 0.32, 0.96);
+                const fontSize = sizeScale[index % sizeScale.length] + frequencyBoost;
                 const color = palette[index % palette.length];
-                const weight = Math.min(tagMap[tag].length - 1, 3);
-                const fontSize = pos.size + (weight * 0.25);
+                const rotation = rotations[index % rotations.length];
 
-                return '<a href="#tag-' + encodeURIComponent(tag) + '" class="word-cloud-item ' + color + '" data-tag="' + escapeHtml(tag) + '" style="' +
-                    'left:' + pos.left + '%;' +
-                    'top:' + pos.top + '%;' +
-                    'font-size:' + fontSize + 'rem;' +
-                    'transform:translate(-50%, -50%) rotate(' + pos.rotate + 'deg);' +
-                    '">' + escapeHtml(tag) + '</a>';
+                return '<a href="#tag-' + encodeURIComponent(tag) + '" class="word-cloud-item ' + color + '" data-tag="' + escapeHtml(tag) + '" style="font-size:' + fontSize + 'rem; transform:rotate(' + rotation + 'deg);">' + escapeHtml(tag) + '</a>';
             }).join('');
 
             cloud.querySelectorAll('.word-cloud-item').forEach(link => {
@@ -1320,11 +1529,11 @@
 
         function renderArticles() {
             const list = document.getElementById('articleList');
-            list.innerHTML = articles.map((article, index) => '<button class="article-btn ' + (index === 0 ? 'active' : '') + '" id="article-btn-' + article.id + '" onclick="loadArticle(\'' + article.id + '\')"><div class="date">' + article.date + ' • ' + article.category + '</div><div class="title">' + article.title + '</div></button>').join('');
+            list.innerHTML = articles.map((article, index) => '<button class="article-btn ' + (index === 0 ? 'active' : '') + '" id="article-btn-' + article.id + '" onclick="loadArticle(\'' + article.id + '\', true)"><div class="date">' + article.date + ' • ' + article.category + '</div><div class="title">' + article.title + '</div></button>').join('');
             loadArticle(articles[0].id);
         }
 
-        function loadArticle(id) {
+        function loadArticle(id, scrollToArticle = false) {
             const article = articles.find(item => item.id === id);
             if (!article) return;
 
@@ -1339,7 +1548,15 @@
                 return '<a class="project-link" href="' + link.url + '" target="_blank" rel="noopener">' + link.label + '</a>';
             }).join('');
 
-            document.getElementById('articleViewer').innerHTML = article.html + (links ? '<div class="article-links">' + links + '</div>' : '');
+            const viewer = document.getElementById('articleViewer');
+            viewer.innerHTML = article.html + (links ? '<div class="article-links">' + links + '</div>' : '');
+
+            if (scrollToArticle) {
+                window.requestAnimationFrame(() => {
+                    const title = viewer.querySelector('h1, h2, h3');
+                    smoothScrollToElement(title || viewer);
+                });
+            }
         }
 
         function initCountdown() {
