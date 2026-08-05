@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Currículo e Perfil Técnico | Daniel Rodrigo Fleck</title>
-  <meta name="description" content="Currículo e perfil técnico de Daniel Rodrigo Fleck para sondagem de mercado, retorno e atualização em tecnologia, sustentação, sistemas relacionais, Git, PostgreSQL/PostGIS, requisitos e gestão técnico-operacional.">
+  <title>Daniel Rodrigo Fleck | Sistemas, Sustentação e Requisitos</title>
+  <meta name="description" content="Currículo de Daniel Rodrigo Fleck: experiência em sistemas críticos, sustentação, SQL/PostgreSQL, Linux, requisitos, suporte N2/N3 e gestão técnico-operacional.">
   <style>
     :root {
       --bg: #f8fafc;
@@ -51,8 +51,21 @@
     .mini { background: var(--soft); border: 1px solid #bfdbfe; border-radius: 14px; padding: 14px; }
     .mini h3 { color: #1d4ed8; margin-bottom: 8px; }
     .callout { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 14px; padding: 14px; }
+    .positioning { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+    .positioning .mini { min-height: 170px; }
+    .portfolio-grid { display: grid; gap: 14px; margin-top: 14px; }
+    .portfolio-item { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: #fff; }
+    .portfolio-item h3 { color: var(--accent); margin-bottom: 6px; }
+    .portfolio-item p { margin-bottom: 8px; }
+    .portfolio-meta { color: var(--muted); font-size: .9rem; font-weight: 700; margin-bottom: 8px; }
+    .portfolio-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .portfolio-links a { display: inline-flex; padding: 8px 10px; border-radius: 999px; background: var(--soft); border: 1px solid #bfdbfe; color: #1d4ed8; text-decoration: none; font-weight: 700; font-size: .86rem; }
+    .evidence-list { display: grid; gap: 10px; padding: 0; list-style: none; }
+    .evidence-list li { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .evidence-list strong { color: var(--accent); }
+    .availability { border-left: 5px solid var(--accent); background: var(--soft); padding: 16px; border-radius: 12px; color: #1e3a8a; }
     footer { border-top: 1px solid var(--line); color: var(--muted); padding: 24px 0; font-size: .9rem; background: #fff; }
-    @media (max-width: 900px) { .grid, .mini-grid { grid-template-columns: 1fr; } header { padding: 36px 0; } .card { padding: 18px; } }
+    @media (max-width: 900px) { .grid, .mini-grid, .positioning { grid-template-columns: 1fr; } header { padding: 36px 0; } .card { padding: 18px; } }
     @media print { body { background: #fff; } .card { box-shadow: none; break-inside: avoid; } header { background: #fff; color: #000; border-bottom: 1px solid #ddd; } header p, .headline { color: #222; } .navlinks { display: none; } }
   </style>
 </head>
@@ -60,7 +73,7 @@
 <header>
   <div class="wrap">
     <h1>DANIEL RODRIGO FLECK</h1>
-    <p class="headline">Retorno e Atualização em Tecnologia | Sustentação • Sistemas Relacionais • Git • PostgreSQL/PostGIS • Requisitos • Gestão Técnico-Operacional</p>
+    <p class="headline">Analista de Sistemas e Sustentação | SQL/PostgreSQL • Linux • Requisitos • Sistemas Críticos • Gestão Técnico-Operacional</p>
     <p>Email: danielfleck@gmail.com</p>
     <p>Site: daniel.fleck.dev.br | GitHub: github.com/danielfleck | LinkedIn: linkedin.com/in/daniel-rodrigo-fleck</p>
     <div class="navlinks">
@@ -69,7 +82,7 @@
       <a href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">Roadmap técnico</a>
       <a href="mailto:danielfleck@gmail.com">Contato</a>
     </div>
-    <p style="margin-top:14px;color:#e0f2fe"><strong>Momento atual:</strong> sondagem de mercado e atualização técnica estruturada. Não se trata de busca ativa imediata por vagas.</p>
+    <p style="margin-top:14px;color:#e0f2fe"><strong>Momento atual:</strong> atualização técnica estruturada, organização de evidências públicas e sondagem de mercado. Disponibilidade profissional planejada para dezembro de 2027.</p>
   </div>
 </header>
 <main class="wrap">
@@ -77,51 +90,30 @@
     <div>
       <section class="card">
         <h2>Resumo profissional</h2>
-        <p>Profissional com trajetória em liderança, planejamento, coordenação de equipes, análise documental, gestão de protocolos, elaboração de relatórios e atuação em ambientes operacionais críticos.</p>
-        <p>Atualmente conduz processo estruturado de <strong>retorno e atualização em tecnologia</strong>, com foco em sustentação de sistemas, suporte técnico N2/N3, SQL, PostgreSQL, PostGIS, Git, GitHub, GitLab, automação, requisitos e documentação técnica.</p>
-        <p>O momento atual é de <strong>sondagem de mercado, atualização técnica e organização de evidências públicas</strong>, sem busca ativa imediata por vagas. O objetivo é compreender oportunidades, validar aderência profissional e preparar uma base técnica demonstrável.</p>
-        <p>Entre 2012 e 2023 atuou em ambiente institucional de TI, com experiência prévia em desenvolvimento, sustentação, suporte, infraestrutura, bancos de dados, sistemas críticos, geotecnologias e gestão de equipes técnicas.</p>
-        <p class="note"><strong>Atualização técnica:</strong> a base técnica anterior está sendo reabsorvida, atualizada e comprovada gradualmente por estudos dirigidos, documentação, uso de ferramentas corporativas, GitHub e projetos públicos. O currículo separa experiência anterior, competências atuais e conhecimentos em estudo.</p>
+        <p>Profissional com trajetória consolidada em liderança, planejamento, coordenação de equipes e atuação em ambientes operacionais críticos.</p>
+        <p>Entre <strong>2012 e 2023</strong>, atuou em tecnologia institucional com desenvolvimento, sustentação, suporte, infraestrutura, bancos de dados, geotecnologias, documentação e gestão de equipes técnicas. Entre as principais experiências estão sistemas corporativos utilizados em produção contínua, com requisitos de disponibilidade, integridade, rastreabilidade e continuidade operacional.</p>
+        <p>Atualmente conduz processo estruturado de <strong>retorno e atualização em tecnologia</strong>, com foco principal em sistemas, sustentação, suporte N2/N3, SQL, PostgreSQL/PostGIS, Linux, requisitos e documentação técnica. Dados, automação e Python permanecem como trilhas complementares em desenvolvimento.</p>
+        <p class="note"><strong>Posicionamento:</strong> não se apresenta como iniciante absoluto nem como especialista atualizado em todas as ferramentas. A experiência anterior está sendo reabsorvida, atualizada e comprovada gradualmente por estudos dirigidos, documentação, GitHub e projetos públicos.</p>
       </section>
 
       <section class="card">
-        <h2>Posicionamento técnico</h2>
-        <div class="mini-grid">
-          <div class="mini">
-            <h3>Atual comprovável</h3>
-            <ul>
-              <li>Liderança, coordenação e gestão de equipes.</li>
-              <li>Planejamento, relatórios, pareceres, protocolos e planilhas.</li>
-              <li>Requisitos, histórias de usuário e critérios de aceitação.</li>
-              <li>Gestão de backlog e documentação com Jira Cloud e Confluence.</li>
-            </ul>
-          </div>
-          <div class="mini">
-            <h3>Base técnica anterior</h3>
-            <ul>
-              <li>Git, GitHub, GitLab e fluxo de versionamento.</li>
-              <li>SQL, PostgreSQL, PostGIS, MySQL/MariaDB e SQL Server.</li>
-              <li>PHP/Symfony, sustentação, suporte e infraestrutura Linux.</li>
-              <li>Apache, Squid, Docker, Samba, logs e auditoria.</li>
-            </ul>
-          </div>
-          <div class="mini">
-            <h3>Em atualização prática</h3>
-            <ul>
-              <li>SQL e PostgreSQL avançado.</li>
-              <li>PostGIS e dados geográficos.</li>
-              <li>Python para automação e dados.</li>
-              <li>GitHub, documentação técnica e projetos públicos.</li>
-            </ul>
-          </div>
+        <h2>Posicionamento profissional</h2>
+        <div class="positioning">
+          <div class="mini"><h3>Funções-alvo</h3><ul><li>Analista de Sistemas e Sustentação.</li><li>Suporte técnico N2/N3 e implantação.</li><li>Analista de Requisitos e Processos.</li><li>Funções com forte uso de SQL e PostgreSQL.</li></ul></div>
+          <div class="mini"><h3>Experiência comprovada</h3><ul><li>Sistemas críticos e corporativos em produção.</li><li>Manutenção corretiva, adaptativa e evolutiva.</li><li>SQL, PostgreSQL/PostGIS, Linux e infraestrutura.</li><li>Regras de negócio, documentação e gestão técnica.</li></ul></div>
+          <div class="mini"><h3>Atualização em andamento</h3><ul><li>PostgreSQL avançado e desempenho.</li><li>Python para automação e dados.</li><li>Projetos públicos com GitHub e documentação.</li><li>Desenvolvimento assistido por IA com revisão humana.</li></ul></div>
         </div>
-        <p class="warn" style="margin-top:16px"><strong>Observação:</strong> ferramentas específicas ainda não estudadas ou sem projeto publicado não são usadas como tags de competência atual. Por isso, este currículo não lista ferramentas de BI específicas como se fossem domínio prático.</p>
+        <p class="availability" style="margin-top:16px"><strong>Disponibilidade:</strong> atualmente realiza sondagem de mercado e atualização técnica estruturada. A disponibilidade profissional está planejada para dezembro de 2027.</p>
       </section>
 
       <section class="card">
-        <h2>Status atual</h2>
-        <p>Este currículo HTML integra meu blog e serve como página pública de perfil técnico. No momento, o foco é <strong>sondar o mercado</strong>, comparar exigências reais com minha base anterior e orientar meus estudos, sem candidatura ativa imediata.</p>
-        <p>As informações técnicas foram organizadas de forma cautelosa: competências atuais, base técnica anterior e conhecimentos em atualização aparecem separados para evitar sobreposição indevida entre experiência pretérita e prática atual.</p>
+        <h2>Proposta de valor</h2>
+        <ul class="evidence-list">
+          <li><strong>Experiência transferível:</strong> atuação em ambientes de alta responsabilidade, com continuidade operacional, priorização, resposta a incidentes e coordenação de equipes.</li>
+          <li><strong>Visão técnico-operacional:</strong> capacidade de compreender simultaneamente aplicação, banco de dados, infraestrutura, regras de negócio e necessidade do usuário.</li>
+          <li><strong>Sustentação e evolução:</strong> experiência com sistemas legados e corporativos, preservando estabilidade enquanto novas funcionalidades são incorporadas.</li>
+          <li><strong>Documentação e governança:</strong> elaboração de relatórios, pareceres, requisitos, critérios de aceitação, registros técnicos e organização de backlog.</li>
+        </ul>
       </section>
 
       <section class="card">
@@ -141,6 +133,26 @@
           <ul>
             <li>Chefia de equipes em atividades operacionais, com responsabilidade por coordenação, disciplina, execução de diretrizes e acompanhamento de ocorrências.</li>
             <li>Desenvolvimento de competências de liderança, análise de cenário, resposta a incidentes e gestão de pessoas em contexto de pressão.</li>
+          </ul>
+        </section>
+        <section class="entry">
+          <h3>SiscopWeb — sistema crítico de atendimento e despacho 190</h3>
+          <p class="period">2012 - 2018</p>
+          <ul>
+            <li>Sustentação e manutenção corretiva, adaptativa e evolutiva de sistema utilizado no atendimento 190, despacho de viaturas, controle operacional, análise e auditoria.</li>
+            <li>Participação na migração para servidores Linux com redundância por DNS e balanceamento de carga.</li>
+            <li>Atuação na evolução para PostgreSQL/PostGIS, Mapnik, OpenStreetMap e Leaflet, com representação de ocorrências, unidades e viaturas em mapa.</li>
+            <li>Planejamento de implantação em ambiente crítico, incluindo procedimentos de rollback, monitoramento pós-implantação e ajustes de desempenho em servidores, consultas e procedures.</li>
+          </ul>
+        </section>
+        <section class="entry">
+          <h3>Siscoger — sistema corporativo de corregedoria</h3>
+          <p class="period">2017 e 2021 - 2023</p>
+          <ul>
+            <li>Sustentação de sistema utilizado no controle de processos, procedimentos e atividades administrativas de corregedoria.</li>
+            <li>Execução de manutenções corretivas, adaptativas e evolutivas, com conclusão e integração de diferentes módulos.</li>
+            <li>Atuação sobre regras de negócio sensíveis, preservando integridade, rastreabilidade, estabilidade e continuidade operacional.</li>
+            <li>Sistema permanece em utilização institucional, com estabilidade significativa.</li>
           </ul>
         </section>
         <section class="entry">
@@ -181,30 +193,32 @@
       <section class="card">
         <h2>Competências técnicas por área</h2>
         <ul>
-          <li><strong>Git, GitHub e GitLab:</strong> versionamento em contexto de sustentação, integração de mudanças, resolução de divergências, rastreabilidade de histórico, governança de repositórios e documentação técnica vinculada ao código.</li>
-          <li><strong>SQL, PostgreSQL e PostGIS:</strong> SQL aplicado a sistemas reais, PostgreSQL com extensão PostGIS, modelagem, consultas, manutenção, análise de dados operacionais e apoio a sistemas com mapas.</li>
-          <li><strong>Suporte, sustentação e infraestrutura:</strong> Linux, Apache, Squid, PostgreSQL, bancos relacionais, Docker, Vagrant, logs, auditoria, servidores, diagnóstico e troubleshooting.</li>
-          <li><strong>Desenvolvimento e geotecnologias:</strong> PHP/Symfony, JavaScript, sistemas web, PostGIS, Leaflet, OpenLayers, Mapnik, OSM e integrações operacionais.</li>
-          <li><strong>Gestão, processos e documentação:</strong> liderança, planejamento, requisitos, histórias de usuário, critérios de aceitação, backlog, Jira Cloud, Confluence e documentação técnica.</li>
+          <li><strong>Sistemas e sustentação:</strong> manutenção corretiva, adaptativa e evolutiva, análise de incidentes, continuidade operacional, implantação controlada e trabalho com sistemas legados e corporativos.</li>
+          <li><strong>SQL, PostgreSQL e PostGIS:</strong> SQL aplicado a sistemas reais, modelagem, consultas, manutenção, dados geográficos, análise operacional e apoio a sistemas com mapas.</li>
+          <li><strong>Linux e infraestrutura:</strong> servidores Linux, Apache, Nginx, Squid, DNS, logs, auditoria, diagnóstico, troubleshooting, redundância e balanceamento de carga.</li>
+          <li><strong>Desenvolvimento e geotecnologias:</strong> PHP/Symfony, JavaScript, HTML, sistemas web, PostGIS, Leaflet, OpenLayers, Mapnik, OSM e integrações operacionais.</li>
+          <li><strong>Git e publicação:</strong> Git, GitHub e GitLab, versionamento, integração de mudanças, rastreabilidade, documentação vinculada ao código, deploy na Vercel e configuração de domínio/DNS.</li>
+          <li><strong>Requisitos, processos e gestão:</strong> regras de negócio, histórias de usuário, critérios de aceitação, backlog, Jira Cloud, Confluence, documentação técnica, planejamento e coordenação de equipes.</li>
+          <li><strong>IA aplicada ao desenvolvimento:</strong> uso do ChatGPT como apoio à elaboração e revisão de código, interface e textos, com validação humana, testes e responsabilidade pelas decisões finais.</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Portfólio e evidências públicas</h2>
-        <p>O principal ponto de partida para acompanhar minha evolução técnica é o repositório:</p>
-        <p class="callout"><strong><a href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">github.com/danielfleck/roadmap-transicao-ti</a></strong><br>Backlog de estudos organizado, uso de Jira Cloud e Confluence, templates de documentação técnica, política de dados e segurança, boas práticas de versionamento e registros de evolução técnica.</p>
+        <p>Os itens abaixo reúnem experiências históricas e uma entrega atual, com documentação, links institucionais e código público.</p>
+        <div class="portfolio-grid">
+          <article class="portfolio-item"><h3>daniel.fleck.dev.br — SPA com apoio de IA</h3><div class="portfolio-meta">Projeto atual • 2026</div><p>Site SPA desenvolvido em HTML, CSS e JavaScript, com apoio do ChatGPT na elaboração e revisão de código, interface e textos. O projeto utiliza Git e GitHub, deploy integrado à Vercel e domínio próprio registrado no Registro.br, com configuração de DNS.</p><div class="portfolio-links"><a href="https://daniel.fleck.dev.br/" target="_blank" rel="noopener">Abrir site</a><a href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener">Ver código</a></div></article>
+          <article class="portfolio-item"><h3>SiscopWeb — sustentação e modernização de sistema crítico</h3><div class="portfolio-meta">Experiência profissional • 2012–2018</div><p>Sustentação e evolução de sistema utilizado no atendimento 190 e despacho de viaturas, envolvendo Linux, SQL, PostgreSQL/PostGIS, infraestrutura, mapas, implantação controlada, rollback, monitoramento e desempenho.</p><div class="portfolio-links"><a href="https://daniel.fleck.dev.br/" target="_blank" rel="noopener">Ler estudo de caso no site</a></div></article>
+          <article class="portfolio-item"><h3>Siscoger — sustentação e evolução de sistema corporativo</h3><div class="portfolio-meta">Experiência profissional • 2017 e 2021–2023</div><p>Manutenção corretiva, adaptativa e evolutiva de sistema de corregedoria, com conclusão de módulos, entendimento de regras de negócio e preservação de estabilidade, integridade e rastreabilidade.</p><div class="portfolio-links"><a href="https://www.pmpr.pr.gov.br/sites/default/arquivos_restritos/files/documento/2022-07/2019_-_sistema_online_de_controle_de_processos_e_procedimentos_administrativos_siscoger.pdf" target="_blank" rel="noopener">Documento institucional</a><a href="https://daniel.fleck.dev.br/" target="_blank" rel="noopener">Ler estudo de caso no site</a></div></article>
+          <article class="portfolio-item"><h3>Roadmap de atualização técnica</h3><div class="portfolio-meta">Documentação e governança do estudo</div><p>Backlog de estudos, uso de Jira Cloud e Confluence, templates de documentação, política de dados e segurança, versionamento e registros de evolução técnica.</p><div class="portfolio-links"><a href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">Abrir repositório</a></div></article>
+        </div>
       </section>
     </div>
     <aside>
       <section class="card">
-        <h2>Áreas de interesse para sondagem</h2>
-        <p>Não estou em busca ativa imediata de vagas. Estas são áreas que estou acompanhando para avaliar aderência entre experiência anterior, atualização técnica e oportunidades futuras.</p>
-        <ul>
-          <li>Suporte N2/N3, sustentação e implantação de sistemas.</li>
-          <li>Análise de sistemas, requisitos, processos e documentação funcional.</li>
-          <li>Dados com foco em SQL, PostgreSQL, planilhas, indicadores e automação.</li>
-          <li>Backend PHP/Laravel ou Python como trilha complementar futura, conforme evolução prática e portfólio.</li>
-        </ul>
+        <h2>Áreas profissionais de interesse</h2>
+        <p>Áreas acompanhadas para avaliar aderência entre experiência anterior, atualização técnica e oportunidades futuras.</p>
+        <ul><li>Analista de Sistemas e Sustentação.</li><li>Suporte técnico N2/N3 e implantação.</li><li>Análise de requisitos, processos e documentação funcional.</li><li>Funções com SQL, PostgreSQL, dados operacionais e automação administrativa.</li></ul>
       </section>
 
       <section class="card">
@@ -249,14 +263,14 @@
       <section class="card">
         <h2>Palavras-chave controladas</h2>
         <div class="tags">
-          <span class="tag strong">Git</span><span class="tag strong">GitHub</span><span class="tag strong">GitLab</span><span class="tag strong">SQL</span><span class="tag strong">PostgreSQL</span><span class="tag strong">PostGIS</span><span class="tag prior">sustentação</span><span class="tag prior">suporte N2/N3</span><span class="tag prior">Linux</span><span class="tag prior">Apache</span><span class="tag prior">Squid</span><span class="tag prior">Docker</span><span class="tag prior">Vagrant</span><span class="tag prior">PHP/Symfony</span><span class="tag prior">AVL</span><span class="tag prior">geotecnologias</span><span class="tag">requisitos</span><span class="tag">critérios de aceitação</span><span class="tag">Jira Cloud</span><span class="tag">Confluence</span><span class="tag">documentação técnica</span><span class="tag">proteção de dados</span><span class="tag study">Python em atualização</span><span class="tag study">automação em estudo</span>
+          <span class="tag strong">Git</span><span class="tag strong">GitHub</span><span class="tag strong">GitLab</span><span class="tag strong">SQL</span><span class="tag strong">PostgreSQL</span><span class="tag strong">PostGIS</span><span class="tag prior">sustentação</span><span class="tag prior">suporte N2/N3</span><span class="tag prior">Linux</span><span class="tag prior">Apache</span><span class="tag prior">Squid</span><span class="tag prior">Docker</span><span class="tag prior">Vagrant</span><span class="tag prior">PHP/Symfony</span><span class="tag prior">AVL</span><span class="tag prior">geotecnologias</span><span class="tag">requisitos</span><span class="tag">critérios de aceitação</span><span class="tag">Jira Cloud</span><span class="tag">Confluence</span><span class="tag">documentação técnica</span><span class="tag">proteção de dados</span><span class="tag strong">Sistemas críticos</span><span class="tag strong">SiscopWeb</span><span class="tag strong">Siscoger</span><span class="tag strong">SPA</span><span class="tag prior">Vercel</span><span class="tag prior">DNS</span><span class="tag prior">desenvolvimento assistido por IA</span><span class="tag study">Python em atualização</span><span class="tag study">automação em estudo</span>
         </div>
       </section>
     </aside>
   </div>
 </main>
 <footer>
-  <div class="wrap">Daniel Rodrigo Fleck — Perfil profissional para sondagem de mercado, retorno e atualização em tecnologia. Última versão: julho de 2026.</div>
+  <div class="wrap">Daniel Rodrigo Fleck — Sistemas, sustentação, requisitos e atualização técnica. Última versão: agosto de 2026.</div>
 </footer>
 </body>
 </html>

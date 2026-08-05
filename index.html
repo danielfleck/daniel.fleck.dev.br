@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Blog de transição de carreira de Daniel Fleck para Dados, SQL, indicadores, automação administrativa, requisitos e sistemas, com foco em avanço técnico em 2026 e aptidão ao mercado em 2027.">
-    <title>Daniel Fleck | Transição TI 2026-2027</title>
+    <meta name="description" content="Portfólio profissional de Daniel Fleck: experiência em sistemas críticos, sustentação, SQL, PostgreSQL, requisitos, infraestrutura e atualização técnica para retorno ao mercado civil de TI.">
+    <title>Daniel Fleck | Sistemas, Sustentação e Atualização em TI</title>
     <style>
         :root {
             --bg: #f8fafc;
@@ -383,6 +383,94 @@
             letter-spacing: .08em;
         }
 
+
+        .profile-answer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .profile-answer-card {
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-answer-card .answer-label,
+        .home-block-head .answer-label,
+        .home-evidence-card .answer-label {
+            color: var(--brand);
+            font-size: 11px;
+            font-weight: 950;
+            letter-spacing: .11em;
+            text-transform: uppercase;
+        }
+
+        .profile-answer-card h3 { margin-top: 8px; }
+
+        .profile-answer-card .project-links {
+            margin-top: auto;
+            padding-top: 16px;
+        }
+
+        .home-block-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 24px;
+            margin: 30px 0 16px;
+        }
+
+        .home-block-head h3 {
+            margin: 6px 0 0;
+            font-size: clamp(24px, 3vw, 34px);
+            letter-spacing: -.04em;
+        }
+
+        .home-block-head p {
+            max-width: 650px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .home-evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .home-evidence-card {
+            min-height: 285px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .home-evidence-card h3 {
+            margin-top: 9px;
+            font-size: 21px;
+        }
+
+        .home-evidence-card .project-links {
+            margin-top: auto;
+            padding-top: 18px;
+        }
+
+        .chart-note {
+            display: block;
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .contact-card { margin-top: 18px; }
+        .contact-card .project-links { margin-top: 18px; }
 
         .dashboard-grid {
             display: grid;
@@ -799,7 +887,9 @@
 
         @media (max-width: 920px) {
             .hero-grid, .dashboard-grid, .grid-2, .tools-layout, .blog-layout { grid-template-columns: 1fr; }
-            .grid-3, .project-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-3, .project-grid, .profile-answer-grid { grid-template-columns: repeat(2, 1fr); }
+            .home-evidence-grid { grid-template-columns: 1fr; }
+            .home-block-head { align-items: flex-start; flex-direction: column; }
             .section-head { align-items: flex-start; flex-direction: column; }
             .article-list { position: static; max-height: none; overflow: visible; padding-right: 0; }
             .brand { min-width: auto; }
@@ -811,7 +901,7 @@
             .brand-subtitle { display: none; }
             .hero { padding: 44px 0 32px; }
             .countdown { grid-template-columns: repeat(2, 1fr); }
-            .grid-3, .project-grid, .metric-grid { grid-template-columns: 1fr; }
+            .grid-3, .project-grid, .metric-grid, .profile-answer-grid, .home-evidence-grid { grid-template-columns: 1fr; }
             .phase { grid-template-columns: 1fr; }
             .phase-status { width: max-content; }
             .footer-inner { flex-direction: column; align-items: flex-start; }
@@ -828,7 +918,7 @@
                 <span class="brand-badge">D</span>
                 <span>
                     <span class="brand-title">daniel.fleck.dev.br</span>
-                    <span class="brand-subtitle">Transição TI • Dados • Automação • Requisitos</span>
+                    <span class="brand-subtitle">Sistemas • Sustentação • Dados • Requisitos</span>
                 </span>
             </a>
             <div class="nav-actions" aria-label="Navegação principal">
@@ -847,22 +937,24 @@
     <header class="hero">
         <div class="container hero-grid">
             <div>
-                <span class="eyebrow">Transição TI • execução em 2026</span>
-                <h1>De operação crítica para Dados, SQL e Automação aplicada.</h1>
+                <span class="eyebrow">Retorno e atualização em tecnologia • execução em 2026</span>
+                <h1>Experiência em sistemas críticos, sustentação e evolução de software.</h1>
                 <p>
-                    Este blog documenta uma transição profissional em execução: aproveitar experiência em sistemas,
-                    processos, SQL, documentação e operação para construir, ainda em 2026, base prática em
-                    <strong>Dados, SQL, indicadores, automação administrativa, requisitos, sustentação e sistemas</strong>.
+                    Sou Daniel Fleck, profissional com experiência em desenvolvimento, sustentação, bancos de dados,
+                    infraestrutura e liderança técnico-operacional. Atualmente conduzo uma atualização estruturada para
+                    retorno ao mercado civil de TI, com evidências públicas em
+                    <strong>sistemas, SQL, requisitos, automação, documentação e uso responsável de IA</strong>.
                 </p>
                 <div class="hero-cta">
-                    <button class="btn btn-primary" onclick="showSection('roadmap')">Ver plano 2026</button>
-                    <button class="btn btn-secondary" onclick="showSection('projetos')">Ver portfólio</button>
+                    <button class="btn btn-primary" onclick="showSection('projetos')">Conhecer o portfólio</button>
+                    <button class="btn btn-secondary" onclick="showSection('roadmap')">Ver plano de atualização</button>
                     <a class="btn btn-secondary" href="/curriculo.html">Ver currículo</a>
                     <a class="btn btn-secondary" href="https://github.com/danielfleck" target="_blank" rel="noopener">Ver GitHub</a>
                     <a class="btn btn-secondary" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">Ver roadmap no GitHub</a>
+                    <a class="btn btn-secondary" href="mailto:danielfleck@gmail.com">Entrar em contato</a>
                 </div>
             </div>
-            <aside class="milestone-card" aria-label="Marcos da transição">
+            <aside class="milestone-card" aria-label="Marcos da atualização profissional">
                 <div class="count-label">Marco de mercado</div>
                 <div class="count-title">Aptidão civil em 16/12/2027</div>
                 <div class="countdown" id="countdown">
@@ -872,7 +964,7 @@
                     <div class="count-box"><strong id="cd-secs">00</strong><span>Seg</span></div>
                 </div>
                 <div class="milestone-line">
-                    <div class="milestone-mini"><span class="dot"></span><span><strong>Dez/2026:</strong> base técnica em construção, estudos organizados e primeiros projetos públicos.</span></div>
+                    <div class="milestone-mini"><span class="dot"></span><span><strong>Dez/2026:</strong> base técnica em atualização, estudos organizados e projetos públicos em evolução.</span></div>
                     <div class="milestone-mini"><span class="dot"></span><span><strong>Dez/2027:</strong> portfólio demonstrável para vagas de Dados/SQL, Requisitos, Sistemas e Suporte N2.</span></div>
                 </div>
             </aside>
@@ -883,88 +975,149 @@
         <section class="section active" id="section-painel">
             <div class="section-head">
                 <div>
-                    <div class="section-kicker">Painel de posicionamento</div>
-                    <h2 class="section-title">O foco não é recomeçar do zero. É reposicionar experiência.</h2>
+                    <div class="section-kicker">Perfil e posicionamento</div>
+                    <h2 class="section-title">Experiência comprovada, atualização transparente e foco em retorno à TI.</h2>
                 </div>
                 <p class="section-desc">
-                    A estratégia deste blog é mostrar evolução técnica real: estudos, projetos, documentação,
-                    decisões, limitações, aprendizados e entregas. O eixo principal é SQL, dados, indicadores, automação administrativa e requisitos, com apoio de Jira, Confluence e GitHub.
+                    Não parto do zero: entre 2012 e 2023 atuei em tecnologia institucional, com sistemas críticos,
+                    sustentação, bancos de dados, infraestrutura, desenvolvimento e gestão técnica. A etapa atual é de
+                    atualização estruturada, construção de evidências públicas e preparação para o mercado civil.
                 </p>
             </div>
 
-            <div class="dashboard-grid">
+            <div class="profile-answer-grid">
+                <article class="card profile-answer-card">
+                    <div class="answer-label">Quem é Daniel?</div>
+                    <h3>Experiência técnica e liderança operacional</h3>
+                    <p>Profissional com trajetória em liderança, planejamento e operação crítica, além de experiência anterior em desenvolvimento, sustentação, suporte, bancos de dados, Linux e geotecnologias.</p>
+                    <div class="project-links"><a class="project-link" href="/curriculo.html">Ver currículo</a></div>
+                </article>
+
+                <article class="card profile-answer-card">
+                    <div class="answer-label">Que problemas resolve?</div>
+                    <h3>Continuidade, evolução e organização</h3>
+                    <p>Sustentação e evolução de sistemas, diagnóstico de falhas, implantação controlada, entendimento de regras de negócio, consultas SQL, documentação e articulação entre operação e tecnologia.</p>
+                </article>
+
+                <article class="card profile-answer-card">
+                    <div class="answer-label">Quais são as evidências?</div>
+                    <h3>Projetos reais e verificáveis</h3>
+                    <p>SiscopWeb, Siscoger e o próprio daniel.fleck.dev.br demonstram experiências históricas e atuais, com documentação, links institucionais, código público, versionamento e deploy.</p>
+                    <div class="project-links"><a class="project-link" href="#" onclick="showSection('projetos'); return false;">Abrir portfólio</a></div>
+                </article>
+
+                <article class="card profile-answer-card">
+                    <div class="answer-label">Para quais funções?</div>
+                    <h3>Posicionamento profissional</h3>
+                    <p>Analista de Sistemas e Sustentação, Requisitos e Processos, Suporte N2/N3 e funções com forte uso de SQL. Dados e automação permanecem como eixo complementar em atualização prática.</p>
+                    <div class="project-links"><a class="project-link" href="mailto:danielfleck@gmail.com">Contato</a></div>
+                </article>
+            </div>
+
+            <div class="home-block-head">
+                <div>
+                    <div class="answer-label">Experiências e entregas</div>
+                    <h3>Evidências principais do portfólio</h3>
+                </div>
+                <p>Dois sistemas corporativos utilizados em produção e um projeto web atual, com código público, integração de deploy e domínio próprio.</p>
+            </div>
+
+            <div class="home-evidence-grid">
+                <article class="card home-evidence-card">
+                    <div class="answer-label">Projeto atual • 2026</div>
+                    <h3>daniel.fleck.dev.br</h3>
+                    <p>Site SPA desenvolvido com HTML, CSS e JavaScript, apoio crítico do ChatGPT, Git e GitHub, deploy integrado à Vercel e domínio próprio configurado por DNS.</p>
+                    <div class="tag-row">
+                        <span class="tag brand">SPA</span><span class="tag">IA</span><span class="tag">GitHub</span><span class="tag">Vercel</span>
+                    </div>
+                    <div class="project-links">
+                        <a class="project-link" href="#" onclick="openArticleFromTag('site-spa-ia-chatgpt'); return false;">Ler estudo de caso</a>
+                        <a class="project-link" href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener">Código</a>
+                    </div>
+                </article>
+
+                <article class="card home-evidence-card">
+                    <div class="answer-label">Sistema corporativo • 2017 e 2021–2023</div>
+                    <h3>Siscoger</h3>
+                    <p>Sustentação e manutenção corretiva, adaptativa e evolutiva de sistema de corregedoria, incluindo conclusão de módulos e preservação da estabilidade operacional.</p>
+                    <div class="tag-row">
+                        <span class="tag brand">Sustentação</span><span class="tag">Regras de negócio</span><span class="tag">Sistema legado</span>
+                    </div>
+                    <div class="project-links"><a class="project-link" href="#" onclick="openArticleFromTag('siscoger-portfolio-historico'); return false;">Ler estudo de caso</a></div>
+                </article>
+
+                <article class="card home-evidence-card">
+                    <div class="answer-label">Sistema de missão crítica • 2012–2018</div>
+                    <h3>SiscopWeb</h3>
+                    <p>Sustentação, modernização de infraestrutura, PostgreSQL/PostGIS, Linux, geoprocessamento, planejamento de implantação, rollback, monitoramento e ajuste de desempenho.</p>
+                    <div class="tag-row">
+                        <span class="tag brand">Sistemas críticos</span><span class="tag">PostgreSQL</span><span class="tag">Linux</span>
+                    </div>
+                    <div class="project-links"><a class="project-link" href="#" onclick="openArticleFromTag('siscopweb-portfolio-historico'); return false;">Ler estudo de caso</a></div>
+                </article>
+            </div>
+
+            <div class="dashboard-grid" style="margin-top: 28px;">
                 <div class="card soft">
-                    <h3>Identidade profissional em construção</h3>
-                    <p>
-                        Profissional em transição para o mercado civil de TI, com experiência em processos operacionais,
-                        sistemas críticos, banco de dados, documentação, gestão e análise administrativa.
-                    </p>
+                    <h3>Situação profissional e atualização técnica</h3>
+                    <p>Tenho experiência anterior em TI, mas não me apresento como pronto em todas as ferramentas atuais. Os conhecimentos estão sendo reabsorvidos, atualizados e demonstrados gradualmente por estudos dirigidos, documentação e projetos públicos. No momento, realizo sondagem de mercado e não estou em busca ativa imediata de vagas.</p>
                     <div class="metric-grid" style="margin-top: 18px;">
-                        <div class="metric"><strong>2027</strong><span>Ano de virada</span></div>
-                        <div class="metric"><strong>SQL</strong><span>Base técnica</span></div>
-                        <div class="metric"><strong>Python</strong><span>Automação e dados</span></div>
-                        <div class="metric"><strong>Indicadores</strong><span>Decisão e métricas</span></div>
+                        <div class="metric"><strong>2012–23</strong><span>Experiência em TI</span></div>
+                        <div class="metric"><strong>2026</strong><span>Atualização estruturada</span></div>
+                        <div class="metric"><strong>2027</strong><span>Disponibilidade planejada</span></div>
+                        <div class="metric"><strong>3</strong><span>Casos no portfólio</span></div>
                     </div>
                     <div class="tag-row">
-                        <span class="tag brand">Dados/SQL</span>
-                        <span class="tag brand">Automação</span>
+                        <span class="tag brand">Sistemas e Sustentação</span>
+                        <span class="tag brand">SQL/PostgreSQL</span>
                         <span class="tag">Requisitos</span>
-                        <span class="tag">Suporte N2</span>
-                        <span class="tag">Sistemas</span>
+                        <span class="tag">Suporte N2/N3</span>
+                        <span class="tag">Linux</span>
                     </div>
                 </div>
+
                 <div class="card">
                     <h3>Mapa de competências</h3>
-                    <p>Radar qualitativo para orientar estudo, não para vender domínio artificial.</p>
+                    <p>Representação meramente ilustrativa, baseada em autoavaliação e utilizada apenas para orientar prioridades de estudo. Não corresponde a teste, certificação ou medição independente.</p>
                     <div class="canvas-wrap"><canvas id="radarCanvas" width="640" height="360"></canvas></div>
+                    <small class="chart-note">Os valores representam uma percepção pessoal do ponto atual e do objetivo de estudo, sujeitos a revisão conforme novos projetos e evidências sejam produzidos.</small>
                 </div>
             </div>
 
-            <div class="card" style="margin-top: 18px;">
-                <h3>Currículo profissional</h3>
-                <p>
-                    A versão HTML do currículo ficará publicada no mesmo nível do arquivo principal do site,
-                    em <strong>/curriculo.html</strong>. Essa página deve apresentar o resumo profissional, a experiência,
-                    as formações, cursos e a observação de que os conhecimentos técnicos anteriores estão em processo de atualização por estudos e portfólio.
-                </p>
+            <div class="card contact-card">
+                <div class="answer-label">Currículo, código e contato</div>
+                <h3>Onde consultar informações profissionais</h3>
+                <p>O currículo detalha experiência, formação e competências. O GitHub concentra código e documentação, enquanto o e-mail e o LinkedIn são os canais para conversas profissionais e sondagens de mercado.</p>
                 <div class="project-links">
-                    <a class="project-link" href="/curriculo.html">Abrir currículo em HTML</a>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top: 18px;">
-                <h3>GitHub e roadmap público</h3>
-                <p>
-                    A evolução técnica e a organização do plano de estudos também serão registradas em repositórios públicos.
-                    O perfil no GitHub concentra os projetos, enquanto o repositório <strong>roadmap-transicao-ti</strong>
-                    documenta a governança da transição, os templates, os arquivos de apoio, as evidências visuais e a estrutura inicial do portfólio.
-                </p>
-                <div class="project-links">
+                    <a class="project-link" href="/curriculo.html">Currículo em HTML</a>
                     <a class="project-link" href="https://github.com/danielfleck" target="_blank" rel="noopener">Perfil no GitHub</a>
-                    <a class="project-link" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">Repositório roadmap-transicao-ti</a>
+                    <a class="project-link" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener">Roadmap técnico</a>
+                    <a class="project-link" href="https://www.linkedin.com/in/daniel-rodrigo-fleck/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a class="project-link" href="mailto:danielfleck@gmail.com">E-mail</a>
                 </div>
             </div>
 
             <div class="card" style="margin-top: 18px;">
                 <h3>Nuvem de tags do blog</h3>
+                <p>Selecione uma tecnologia, competência ou tema para consultar os posts relacionados.</p>
                 <div class="word-cloud" id="blogTagCloud" aria-label="Nuvem de tags do blog"></div>
             </div>
 
-<div class="grid-3" style="margin-top: 18px;">
+            <div class="grid-3" style="margin-top: 18px;">
                 <div class="card">
                     <h3>Trilha principal</h3>
-                    <p>Dados, SQL, indicadores e automação administrativa aplicada a processos operacionais.</p>
-                    <div class="tag-row"><span class="tag brand">SQL</span><span class="tag brand">Planilhas</span><span class="tag">Python em estudo</span></div>
+                    <p>Sistemas, sustentação, SQL/PostgreSQL, implantação, diagnóstico e continuidade operacional.</p>
+                    <div class="tag-row"><span class="tag brand">Sustentação</span><span class="tag brand">SQL</span><span class="tag">Linux</span></div>
                 </div>
                 <div class="card">
                     <h3>Trilha complementar</h3>
-                    <p>Requisitos, BPMN, Jira, Confluence, documentação e análise funcional.</p>
-                    <div class="tag-row"><span class="tag">BPMN</span><span class="tag">Critérios de aceitação</span><span class="tag">Backlog</span></div>
+                    <p>Requisitos, processos, Jira, Confluence, documentação e interlocução técnico-operacional.</p>
+                    <div class="tag-row"><span class="tag">Requisitos</span><span class="tag">Critérios de aceitação</span><span class="tag">Backlog</span></div>
                 </div>
                 <div class="card">
-                    <h3>Porta de entrada</h3>
-                    <p>Analista de Dados Jr., Automação Administrativa, Analista de Sistemas, Suporte N2 ou Requisitos.</p>
-                    <div class="tag-row"><span class="tag success">Empregabilidade</span><span class="tag warn">Portfólio obrigatório</span></div>
+                    <h3>Em atualização prática</h3>
+                    <p>Dados, indicadores, automação, Python e uso responsável de inteligência artificial.</p>
+                    <div class="tag-row"><span class="tag success">Evolução documentada</span><span class="tag warn">Sem exagerar domínio</span></div>
                 </div>
             </div>
         </section>
@@ -989,7 +1142,7 @@
                     <h2 class="section-title">Portfólio demonstrável.</h2>
                 </div>
                 <p class="section-desc">
-                    Esta seção ficará reservada apenas para entregas já construídas e publicadas.
+                    Esta seção ficará reservada apenas para entregas já construídas e publicadas. Quando houver um projeto concluído, inclua título, descrição, texto, imagens, link do GitHub, link da página publicada e, se houver, artigo do blog relacionado.
                 </p>
             </div>
             <div class="project-grid" id="projectGrid"></div>
@@ -1015,7 +1168,7 @@
             <div class="section-head">
                 <div>
                     <div class="section-kicker">Diário técnico</div>
-                    <h2 class="section-title" id="blogSectionTitle">Notas de estudo e transição.</h2>
+                    <h2 class="section-title" id="blogSectionTitle">Estudos de caso e diário técnico.</h2>
                 </div>
                 <p class="section-desc">
                     Textos curtos para registrar decisões técnicas, aplicação no trabalho, projetos concluídos, links para GitHub e resultados publicados em páginas específicas.
@@ -1047,7 +1200,7 @@
         <div class="container footer-inner">
             <div>
                 <strong>Daniel Rodrigo Fleck</strong><br>
-                <span>Transição profissional para Dados, SQL, Automação e Sistemas • Curitiba/PR</span>
+                <span>Sistemas, Sustentação, SQL, Requisitos e Atualização Técnica • Curitiba/PR</span>
             </div>
             <div class="footer-links">
                 <a href="mailto:danielfleck@gmail.com">E-mail</a>
@@ -1123,8 +1276,22 @@
          */
         const portfolioItems = [
             {
+                id: 'site-spa-ia-chatgpt',
+                title: 'daniel.fleck.dev.br: criação de site SPA com apoio de IA',
+                description: 'Desenvolvimento e publicação de um site pessoal de página única para reunir currículo, portfólio, estudos de caso, blog técnico e trajetória de atualização profissional.',
+                text: 'Projeto atual desenvolvido em HTML, CSS e JavaScript, com apoio do ChatGPT na geração e revisão do código, construção da interface e aprimoramento dos textos. O trabalho incluiu definição de requisitos, avaliação e correção das respostas da IA, versionamento com Git, publicação do código no GitHub, deploy integrado à Vercel e configuração de domínio próprio registrado no Registro.br por meio de DNS.',
+                date: 'Ago 2026',
+                featured: true,
+                tags: ['SPA', 'HTML', 'CSS', 'JavaScript', 'IA Generativa', 'Git', 'GitHub', 'Vercel', 'DNS'],
+                links: [
+                    { label: 'Ler estudo de caso completo', articleId: 'site-spa-ia-chatgpt' },
+                    { label: 'Abrir site publicado', url: 'https://daniel.fleck.dev.br' },
+                    { label: 'Ver código no GitHub', url: 'https://github.com/danielfleck/daniel.fleck.dev.br' }
+                ]
+            },
+            {
                 id: 'siscoger-corregedoria',
-                title: 'Sustentação e evolução de sistema corporativo de corregedoria',
+                title: 'Siscoger: sustentação e evolução de sistema corporativo de corregedoria',
                 description: 'Experiência real na sustentação e evolução do sistema utilizado pela PMPR para controlar processos, procedimentos e atividades administrativas de corregedoria.',
                 text: 'Sistema desenvolvido em 2010. Atuei em sua sustentação em 2017 e, posteriormente, entre 2021 e 2023, realizando manutenções corretivas, adaptativas e evolutivas, além da conclusão de diferentes módulos. O sistema permanece em utilização, com estabilidade significativa.',
                 date: '2017 e 2021–2023',
@@ -1137,7 +1304,7 @@
             },
             {
                 id: 'siscopweb-missao-critica',
-                title: 'Sustentação e evolução de sistema de missão crítica - atendimento 190',
+                title: 'SiscopWeb: sustentação e evolução de sistema de missão crítica',
                 description: 'Experiência real, entre 2012 e 2018, na sustentação e modernização do sistema utilizado no atendimento 190, despacho de viaturas e controle operacional.',
                 text: 'Atuação em manutenção corretiva, adaptativa e evolutiva; migração de infraestrutura para Linux; bancos SQL Server e PostgreSQL/PostGIS; Apache; redundância por DNS Load Balance; geoprocessamento com Mapnik, OpenStreetMap e Leaflet; planejamento de implantação, rollback, monitoramento e ajuste de desempenho.',
                 date: '2012–2018',
@@ -1153,7 +1320,7 @@
             {
                 id: 'jira',
                 title: 'Jira Cloud: execução do plano',
-                body: '<p>O Jira Cloud está sendo usado de forma prática para organizar a transição de carreira.</p><ul><li>Épicos para grandes blocos de estudo.</li><li>Tarefas com descrição, objetivo e critérios de aceitação.</li><li>Bloqueios e dependências para reduzir ansiedade de escopo.</li><li>Filtros e categorias para acompanhar cronologia e prioridade.</li><li>Uso consciente: ferramenta corporativa real, aplicada a um projeto pessoal.</li></ul>'
+                body: '<p>O Jira Cloud está sendo usado de forma prática para organizar o plano de atualização e retorno ao mercado de tecnologia.</p><ul><li>Épicos para grandes blocos de estudo.</li><li>Tarefas com descrição, objetivo e critérios de aceitação.</li><li>Bloqueios e dependências para reduzir ansiedade de escopo.</li><li>Filtros e categorias para acompanhar cronologia e prioridade.</li><li>Uso consciente: ferramenta corporativa real, aplicada a um projeto pessoal.</li></ul>'
             },
             {
                 id: 'confluence',
@@ -1167,13 +1334,13 @@
             },
             {
                 id: 'dados',
-                title: 'Dados e SQL: trilha de reabsorção',
-                body: '<p>A trilha de dados começa por SQL, modelagem e indicadores, aproveitando base técnica anterior sem superestimar domínio atual.</p><ul><li>Consultas SQL e modelagem relacional.</li><li>Indicadores e dicionário de métricas.</li><li>Relatórios simples com planilhas e dados fictícios.</li><li>Ferramentas específicas serão citadas somente após estudo e projeto publicado.</li></ul>'
+                title: 'Dados e SQL: trilha de atualização',
+                body: '<p>A trilha de dados começa por SQL, modelagem e indicadores, atualizando uma base técnica anterior sem superestimar o domínio atual.</p><ul><li>Consultas SQL e modelagem relacional.</li><li>Indicadores e dicionário de métricas.</li><li>Relatórios simples com planilhas e dados fictícios.</li><li>Ferramentas específicas serão citadas somente após estudo e projeto publicado.</li></ul>'
             },
             {
                 id: 'site',
                 title: 'Site pessoal e currículo',
-                body: '<p>O site pessoal deve apresentar a transição de forma madura e objetiva.</p><ul><li>Currículo em <strong>/curriculo.html</strong>.</li><li>Itens de portfólio apenas quando houver projeto construído.</li><li>Artigos curtos de estudo e decisões técnicas.</li><li>Narrativa profissional sem exagerar senioridade atual.</li></ul>'
+                body: '<p>O site pessoal deve apresentar o retorno e a atualização profissional de forma madura e objetiva.</p><ul><li>Currículo em <strong>/curriculo.html</strong>.</li><li>Itens de portfólio apenas quando houver projeto construído.</li><li>Artigos curtos de estudo e decisões técnicas.</li><li>Narrativa profissional sem exagerar senioridade atual.</li></ul>'
             }
         ];
 
@@ -1197,21 +1364,85 @@
          */
         const articles = [
             {
-                id: 'siscoger-portfolio-historico',
-                title: 'Sustentação e evolução de um sistema corporativo de corregedoria',
+                id: 'site-spa-ia-chatgpt',
+                title: 'Criação do site daniel.fleck.dev.br: SPA, IA, GitHub, Vercel e domínio próprio',
                 date: '04 Ago 2026',
                 category: 'Portfólio',
                 isPortfolio: true,
-                tags: ['Sustentação', 'Sistemas Corporativos', 'Corregedoria'],
+                tags: ['SPA', 'IA Generativa', 'GitHub', 'Vercel'],
                 html: `
-                    <h2>Sustentação e evolução de um sistema corporativo de corregedoria</h2>
+                    <h2>Criação do site daniel.fleck.dev.br: SPA, IA, GitHub, Vercel e domínio próprio</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Portfólio atual</span>
+                        <span class="tag">SPA</span>
+                        <span class="tag">IA generativa</span>
+                        <span class="tag">Git e GitHub</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">DNS</span>
+                    </div>
+                    <blockquote>Este projeto demonstra o uso consciente de inteligência artificial como ferramenta de apoio ao desenvolvimento, mantendo sob minha responsabilidade a definição dos requisitos, a revisão do código, as correções, o versionamento e a publicação do site.</blockquote>
+
+                    <h3>Objetivo do projeto</h3>
+                    <p>Criei o <strong>daniel.fleck.dev.br</strong> para reunir, em uma única presença digital, meu currículo, portfólio, estudos de caso, registros de aprendizado e evidências da atualização profissional em tecnologia.</p>
+                    <p>O site foi estruturado como uma <strong>Single Page Application — SPA</strong>, construída com HTML, CSS e JavaScript. A navegação entre as seções ocorre na própria página, sem recarregamento completo, mantendo acesso ao painel, plano de estudos, portfólio, ferramentas, blog e consulta de artigos por tags.</p>
+
+                    <h3>Desenvolvimento com apoio do ChatGPT</h3>
+                    <p>O ChatGPT foi utilizado como ferramenta de apoio na geração inicial e na evolução do código-fonte, na construção da interface e na revisão dos textos. O processo foi iterativo: cada alteração foi especificada, testada, analisada e corrigida antes de ser incorporada à versão seguinte.</p>
+                    <p>O uso da IA não se limitou à solicitação de uma página pronta. Foi necessário transformar necessidades em instruções objetivas, identificar respostas inadequadas, preservar funcionalidades existentes, corrigir problemas de navegação, ajustar a responsividade e impedir alterações desnecessárias no código.</p>
+
+                    <h3>Funcionalidades e decisões implementadas</h3>
+                    <ul class="checklist">
+                        <li>Navegação SPA entre as seções do site, com rolagem suave e preservação do contexto.</li>
+                        <li>Blog técnico com lista de posts, carregamento dinâmico e visualização do artigo principal.</li>
+                        <li>Portfólio integrado aos estudos de caso publicados no blog.</li>
+                        <li>Nuvem de tags com filtragem dos artigos por assunto.</li>
+                        <li>Layout responsivo para computadores e dispositivos móveis.</li>
+                        <li>Referência a imagens e documentos externos sem incorporação indevida em base64.</li>
+                        <li>Revisão e melhoria dos textos com apoio de IA, preservando a fidelidade da trajetória profissional.</li>
+                    </ul>
+
+                    <h3>Versionamento e publicação</h3>
+                    <p>O código-fonte é gerenciado com <strong>Git</strong> e mantido em um repositório público no <strong>GitHub</strong>. Isso permite registrar a evolução do projeto, revisar alterações e manter uma evidência verificável do trabalho realizado.</p>
+                    <p>O repositório foi integrado à <strong>Vercel</strong>, que realiza o deploy do site publicado. Também registrei o domínio <strong>daniel.fleck.dev.br</strong> diretamente no <strong>Registro.br</strong> e configurei os registros de <strong>DNS</strong> necessários para apontar o domínio próprio para a aplicação hospedada.</p>
+
+                    <h3>Competências demonstradas</h3>
+                    <ul class="checklist">
+                        <li>Definição e refinamento progressivo de requisitos para uma aplicação web.</li>
+                        <li>Desenvolvimento e manutenção de HTML, CSS e JavaScript.</li>
+                        <li>Uso crítico de IA generativa no ciclo de desenvolvimento.</li>
+                        <li>Revisão, teste e correção de código produzido com apoio de IA.</li>
+                        <li>Versionamento de código com Git e publicação no GitHub.</li>
+                        <li>Deploy contínuo por integração entre GitHub e Vercel.</li>
+                        <li>Registro de domínio e configuração de DNS.</li>
+                        <li>Documentação e apresentação pública de um projeto real.</li>
+                    </ul>
+
+                    <h3>Resultado</h3>
+                    <p>O resultado é um site funcional, publicado em domínio próprio e mantido em repositório público. Além de apresentar minha trajetória, o projeto constitui uma evidência atual de desenvolvimento web, gestão de código, uso responsável de IA e operação do fluxo completo entre criação, versionamento, deploy e configuração de domínio.</p>
+                `,
+                links: [
+                    { label: 'Abrir daniel.fleck.dev.br', url: 'https://daniel.fleck.dev.br' },
+                    { label: 'Ver código no GitHub', url: 'https://github.com/danielfleck/daniel.fleck.dev.br' },
+                    { label: 'Ver Portfólio', section: 'projetos' }
+                ]
+            },
+            {
+                id: 'siscoger-portfolio-historico',
+                title: 'Siscoger: sustentação e evolução de um sistema corporativo de corregedoria',
+                date: '04 Ago 2026',
+                category: 'Portfólio',
+                isPortfolio: true,
+                tags: ['Siscoger', 'Sustentação', 'Sistemas Corporativos', 'Corregedoria'],
+                html: `
+                    <h2>Siscoger: sustentação e evolução de um sistema corporativo de corregedoria</h2>
                     <div class="article-meta">
                         <span class="tag brand">Portfólio histórico</span>
+                        <span class="tag">Siscoger</span>
                         <span class="tag">Sustentação</span>
                         <span class="tag">2017 e 2021–2023</span>
                     </div>
                     <blockquote>Experiência prática em sustentação, manutenção corretiva, adaptativa e evolutiva de um sistema corporativo utilizado em atividades administrativas de corregedoria.</blockquote>
-                    <p>O <strong>Sistema Online de Controle de Processos e Procedimentos Administrativos</strong> foi desenvolvido pela Polícia Militar do Paraná em 2010 para apoiar o controle das atividades de corregedoria.</p>
+                    <p>O <strong>Sistema Online de Controle de Processos e Procedimentos Administrativos — Siscoger</strong> foi desenvolvido pela Polícia Militar do Paraná em 2010 para apoiar o controle das atividades de corregedoria.</p>
                     <p>Atuei na sustentação do sistema em <strong>2017</strong> e, posteriormente, entre <strong>2021 e 2023</strong>. Nesse período, fui responsável por manutenções corretivas, adaptativas e evolutivas, além da conclusão de diferentes módulos incorporados ao sistema.</p>
                     <h3>Continuidade e evolução do sistema</h3>
                     <p>A atuação não se limitou à correção pontual de falhas. O trabalho envolveu compreender regras de negócio, preservar funcionalidades existentes, adaptar o sistema a novas necessidades administrativas e concluir módulos que ampliaram sua capacidade operacional.</p>
@@ -1248,20 +1479,21 @@
             },
             {
                 id: 'siscopweb-portfolio-historico',
-                title: 'Meu primeiro grande portfólio: sustentação e evolução de sistema em ambiente de missão crítica - atendimento 190',
+                title: 'Meu primeiro grande portfólio: sustentação e evolução do SiscopWeb em ambiente de missão crítica',
                 date: '04 Ago 2026',
                 category: 'Portfólio',
                 isPortfolio: true,
                 tags: ['SiscopWeb', 'Sistemas Críticos', 'Sustentação', 'PostgreSQL'],
                 html: `
-                    <h2>Meu primeiro grande portfólio: sustentação e evolução de sistema em ambiente de missão crítica - atendimento 190</h2>
+                    <h2>Meu primeiro grande portfólio: sustentação e evolução do SiscopWeb em ambiente de missão crítica</h2>
                     <div class="article-meta">
                         <span class="tag brand">Portfólio histórico</span>
+                        <span class="tag">SiscopWeb</span>
                         <span class="tag">Sistemas críticos</span>
                         <span class="tag">2012–2018</span>
                     </div>
                     <blockquote>Embora esta experiência tenha ocorrido há alguns anos, ela representa atuação real em produção contínua, sustentação, programação, bancos de dados, geoprocessamento, infraestrutura e implantação de mudanças em um serviço crítico.</blockquote>
-                    <p>Entre 2012 e 2018, atuei na sustentação e nas manutenções corretiva, adaptativa e evolutiva do <strong>Sistema de Controle Operacional</strong>. Desenvolvido pela área de tecnologia da Polícia Militar do Paraná em 2005, o sistema apoiava o atendimento 190, o despacho de viaturas, o controle operacional, o emprego de recursos, a análise e a auditoria das ocorrências em funcionamento contínuo.</p>
+                    <p>Entre 2012 e 2018, atuei na sustentação e nas manutenções corretiva, adaptativa e evolutiva do <strong>Sistema de Controle Operacional — SiscopWeb</strong>. Desenvolvido pela área de tecnologia da Polícia Militar do Paraná em 2005, o sistema apoiava o atendimento 190, o despacho de viaturas, o controle operacional, o emprego de recursos, a análise e a auditoria das ocorrências em funcionamento contínuo.</p>
                     <h3>Base tecnológica e sustentação</h3>
                     <p>No início desse período, a aplicação utilizava <strong>HTML, JavaScript, PHP, SQL e stored procedures</strong>, com banco de dados Microsoft SQL Server e servidores web Microsoft. Minha atuação envolveu diagnóstico de falhas, correções, adequações funcionais, evolução da aplicação e acompanhamento do ambiente de produção.</p>
                     <h3>Migração e modernização da infraestrutura</h3>
@@ -1729,7 +1961,10 @@
             ctx.textAlign = 'left';
             ctx.font = w < 520 ? '10px Inter, system-ui, sans-serif' : '12px Inter, system-ui, sans-serif';
             ctx.fillStyle = '#64748b';
-            ctx.fillText('Azul: alvo de estudo • Verde: ponto atual estimado', 14, legendY);
+            const legendText = w < 520
+                ? 'Autoavaliação ilustrativa: azul = alvo • verde = atual'
+                : 'Autoavaliação meramente ilustrativa • Azul: alvo • Verde: ponto atual estimado';
+            ctx.fillText(legendText, 14, legendY);
         }
 
         window.addEventListener('load', () => {
