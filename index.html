@@ -832,6 +832,31 @@
             font-weight: 800;
         }
 
+        .article pre {
+            margin: 18px 0;
+            padding: 18px;
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.65;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+        }
+
+        .article code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.92em;
+        }
+
+        .article p code,
+        .article li code {
+            padding: 2px 6px;
+            border-radius: 7px;
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
         .checklist {
             display: grid;
             gap: 10px;
@@ -1002,7 +1027,7 @@
                 <article class="card profile-answer-card">
                     <div class="answer-label">Quais são as evidências?</div>
                     <h3>Projetos reais e verificáveis</h3>
-                    <p>SiscopWeb, Siscoger e o próprio daniel.fleck.dev.br demonstram experiências históricas e atuais, com documentação, links institucionais, código público, versionamento e deploy.</p>
+                    <p>SiscopWeb, Siscoger, o daniel.fleck.dev.br e o laboratório PostgreSQL com Supabase demonstram experiências históricas e atuais, com documentação, código público, versionamento, migrations e deploy.</p>
                     <div class="project-links"><a class="project-link" href="#" onclick="showSection('projetos'); return false;">Abrir portfólio</a></div>
                 </article>
 
@@ -1019,7 +1044,7 @@
                     <div class="answer-label">Experiências e entregas</div>
                     <h3>Evidências principais do portfólio</h3>
                 </div>
-                <p>Dois sistemas corporativos utilizados em produção e um projeto web atual, com código público, integração de deploy e domínio próprio.</p>
+                <p>Dois sistemas corporativos utilizados em produção e dois projetos atuais, com código público, migrations, integração de deploy e domínio próprio.</p>
             </div>
 
             <div class="home-evidence-grid">
@@ -1038,8 +1063,8 @@
 
                 <article class="card home-evidence-card">
                     <div class="answer-label">Sistema corporativo • 2017 e 2021–2023</div>
-                    <h3>Siscoger</h3>
-                    <p>Sustentação e manutenção corretiva, adaptativa e evolutiva de sistema de corregedoria, incluindo conclusão de módulos e preservação da estabilidade operacional.</p>
+                    <h3>Sistema de Corregedoria</h3>
+                    <p>(Não criação) Sustentação e manutenção corretiva, adaptativa e evolutiva de sistema de corregedoria, incluindo conclusão de módulos e preservação da estabilidade operacional.</p>
                     <div class="tag-row">
                         <span class="tag brand">Sustentação</span><span class="tag">Regras de negócio</span><span class="tag">Sistema legado</span>
                     </div>
@@ -1048,8 +1073,8 @@
 
                 <article class="card home-evidence-card">
                     <div class="answer-label">Sistema de missão crítica • 2012–2018</div>
-                    <h3>SiscopWeb</h3>
-                    <p>Sustentação, modernização de infraestrutura, PostgreSQL/PostGIS, Linux, geoprocessamento, planejamento de implantação, rollback, monitoramento e ajuste de desempenho.</p>
+                    <h3>Sistema de controle operacional</h3>
+                    <p>(Não criação) Sustentação, modernização de infraestrutura, PostgreSQL/PostGIS, Linux, geoprocessamento, planejamento de implantação, rollback, monitoramento e ajuste de desempenho.</p>
                     <div class="tag-row">
                         <span class="tag brand">Sistemas críticos</span><span class="tag">PostgreSQL</span><span class="tag">Linux</span>
                     </div>
@@ -1065,7 +1090,7 @@
                         <div class="metric"><strong>2012–23</strong><span>Experiência em TI</span></div>
                         <div class="metric"><strong>2026</strong><span>Atualização estruturada</span></div>
                         <div class="metric"><strong>2027</strong><span>Disponibilidade planejada</span></div>
-                        <div class="metric"><strong>3</strong><span>Casos no portfólio</span></div>
+                        <div class="metric"><strong>4</strong><span>Casos no portfólio</span></div>
                     </div>
                     <div class="tag-row">
                         <span class="tag brand">Sistemas e Sustentação</span>
@@ -1276,6 +1301,19 @@
          */
         const portfolioItems = [
             {
+                id: 'postgresql-supabase-github-migrations',
+                title: 'Laboratório PostgreSQL: GitHub, Supabase e migrations versionadas',
+                description: 'Estrutura criada para estudar SQL e PostgreSQL em um fluxo controlado, com repositório Git, projeto Supabase, conexão pelo pgAdmin 4 e evolução do banco por migrations.',
+                text: 'O projeto registra a criação do ambiente desde o repositório e o banco remoto até a integração entre GitHub e Supabase. Foram configurados comandos auxiliares no package.json, criada uma migration para o schema transicao e outra para uma tabela de exemplo, com verificações pelo dashboard, SQL, pgAdmin 4 e histórico local e remoto das migrations. A IA foi usada como apoio, mas os comandos, erros, correções e resultados foram conferidos em cada etapa.',
+                date: 'Ago 2026',
+                featured: true,
+                tags: ['PostgreSQL', 'Supabase', 'Migrations', 'Git', 'GitHub', 'SQL', 'pgAdmin 4'],
+                links: [
+                    { label: 'Ler estudo de caso completo', articleId: 'postgresql-supabase-github-migrations' },
+                    { label: 'Ver projeto no GitHub', url: 'https://github.com/danielfleck/transicao-database-supabase' }
+                ]
+            },
+            {
                 id: 'site-spa-ia-chatgpt',
                 title: 'daniel.fleck.dev.br: criação de site SPA com apoio de IA',
                 description: 'Desenvolvimento e publicação de um site pessoal de página única para reunir currículo, portfólio, estudos de caso, blog técnico e trajetória de atualização profissional.',
@@ -1363,6 +1401,143 @@
          * }
          */
         const articles = [
+            {
+                id: 'postgresql-supabase-github-migrations',
+                title: 'GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL',
+                date: '06 Ago 2026',
+                category: 'Projeto',
+                isPortfolio: true,
+                tags: ['PostgreSQL', 'Supabase', 'Migrations', 'GitHub', 'SQL', 'pgAdmin 4', 'IA Generativa'],
+                html: `
+                    <h2>GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Projeto atual</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Supabase</span>
+                        <span class="tag">Migrations</span>
+                        <span class="tag">Git e GitHub</span>
+                        <span class="tag">pgAdmin 4</span>
+                    </div>
+                    <blockquote>Usei inteligência artificial como apoio para consultar comandos e revisar alternativas, mas mantive sob minha responsabilidade a execução, a interpretação dos erros, a correção do ambiente e a validação do estado local e remoto do banco de dados.</blockquote>
+
+                    <h3>Por que criei este projeto</h3>
+                    <p>Criei o repositório <strong>transicao-database-supabase</strong> para funcionar como meu laboratório de atualização em SQL e PostgreSQL. A intenção não é apenas armazenar consultas isoladas, mas desenvolver os próximos exercícios sobre uma estrutura reproduzível, versionada e capaz de registrar a evolução do banco de dados.</p>
+                    <p>O projeto combina <strong>GitHub</strong>, <strong>Supabase</strong>, <strong>PostgreSQL</strong>, <strong>Supabase CLI</strong> e <strong>pgAdmin 4</strong>. Nesse fluxo, a estrutura do banco é descrita por arquivos de migration mantidos no repositório. Assim, cada alteração relevante pode ser revisada, aplicada e conferida, em vez de existir somente como uma mudança manual no painel do banco.</p>
+
+                    <h3>Fluxo que eu pretendia estabelecer</h3>
+                    <ol>
+                        <li>Manter o código e as migrations em um repositório Git.</li>
+                        <li>Associar o ambiente local a um projeto remoto no Supabase.</li>
+                        <li>Criar alterações no banco por migrations SQL.</li>
+                        <li>Registrar cada etapa por commits e enviar para o GitHub.</li>
+                        <li>Verificar se as migrations locais e remotas representam o mesmo estado.</li>
+                        <li>Usar o ambiente como base para exercícios futuros de SQL, modelagem e PostgreSQL.</li>
+                    </ol>
+
+                    <h3>1. Repositório, projeto remoto e conexão inicial</h3>
+                    <p>O primeiro passo foi criar o repositório no GitHub, cloná-lo para o computador e passar a trabalhar no diretório versionado. Em paralelo, criei minha conta no Supabase e um projeto de banco de dados do zero.</p>
+                    <p>Também configurei uma conexão pelo pgAdmin 4. Nessa etapa, informei inicialmente o host com o prefixo <code>http://</code>. A conexão falhou porque o campo de host espera o nome do servidor, não uma URL HTTP. Após remover o prefixo e usar corretamente o endereço do banco e a senha, a conexão foi estabelecida.</p>
+                    <p>Para confirmar que eu estava conectado ao servidor PostgreSQL correto, executei:</p>
+                    <pre><code>SELECT version();</code></pre>
+
+                    <h3>2. Erros de autenticação e recuperação de acesso</h3>
+                    <p>Durante os testes, errei a senha algumas vezes e meu endereço IP foi bloqueado temporariamente. Em vez de tratar o erro apenas como uma falha genérica de conexão, consultei o painel do projeto, removi o bloqueio do IP e redefini a senha do banco na área de configurações.</p>
+                    <p>Esse episódio ajudou a separar três causas diferentes que podem produzir sintomas semelhantes: host informado incorretamente, credencial inválida e bloqueio temporário por tentativas repetidas.</p>
+
+                    <h3>3. Inicialização da CLI e comandos auxiliares</h3>
+                    <p>Com apoio de IA, organizei atalhos no <code>package.json</code> para reduzir erros de digitação e tornar os comandos mais previsíveis durante os estudos. Antes de utilizá-los, conferi o que cada comando executava e mantive os nomes alinhados às ações da CLI.</p>
+                    <pre><code>"scripts": {
+  "supabase:init": "supabase init",
+  "supabase:login": "supabase login",
+  "supabase:link": "supabase link",
+  "migration:new": "supabase migration new",
+  "migration:list": "supabase migration list",
+  "db:start": "supabase start",
+  "db:stop": "supabase stop",
+  "db:reset": "supabase db reset",
+  "db:pull:transicao": "supabase db pull --schema transicao",
+  "db:push:check": "supabase db push --dry-run",
+  "db:push": "supabase db push"
+}</code></pre>
+                    <p>Depois de inicializar a estrutura, fiz um commit antes de começar as migrations. Isso criou um ponto de referência para diferenciar a configuração inicial das alterações posteriores do banco.</p>
+                    <pre><code>git add .
+git commit -m "chore: inicializa projeto Supabase"</code></pre>
+
+                    <h3>4. O uso inadequado de db pull e o que aprendi</h3>
+                    <p>Executei <code>supabase db pull --schema transicao</code> antes de existir qualquer objeto no banco remoto. Durante o processo, a CLI baixou imagens Docker usadas por suas ferramentas locais. Inicialmente, aquele volume de downloads poderia ser confundido com o conteúdo do banco, mas compreendi que eram componentes de apoio da própria CLI.</p>
+                    <p>Como o schema <code>transicao</code> ainda não existia, não havia uma estrutura remota para transformar em migration local. O comando não era necessário naquele ponto do fluxo. O <code>db pull</code> faz mais sentido quando o banco remoto já contém objetos que precisam ser capturados como referência para o histórico local.</p>
+                    <p>Decidi excluir e recriar o projeto para repetir a configuração desde o início. Essa recriação não era uma exigência técnica para todo projeto, mas foi útil como exercício de fixação e permitiu refazer conscientemente cada etapa.</p>
+
+                    <h3>5. Integração entre GitHub e Supabase</h3>
+                    <p>Após reconstruir o ambiente, configurei a integração do projeto Supabase com o repositório do GitHub e associei a branch <code>main</code>. A partir daí, as migrations passaram a fazer parte do mesmo fluxo de versionamento adotado para o restante do projeto.</p>
+                    <p>O ponto importante não era apenas ativar uma integração visual no painel. Eu precisava conferir se uma alteração criada localmente, registrada no Git e enviada ao repositório apareceria efetivamente no banco remoto.</p>
+
+                    <h3>6. Primeira migration: criação do schema</h3>
+                    <p>Criei a primeira migration com um nome que expressa a alteração realizada:</p>
+                    <pre><code>npm run migration:new -- create_transicao_schema</code></pre>
+                    <p>No arquivo gerado, defini a criação do schema <code>transicao</code>. Em seguida, executei <code>git add</code>, <code>git commit</code> e <code>git push</code>.</p>
+                    <p>Não considerei a migration concluída apenas porque o comando terminou sem erro. Verifiquei o resultado por caminhos independentes:</p>
+                    <ul class="checklist">
+                        <li>consulta ao schema pelo painel do Supabase;</li>
+                        <li>consulta SQL ao catálogo do PostgreSQL;</li>
+                        <li>inspeção do banco pelo pgAdmin 4;</li>
+                        <li>comparação do histórico local e remoto pela CLI.</li>
+                    </ul>
+                    <pre><code>select schema_name
+from information_schema.schemata
+where schema_name = 'transicao';</code></pre>
+                    <p>Também executei <code>npm run migration:list</code> e confirmei que a migration aparecia tanto no histórico local quanto no remoto.</p>
+
+                    <h3>7. Segunda migration: tabela de exemplo</h3>
+                    <p>Depois de validar a criação do schema, criei outra migration para adicionar uma tabela simples. O objetivo era testar uma evolução real do banco, incluindo chave primária gerada automaticamente, campos obrigatórios, unicidade e valor padrão de data e hora.</p>
+                    <pre><code>create table transicao.usuario (
+  id bigint generated always as identity primary key,
+  nome text not null,
+  email text not null unique,
+  criado_em timestamptz not null default now()
+);</code></pre>
+                    <p>Novamente, registrei a alteração no Git, enviei ao GitHub e conferi o histórico com <code>npm run migration:list</code>. A presença da migration nos estados local e remoto confirmou que o fluxo continuava consistente após uma segunda alteração.</p>
+
+                    <h3>O que demonstra que eu sabia o que estava fazendo</h3>
+                    <p>O uso de IA não eliminou a necessidade de compreender o ambiente. Ao longo da tarefa, precisei distinguir conceitos e estados diferentes:</p>
+                    <ul class="checklist">
+                        <li>host de banco de dados não é uma URL HTTP;</li>
+                        <li>falha de senha e bloqueio temporário de IP são problemas distintos;</li>
+                        <li>download de imagens Docker pela CLI não significa download dos dados do banco;</li>
+                        <li><code>db pull</code> e criação de uma nova migration atendem a situações diferentes;</li>
+                        <li>um arquivo presente no Git não prova, sozinho, que a alteração foi aplicada no banco;</li>
+                        <li>o histórico local e o histórico remoto de migrations precisam ser comparados;</li>
+                        <li>a validação deve incluir consultas ao catálogo, painel e cliente externo quando possível.</li>
+                    </ul>
+                    <p>A IA foi útil para acelerar consultas, revisar comandos e organizar alternativas. Ainda assim, as decisões, a execução, a leitura dos erros e a comprovação dos resultados permaneceram sob minha responsabilidade.</p>
+
+                    <h3>Como esta estrutura será utilizada</h3>
+                    <p>Este repositório será a base dos meus projetos de retomada de SQL e PostgreSQL. Pretendo evoluir o banco por migrations pequenas e identificáveis, acrescentando progressivamente tabelas relacionadas, restrições, índices, dados fictícios de teste, views e consultas de relatório.</p>
+                    <p>Esse formato permite estudar não apenas a sintaxe SQL, mas também práticas de trabalho: histórico de alterações, reprodutibilidade, revisão, separação entre configuração e evolução do banco, documentação dos erros e validação em mais de uma ferramenta.</p>
+
+                    <h3>Segurança e proteção de dados</h3>
+                    <p>O projeto é exclusivamente educacional e de portfólio. As próximas cargas e arquivos de seed deverão utilizar somente dados fictícios, públicos ou adequadamente anonimizados. Senhas, tokens e configurações locais não devem ser versionados.</p>
+                    <p>Antes da publicação de novas etapas, o projeto deverá receber o checklist curto de segurança, LGPD, riscos técnicos e riscos essenciais relacionados ao OWASP, conforme o padrão adotado no meu roadmap.</p>
+
+                    <h3>Próximos passos</h3>
+                    <ul class="checklist">
+                        <li>documentar os requisitos do primeiro modelo de dados demonstrativo;</li>
+                        <li>criar migrations menores para tabelas, relacionamentos e restrições;</li>
+                        <li>adicionar um arquivo de seed apenas com dados fictícios;</li>
+                        <li>praticar SELECT, JOIN, GROUP BY, CTE, views e índices;</li>
+                        <li>registrar testes de aplicação e reconstrução do banco;</li>
+                        <li>criar e preencher o checklist essencial de segurança antes de concluir o projeto.</li>
+                    </ul>
+
+                    <h3>Resultado</h3>
+                    <p>Ao final da tarefa, o projeto ficou criado e versionado, o banco PostgreSQL remoto estava acessível pelo pgAdmin 4, a integração com o GitHub estava configurada e duas migrations haviam sido verificadas local e remotamente: uma para o schema <code>transicao</code> e outra para a tabela de exemplo <code>usuario</code>.</p>
+                    <p>Mais do que configurar uma ferramenta, a atividade estabeleceu a infraestrutura que utilizarei para transformar os próximos estudos de SQL e PostgreSQL em alterações rastreáveis, reproduzíveis e publicamente verificáveis.</p>
+                `,
+                links: [
+                    { label: 'Ver projeto no GitHub', url: 'https://github.com/danielfleck/transicao-database-supabase' },
+                    { label: 'Ver Portfólio', section: 'projetos' }
+                ]
+            },
             {
                 id: 'site-spa-ia-chatgpt',
                 title: 'Criação do site daniel.fleck.dev.br: SPA, IA, GitHub, Vercel e domínio próprio',
