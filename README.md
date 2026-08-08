@@ -169,4 +169,3 @@ Este repositório deve comunicar uma transição realista:
 - **E-mail:** [danielfleck@gmail.com](mailto:danielfleck@gmail.com)
 - **LinkedIn:** [Daniel Rodrigo Fleck](https://www.linkedin.com/in/daniel-rodrigo-fleck/)
 - **Localização:** Curitiba/PR
-...
