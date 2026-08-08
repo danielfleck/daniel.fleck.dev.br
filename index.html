@@ -71,6 +71,9 @@
       },
       "blogPost": [
         {
+          "@id": "https://daniel.fleck.dev.br/#post-migracao-vercel-kinghost-seguranca"
+        },
+        {
           "@id": "https://daniel.fleck.dev.br/#post-postgresql-supabase-github-migrations"
         },
         {
@@ -332,14 +335,78 @@
       "dateModified": "2026-07-06"
     },
     {
+      "@type": "BlogPosting",
+      "@id": "https://daniel.fleck.dev.br/#post-migracao-vercel-kinghost-seguranca",
+      "url": "https://daniel.fleck.dev.br/#post-migracao-vercel-kinghost-seguranca",
+      "headline": "Migração do daniel.fleck.dev.br da Vercel para a KingHost: DNS, GitHub, SSH, FTP e segurança",
+      "articleSection": "Infraestrutura",
+      "keywords": [
+        "KingHost",
+        "GitHub",
+        "Git",
+        "SSH",
+        "FTP",
+        "DNS",
+        "Registro.br",
+        "Webhook",
+        "Segurança",
+        "LGPD",
+        "Infraestrutura",
+        "Vercel"
+      ],
+      "articleBody": "Migração do daniel.fleck.dev.br da Vercel para a KingHost: DNS, GitHub, SSH, FTP e segurança Infraestrutura KingHost GitHub SSH FTP DNS Segurança LGPD A migração não foi apenas uma troca de hospedagem. Usei a mudança para revisar contrato, privacidade, DNS, integração com GitHub, privilégios de acesso e exposição de serviços administrativos. Por que decidi migrar A primeira versão pública do daniel.fleck.dev.br foi hospedada na Vercel. Depois de estudar termos de uso, privacidade e LGPD, passei a avaliar com mais cuidado o enquadramento do meu uso no plano Hobby. Como o site funciona também como portfólio profissional, fiquei em dúvida sobre a interpretação de uso pessoal prevista para esse plano. Além dessa dúvida contratual, considerei a localização internacional da infraestrutura e o custo da modalidade Pro. Por prudência, optei por pausar o site na Vercel e migrar a hospedagem para um provedor brasileiro, com suporte em português 24/7. Escolhi a KingHost e contratei o plano de hospedagem definido para o projeto. 1. Segurança da conta antes da publicação Meu primeiro passo após a contratação foi ativar autenticação em dois fatores — 2FA . A ideia foi proteger primeiro o painel que controla arquivos, DNS, certificados e configurações da hospedagem antes de iniciar a publicação. 2. DNS no Registro.br Configurei no Registro.br os servidores DNS informados pela KingHost. A propagação levou algum tempo, como esperado em alterações de DNS, mas ao final o domínio passou a resolver para a nova infraestrutura. Esse passo exigiu separar claramente duas responsabilidades: o domínio continua administrado no Registro.br, enquanto a zona e a hospedagem passaram a ser operadas na KingHost. 3. FTP: acesso configurado e posteriormente desativado Configurei inicialmente o acesso FTP no painel da KingHost com uma senha forte. O acesso foi útil durante a preparação do ambiente, mas não deveria permanecer habilitado sem necessidade. Depois que o processo de publicação via GitHub ficou funcional, desativei o FTP . A decisão foi reduzir a superfície de exposição e manter acessos administrativos temporários habilitados somente quando forem realmente necessários. 4. O desafio da pasta de publicação e o uso de SSH Eu não queria clonar o projeto diretamente no diretório principal da hospedagem. A organização desejada exigia manter o repositório dentro de uma pasta específica sob /www/ . A configuração direta pela interface de integração com GitHub não funcionou nesse cenário. Para resolver, habilitei temporariamente o SSH , conectei ao servidor, naveguei até o diretório desejado e clonei o repositório manualmente na pasta escolhida. Depois disso, voltei ao painel da KingHost, abri a integração com GitHub, selecionei a pasta já preparada e informei que o repositório já havia sido clonado. A partir desse estado, a integração passou a funcionar. 5. GitHub, webhook e princípio do menor privilégio Com a integração ativa, a KingHost configurou um webhook no repositório para atualizar a hospedagem quando ocorrem alterações no GitHub. Durante a configuração, observei que a aplicação da KingHost aparecia em Settings > Integrations > Authorized OAuth Apps com permissões que considerei mais amplas do que o necessário para este projeto. Como o repositório é público e a integração já estava configurada, revoguei a autorização OAuth e testei novamente o fluxo. No meu cenário, o webhook e a publicação continuaram funcionando normalmente. Registrei essa decisão como aplicação prática do princípio do menor privilégio : manter somente os acessos efetivamente necessários e validar o funcionamento depois da redução de permissões. 6. Desativação do SSH depois da configuração O SSH foi necessário para preparar manualmente o diretório e clonar o repositório no local desejado. Após concluir essa etapa e validar a integração, desativei também o acesso SSH . A estratégia adotada foi deixar FTP e SSH desabilitados por padrão e reativá-los somente quando uma atividade administrativa justificar o acesso. 7. O ponto crítico de /stats A migração trouxe uma preocupação específica: a área /stats da hospedagem. Pelos estudos realizados e pela documentação do provedor, essas estatísticas podem conter informações técnicas de acesso como endereço IP, país, navegador, sistema operacional, duração e páginas consultadas. Não encontrei uma forma nativa de desativar completamente esse recurso. Por isso, tratei a proteção do acesso como requisito de segurança e privacidade. Removi o usuário padrão, que seria mais previsível, e configurei um nome de usuário não óbvio e uma senha forte dentro das opções permitidas pelo painel . O objetivo é impedir acesso público às estatísticas e reduzir a exposição de dados técnicos gerados pela infraestrutura. 8. Privacidade, transparência e LGPD A mudança de provedor foi acompanhada de revisão da Política de Privacidade, Termos de Uso, avisos de transparência e tratamento de dados técnicos . O site não afirma que nenhum IP é processado: o código da aplicação não implementa coleta própria, mas a infraestrutura de hospedagem pode registrar informações técnicas necessárias à operação e à segurança. Também mantive a decisão de não introduzir um banner artificial de consentimento, já que o site não utiliza cookies próprios de rastreamento, publicidade comportamental ou analytics próprio. A abordagem adotada é de transparência e minimização. 9. Mapeamento de domínio alternativo ainda pendente Tentei utilizar a função de gerenciamento de mapeamento para fazer o domínio daniel.fleck.nom.br apontar para o site principal. A configuração, porém, aparentemente ainda não funcionou como esperado . Mantive esse ponto registrado como pendência, sem considerar a funcionalidade concluída. Resultado atual Depois da propagação do DNS e da configuração da hospedagem, o site voltou a ficar disponível na mesma URL, agora com o código hospedado na infraestrutura da KingHost no Brasil . O GitHub continua sendo a fonte oficial do código e o webhook mantém o fluxo de atualização. Além da migração em si, o exercício envolveu DNS, Git, GitHub, webhook, SSH, FTP, organização de diretórios, revisão de permissões, 2FA, proteção de estatísticas e documentação de privacidade. O que esta experiência demonstrou análise de requisitos e riscos antes de escolher uma infraestrutura; configuração de DNS e compreensão do período de propagação; uso de SSH para preparação controlada do ambiente remoto; configuração e posterior desativação de acessos FTP e SSH; integração GitHub/KingHost e validação de webhook; revisão de permissões OAuth e aplicação prática do menor privilégio; tratamento de uma limitação real da hospedagem em torno de /stats ; revisão de privacidade, LGPD e transparência associada à operação do site; registro explícito de uma pendência que ainda não foi resolvida. Próximos passos investigar e corrigir o mapeamento de daniel.fleck.nom.br ; validar periodicamente que /stats permanece protegido; manter SSH e FTP desativados quando não houver necessidade administrativa; revisar periodicamente webhooks e integrações autorizadas no GitHub; manter Política de Privacidade e Termos coerentes com o funcionamento real da hospedagem; registrar evidências da migração no Jira e no Confluence; preencher o checklist de segurança, LGPD e OWASP antes de considerar a migração encerrada. Conclusão A principal aprendizagem foi que migrar um site não é apenas copiar arquivos. A mudança envolve contrato, DNS, controle de acesso, integração de deploy, gestão de credenciais, serviços expostos, logs técnicos e documentação. A solução final ficou deliberadamente simples: site estático, GitHub como fonte, hospedagem gerenciada, acessos administrativos desabilitados por padrão e controles adicionais nos pontos que não podem ser removidos. Ver código no GitHub Ver Portfólio",
+      "inLanguage": "pt-BR",
+      "author": {
+        "@id": "https://daniel.fleck.dev.br/#daniel-fleck"
+      },
+      "publisher": {
+        "@id": "https://daniel.fleck.dev.br/#daniel-fleck"
+      },
+      "isPartOf": {
+        "@id": "https://daniel.fleck.dev.br/#blog"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://daniel.fleck.dev.br/#profile"
+      },
+      "datePublished": "2026-08-08",
+      "dateModified": "2026-08-08"
+    },
+    {
       "@type": "ItemList",
       "@id": "https://daniel.fleck.dev.br/#portfolio",
       "name": "Portfólio de Daniel Fleck",
-      "numberOfItems": 4,
+      "numberOfItems": 5,
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
+          "item": {
+            "@type": "CreativeWork",
+            "@id": "https://daniel.fleck.dev.br/#portfolio-migracao-kinghost-github-ssh-ftp",
+            "name": "Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH e hardening",
+            "description": "Migração do site pessoal para hospedagem nacional, com DNS no Registro.br, GitHub, SSH temporário, FTP temporário, webhook, redução de permissões e proteção de estatísticas.",
+            "url": "https://daniel.fleck.dev.br/#post-migracao-vercel-kinghost-seguranca",
+            "keywords": [
+              "KingHost",
+              "GitHub",
+              "Git",
+              "SSH",
+              "FTP",
+              "DNS",
+              "Registro.br",
+              "Webhook",
+              "Segurança",
+              "LGPD",
+              "Infraestrutura"
+            ],
+            "author": {
+              "@id": "https://daniel.fleck.dev.br/#daniel-fleck"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
           "item": {
             "@type": "CreativeWork",
             "@id": "https://daniel.fleck.dev.br/#portfolio-postgresql-supabase-github-migrations",
@@ -362,7 +429,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 2,
+          "position": 3,
           "item": {
             "@type": "CreativeWork",
             "@id": "https://daniel.fleck.dev.br/#portfolio-site-spa-ia-chatgpt",
@@ -388,7 +455,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 3,
+          "position": 4,
           "item": {
             "@type": "CreativeWork",
             "@id": "https://daniel.fleck.dev.br/#portfolio-siscoger-corregedoria",
@@ -410,7 +477,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 4,
+          "position": 5,
           "item": {
             "@type": "CreativeWork",
             "@id": "https://daniel.fleck.dev.br/#portfolio-siscopweb-missao-critica",
@@ -434,7 +501,7 @@
     }
   ]
 }
-    </script>
+</script>
     <title>Daniel Fleck | Sistemas, Sustentação e Atualização em TI</title>
     <style>
         :root {
@@ -1539,7 +1606,7 @@
                     <div class="answer-label">Experiências e entregas</div>
                     <h3>Evidências principais do portfólio</h3>
                 </div>
-                <p>Dois sistemas corporativos utilizados em produção e dois projetos atuais, com código público, migrations, integração de deploy e domínio próprio.</p>
+                <p>Dois sistemas corporativos utilizados em produção e três entregas/casos atuais, com código público, migrations, integração de deploy, migração de hospedagem e domínio próprio.</p>
             </div>
 
             <div class="home-evidence-grid">
@@ -1585,7 +1652,7 @@
                         <div class="metric"><strong>2012–23</strong><span>Experiência em TI</span></div>
                         <div class="metric"><strong>2026</strong><span>Atualização estruturada</span></div>
                         <div class="metric"><strong>2027</strong><span>Disponibilidade planejada</span></div>
-                        <div class="metric"><strong>4</strong><span>Casos no portfólio</span></div>
+                        <div class="metric"><strong>5</strong><span>Casos no portfólio</span></div>
                     </div>
                     <div class="tag-row">
                         <span class="tag brand">Sistemas e Sustentação</span>
@@ -1695,7 +1762,7 @@
                 </p>
             </div>
             <div class="blog-layout">
-                <aside class="article-list" id="articleList"><button class="article-btn active" id="article-btn-postgresql-supabase-github-migrations" onclick="loadArticle('postgresql-supabase-github-migrations', true)"><div class="date">06 Ago 2026 • Projeto</div><div class="title">GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL</div></button><button class="article-btn " id="article-btn-site-spa-ia-chatgpt" onclick="loadArticle('site-spa-ia-chatgpt', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Criação do site daniel.fleck.dev.br: SPA, IA, GitHub, Vercel e domínio próprio</div></button><button class="article-btn " id="article-btn-siscoger-portfolio-historico" onclick="loadArticle('siscoger-portfolio-historico', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Siscoger: sustentação e evolução de um sistema corporativo de corregedoria</div></button><button class="article-btn " id="article-btn-siscopweb-portfolio-historico" onclick="loadArticle('siscopweb-portfolio-historico', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Meu primeiro grande portfólio: sustentação e evolução do SiscopWeb em ambiente de missão crítica</div></button><button class="article-btn " id="article-btn-roadmap-transicao-ti-github" onclick="loadArticle('roadmap-transicao-ti-github', true)"><div class="date">10 Jul 2026 • GitHub</div><div class="title">Roadmap de transição no GitHub: do branch dev ao merge na main</div></button><button class="article-btn " id="article-btn-confluence-diario-tecnico-transicao" onclick="loadArticle('confluence-diario-tecnico-transicao', true)"><div class="date">07 Jul 2026 • Documentação</div><div class="title">Confluence: diário técnico da transição</div></button><button class="article-btn " id="article-btn-agilidade-autodesenvolvimento-jira-cloud" onclick="loadArticle('agilidade-autodesenvolvimento-jira-cloud', true)"><div class="date">06 Jul 2026 • Método</div><div class="title">Agilidade no Autodesenvolvimento: Jira Cloud na transição de carreira</div></button><button class="article-btn " id="article-btn-estrutura-blog-portfolio" onclick="loadArticle('estrutura-blog-portfolio', true)"><div class="date">06 Jul 2026 • Método</div><div class="title">Como este blog será usado na transição de carreira</div></button></aside>
+                <aside class="article-list" id="articleList"><button class="article-btn active" id="article-btn-migracao-vercel-kinghost-seguranca" onclick="loadArticle('migracao-vercel-kinghost-seguranca', true)"><div class="date">08 Ago 2026 • Infraestrutura</div><div class="title">Migração do daniel.fleck.dev.br da Vercel para a KingHost: DNS, GitHub, SSH, FTP e segurança</div></button><button class="article-btn " id="article-btn-postgresql-supabase-github-migrations" onclick="loadArticle('postgresql-supabase-github-migrations', true)"><div class="date">06 Ago 2026 • Projeto</div><div class="title">GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL</div></button><button class="article-btn " id="article-btn-site-spa-ia-chatgpt" onclick="loadArticle('site-spa-ia-chatgpt', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Criação do site daniel.fleck.dev.br: SPA, IA, GitHub, Vercel e domínio próprio</div></button><button class="article-btn " id="article-btn-siscoger-portfolio-historico" onclick="loadArticle('siscoger-portfolio-historico', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Siscoger: sustentação e evolução de um sistema corporativo de corregedoria</div></button><button class="article-btn " id="article-btn-siscopweb-portfolio-historico" onclick="loadArticle('siscopweb-portfolio-historico', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Meu primeiro grande portfólio: sustentação e evolução do SiscopWeb em ambiente de missão crítica</div></button><button class="article-btn " id="article-btn-roadmap-transicao-ti-github" onclick="loadArticle('roadmap-transicao-ti-github', true)"><div class="date">10 Jul 2026 • GitHub</div><div class="title">Roadmap de transição no GitHub: do branch dev ao merge na main</div></button><button class="article-btn " id="article-btn-confluence-diario-tecnico-transicao" onclick="loadArticle('confluence-diario-tecnico-transicao', true)"><div class="date">07 Jul 2026 • Documentação</div><div class="title">Confluence: diário técnico da transição</div></button><button class="article-btn " id="article-btn-agilidade-autodesenvolvimento-jira-cloud" onclick="loadArticle('agilidade-autodesenvolvimento-jira-cloud', true)"><div class="date">06 Jul 2026 • Método</div><div class="title">Agilidade no Autodesenvolvimento: Jira Cloud na transição de carreira</div></button><button class="article-btn " id="article-btn-estrutura-blog-portfolio" onclick="loadArticle('estrutura-blog-portfolio', true)"><div class="date">06 Jul 2026 • Método</div><div class="title">Como este blog será usado na transição de carreira</div></button></aside>
                 <article class="card article" id="articleViewer">
                     <h2>GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL</h2>
                     <div class="article-meta">
@@ -2033,9 +2100,98 @@ where schema_name = 'transicao';</code></pre>
                     <p class="section-desc">Esta versão apresenta o conteúdo essencial para navegadores, leitores e robôs que não executam JavaScript.</p>
                 </div>
                 <h2>Portfólio</h2>
-                <article id="static-portfolio-postgresql-supabase-github-migrations" class="card" style="margin-top:18px;"><h3>Laboratório PostgreSQL: GitHub, Supabase e migrations versionadas</h3><p>Estrutura criada para estudar SQL e PostgreSQL em um fluxo controlado, com repositório Git, projeto Supabase, conexão pelo pgAdmin 4 e evolução do banco por migrations.</p><p>O projeto registra a criação do ambiente desde o repositório e o banco remoto até a integração entre GitHub e Supabase. Foram configurados comandos auxiliares no package.json, criada uma migration para o schema transicao e outra para uma tabela de exemplo, com verificações pelo dashboard, SQL, pgAdmin 4 e histórico local e remoto das migrations. A IA foi usada como apoio, mas os comandos, erros, correções e resultados foram conferidos em cada etapa.</p><div class="tag-row"><span class="tag brand">PostgreSQL</span><span class="tag brand">Supabase</span><span class="tag brand">Migrations</span><span class="tag brand">Git</span><span class="tag brand">GitHub</span><span class="tag brand">SQL</span><span class="tag brand">pgAdmin 4</span></div><div class="project-links"><a class="project-link" href="#post-postgresql-supabase-github-migrations" onclick="openArticle('postgresql-supabase-github-migrations'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://github.com/danielfleck/transicao-database-supabase" target="_blank" rel="noopener noreferrer">Ver projeto no GitHub</a></div></article><article id="static-portfolio-site-spa-ia-chatgpt" class="card" style="margin-top:18px;"><h3>daniel.fleck.dev.br: criação de site SPA com apoio de IA</h3><p>Desenvolvimento e publicação de um site pessoal de página única para reunir currículo, portfólio, estudos de caso, blog técnico e trajetória de atualização profissional.</p><p>Projeto atual desenvolvido em HTML, CSS e JavaScript, com apoio do ChatGPT na geração e revisão do código, construção da interface e aprimoramento dos textos. A primeira publicação utilizou integração entre GitHub e Vercel; posteriormente, a hospedagem foi migrada para a KingHost, mantendo GitHub como fonte oficial, domínio próprio no Registro.br, DNS, HTTPS e revisão de privacidade e segurança.</p><div class="tag-row"><span class="tag brand">SPA</span><span class="tag brand">HTML</span><span class="tag brand">CSS</span><span class="tag brand">JavaScript</span><span class="tag brand">IA Generativa</span><span class="tag brand">Git</span><span class="tag brand">GitHub</span><span class="tag brand">Vercel</span><span class="tag brand">DNS</span></div><div class="project-links"><a class="project-link" href="#post-site-spa-ia-chatgpt" onclick="openArticle('site-spa-ia-chatgpt'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Abrir site publicado</a><a class="project-link" href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a></div></article><article id="static-portfolio-siscoger-corregedoria" class="card" style="margin-top:18px;"><h3>Siscoger: sustentação e evolução de sistema corporativo de corregedoria</h3><p>Experiência real na sustentação e evolução do sistema utilizado pela PMPR para controlar processos, procedimentos e atividades administrativas de corregedoria.</p><p>Sistema desenvolvido em 2010. Atuei em sua sustentação em 2017 e, posteriormente, entre 2021 e 2023, realizando manutenções corretivas, adaptativas e evolutivas, além da conclusão de diferentes módulos. O sistema permanece em utilização, com estabilidade significativa.</p><div class="tag-row"><span class="tag brand">Siscoger</span><span class="tag brand">Sustentação</span><span class="tag brand">Sistemas Corporativos</span><span class="tag brand">Corregedoria</span><span class="tag brand">PHP</span><span class="tag brand">SQL</span></div><div class="project-links"><a class="project-link" href="#post-siscoger-portfolio-historico" onclick="openArticle('siscoger-portfolio-historico'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://www.pmpr.pr.gov.br/sites/default/arquivos_restritos/files/documento/2022-07/2019_-_sistema_online_de_controle_de_processos_e_procedimentos_administrativos_siscoger.pdf" target="_blank" rel="noopener noreferrer">Documento institucional</a></div></article><article id="static-portfolio-siscopweb-missao-critica" class="card" style="margin-top:18px;"><h3>SiscopWeb: sustentação e evolução de sistema de missão crítica</h3><p>Experiência real, entre 2012 e 2018, na sustentação e modernização do sistema utilizado no atendimento 190, despacho de viaturas e controle operacional.</p><p>Atuação em manutenção corretiva, adaptativa e evolutiva; migração de infraestrutura para Linux; bancos SQL Server e PostgreSQL/PostGIS; Apache; redundância por DNS Load Balance; geoprocessamento com Mapnik, OpenStreetMap e Leaflet; planejamento de implantação, rollback, monitoramento e ajuste de desempenho.</p><div class="tag-row"><span class="tag brand">Sistemas Críticos</span><span class="tag brand">Sustentação</span><span class="tag brand">PostgreSQL</span><span class="tag brand">PostGIS</span><span class="tag brand">Linux</span><span class="tag brand">PHP</span></div><div class="project-links"><a class="project-link" href="#post-siscopweb-portfolio-historico" onclick="openArticle('siscopweb-portfolio-historico'); return false;">Ler estudo de caso completo</a></div></article>
+                <article id="static-portfolio-migracao-kinghost-github-ssh-ftp" class="card" style="margin-top:18px;"><h3>Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH e hardening</h3><p>Migração do site pessoal para hospedagem nacional, preservando o GitHub como fonte do código e revisando DNS, acessos administrativos, webhook, permissões e privacidade.</p><p>O trabalho envolveu 2FA, Registro.br, preparação do diretório remoto via SSH, integração GitHub/KingHost, validação de webhook, redução de permissões OAuth, desativação de FTP/SSH após o uso e proteção da área /stats. O mapeamento do domínio alternativo permanece registrado como pendência.</p><div class="tag-row"><span class="tag brand">KingHost</span><span class="tag brand">GitHub</span><span class="tag brand">SSH</span><span class="tag brand">FTP</span><span class="tag brand">DNS</span><span class="tag brand">Webhook</span><span class="tag brand">Segurança</span><span class="tag brand">LGPD</span></div><div class="project-links"><a class="project-link" href="#post-migracao-vercel-kinghost-seguranca" onclick="openArticle('migracao-vercel-kinghost-seguranca'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a></div></article><article id="static-portfolio-postgresql-supabase-github-migrations" class="card" style="margin-top:18px;"><h3>Laboratório PostgreSQL: GitHub, Supabase e migrations versionadas</h3><p>Estrutura criada para estudar SQL e PostgreSQL em um fluxo controlado, com repositório Git, projeto Supabase, conexão pelo pgAdmin 4 e evolução do banco por migrations.</p><p>O projeto registra a criação do ambiente desde o repositório e o banco remoto até a integração entre GitHub e Supabase. Foram configurados comandos auxiliares no package.json, criada uma migration para o schema transicao e outra para uma tabela de exemplo, com verificações pelo dashboard, SQL, pgAdmin 4 e histórico local e remoto das migrations. A IA foi usada como apoio, mas os comandos, erros, correções e resultados foram conferidos em cada etapa.</p><div class="tag-row"><span class="tag brand">PostgreSQL</span><span class="tag brand">Supabase</span><span class="tag brand">Migrations</span><span class="tag brand">Git</span><span class="tag brand">GitHub</span><span class="tag brand">SQL</span><span class="tag brand">pgAdmin 4</span></div><div class="project-links"><a class="project-link" href="#post-postgresql-supabase-github-migrations" onclick="openArticle('postgresql-supabase-github-migrations'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://github.com/danielfleck/transicao-database-supabase" target="_blank" rel="noopener noreferrer">Ver projeto no GitHub</a></div></article><article id="static-portfolio-site-spa-ia-chatgpt" class="card" style="margin-top:18px;"><h3>daniel.fleck.dev.br: criação de site SPA com apoio de IA</h3><p>Desenvolvimento e publicação de um site pessoal de página única para reunir currículo, portfólio, estudos de caso, blog técnico e trajetória de atualização profissional.</p><p>Projeto atual desenvolvido em HTML, CSS e JavaScript, com apoio do ChatGPT na geração e revisão do código, construção da interface e aprimoramento dos textos. A primeira publicação utilizou integração entre GitHub e Vercel; posteriormente, a hospedagem foi migrada para a KingHost, mantendo GitHub como fonte oficial, domínio próprio no Registro.br, DNS, HTTPS e revisão de privacidade e segurança.</p><div class="tag-row"><span class="tag brand">SPA</span><span class="tag brand">HTML</span><span class="tag brand">CSS</span><span class="tag brand">JavaScript</span><span class="tag brand">IA Generativa</span><span class="tag brand">Git</span><span class="tag brand">GitHub</span><span class="tag brand">Vercel</span><span class="tag brand">DNS</span></div><div class="project-links"><a class="project-link" href="#post-site-spa-ia-chatgpt" onclick="openArticle('site-spa-ia-chatgpt'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Abrir site publicado</a><a class="project-link" href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a></div></article><article id="static-portfolio-siscoger-corregedoria" class="card" style="margin-top:18px;"><h3>Siscoger: sustentação e evolução de sistema corporativo de corregedoria</h3><p>Experiência real na sustentação e evolução do sistema utilizado pela PMPR para controlar processos, procedimentos e atividades administrativas de corregedoria.</p><p>Sistema desenvolvido em 2010. Atuei em sua sustentação em 2017 e, posteriormente, entre 2021 e 2023, realizando manutenções corretivas, adaptativas e evolutivas, além da conclusão de diferentes módulos. O sistema permanece em utilização, com estabilidade significativa.</p><div class="tag-row"><span class="tag brand">Siscoger</span><span class="tag brand">Sustentação</span><span class="tag brand">Sistemas Corporativos</span><span class="tag brand">Corregedoria</span><span class="tag brand">PHP</span><span class="tag brand">SQL</span></div><div class="project-links"><a class="project-link" href="#post-siscoger-portfolio-historico" onclick="openArticle('siscoger-portfolio-historico'); return false;">Ler estudo de caso completo</a><a class="project-link" href="https://www.pmpr.pr.gov.br/sites/default/arquivos_restritos/files/documento/2022-07/2019_-_sistema_online_de_controle_de_processos_e_procedimentos_administrativos_siscoger.pdf" target="_blank" rel="noopener noreferrer">Documento institucional</a></div></article><article id="static-portfolio-siscopweb-missao-critica" class="card" style="margin-top:18px;"><h3>SiscopWeb: sustentação e evolução de sistema de missão crítica</h3><p>Experiência real, entre 2012 e 2018, na sustentação e modernização do sistema utilizado no atendimento 190, despacho de viaturas e controle operacional.</p><p>Atuação em manutenção corretiva, adaptativa e evolutiva; migração de infraestrutura para Linux; bancos SQL Server e PostgreSQL/PostGIS; Apache; redundância por DNS Load Balance; geoprocessamento com Mapnik, OpenStreetMap e Leaflet; planejamento de implantação, rollback, monitoramento e ajuste de desempenho.</p><div class="tag-row"><span class="tag brand">Sistemas Críticos</span><span class="tag brand">Sustentação</span><span class="tag brand">PostgreSQL</span><span class="tag brand">PostGIS</span><span class="tag brand">Linux</span><span class="tag brand">PHP</span></div><div class="project-links"><a class="project-link" href="#post-siscopweb-portfolio-historico" onclick="openArticle('siscopweb-portfolio-historico'); return false;">Ler estudo de caso completo</a></div></article>
                 <h2 style="margin-top:32px;">Artigos do blog</h2>
-                <article id="static-post-postgresql-supabase-github-migrations" class="card article" style="margin-top:18px;">
+                <article id="static-post-migracao-vercel-kinghost-seguranca" class="card article" style="margin-top:18px;">
+<h2>Migração do daniel.fleck.dev.br da Vercel para a KingHost: DNS, GitHub, SSH, FTP e segurança</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Infraestrutura</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">SSH</span>
+                        <span class="tag">FTP</span>
+                        <span class="tag">DNS</span>
+                        <span class="tag">Segurança</span>
+                        <span class="tag">LGPD</span>
+                    </div>
+                    <blockquote>A migração não foi apenas uma troca de hospedagem. Usei a mudança para revisar contrato, privacidade, DNS, integração com GitHub, privilégios de acesso e exposição de serviços administrativos.</blockquote>
+
+                    <h3>Por que decidi migrar</h3>
+                    <p>A primeira versão pública do <strong>daniel.fleck.dev.br</strong> foi hospedada na Vercel. Depois de estudar termos de uso, privacidade e LGPD, passei a avaliar com mais cuidado o enquadramento do meu uso no plano Hobby. Como o site funciona também como portfólio profissional, fiquei em dúvida sobre a interpretação de uso pessoal prevista para esse plano.</p>
+                    <p>Além dessa dúvida contratual, considerei a localização internacional da infraestrutura e o custo da modalidade Pro. Por prudência, optei por <strong>pausar o site na Vercel</strong> e migrar a hospedagem para um provedor brasileiro, com suporte em português 24/7. Escolhi a <strong>KingHost</strong> e contratei o plano de hospedagem definido para o projeto.</p>
+
+                    <h3>1. Segurança da conta antes da publicação</h3>
+                    <p>Meu primeiro passo após a contratação foi ativar <strong>autenticação em dois fatores — 2FA</strong>. A ideia foi proteger primeiro o painel que controla arquivos, DNS, certificados e configurações da hospedagem antes de iniciar a publicação.</p>
+
+                    <h3>2. DNS no Registro.br</h3>
+                    <p>Configurei no <strong>Registro.br</strong> os servidores DNS informados pela KingHost. A propagação levou algum tempo, como esperado em alterações de DNS, mas ao final o domínio passou a resolver para a nova infraestrutura.</p>
+                    <p>Esse passo exigiu separar claramente duas responsabilidades: o domínio continua administrado no Registro.br, enquanto a zona e a hospedagem passaram a ser operadas na KingHost.</p>
+
+                    <h3>3. FTP: acesso configurado e posteriormente desativado</h3>
+                    <p>Configurei inicialmente o acesso <strong>FTP</strong> no painel da KingHost com uma senha forte. O acesso foi útil durante a preparação do ambiente, mas não deveria permanecer habilitado sem necessidade.</p>
+                    <p>Depois que o processo de publicação via GitHub ficou funcional, <strong>desativei o FTP</strong>. A decisão foi reduzir a superfície de exposição e manter acessos administrativos temporários habilitados somente quando forem realmente necessários.</p>
+
+                    <h3>4. O desafio da pasta de publicação e o uso de SSH</h3>
+                    <p>Eu não queria clonar o projeto diretamente no diretório principal da hospedagem. A organização desejada exigia manter o repositório dentro de uma pasta específica sob <code>/www/</code>.</p>
+                    <p>A configuração direta pela interface de integração com GitHub não funcionou nesse cenário. Para resolver, habilitei temporariamente o <strong>SSH</strong>, conectei ao servidor, naveguei até o diretório desejado e clonei o repositório manualmente na pasta escolhida.</p>
+                    <p>Depois disso, voltei ao painel da KingHost, abri a integração com GitHub, selecionei a pasta já preparada e informei que o repositório já havia sido clonado. A partir desse estado, a integração passou a funcionar.</p>
+
+                    <h3>5. GitHub, webhook e princípio do menor privilégio</h3>
+                    <p>Com a integração ativa, a KingHost configurou um <strong>webhook</strong> no repositório para atualizar a hospedagem quando ocorrem alterações no GitHub.</p>
+                    <p>Durante a configuração, observei que a aplicação da KingHost aparecia em <strong>Settings &gt; Integrations &gt; Authorized OAuth Apps</strong> com permissões que considerei mais amplas do que o necessário para este projeto. Como o repositório é público e a integração já estava configurada, revoguei a autorização OAuth e testei novamente o fluxo.</p>
+                    <p>No meu cenário, o webhook e a publicação continuaram funcionando normalmente. Registrei essa decisão como aplicação prática do <strong>princípio do menor privilégio</strong>: manter somente os acessos efetivamente necessários e validar o funcionamento depois da redução de permissões.</p>
+
+                    <h3>6. Desativação do SSH depois da configuração</h3>
+                    <p>O SSH foi necessário para preparar manualmente o diretório e clonar o repositório no local desejado. Após concluir essa etapa e validar a integração, <strong>desativei também o acesso SSH</strong>.</p>
+                    <p>A estratégia adotada foi deixar FTP e SSH desabilitados por padrão e reativá-los somente quando uma atividade administrativa justificar o acesso.</p>
+
+                    <h3>7. O ponto crítico de <code>/stats</code></h3>
+                    <p>A migração trouxe uma preocupação específica: a área <code>/stats</code> da hospedagem. Pelos estudos realizados e pela documentação do provedor, essas estatísticas podem conter informações técnicas de acesso como endereço IP, país, navegador, sistema operacional, duração e páginas consultadas.</p>
+                    <p>Não encontrei uma forma nativa de desativar completamente esse recurso. Por isso, tratei a proteção do acesso como requisito de segurança e privacidade.</p>
+                    <p>Removi o usuário padrão, que seria mais previsível, e configurei um <strong>nome de usuário não óbvio e uma senha forte dentro das opções permitidas pelo painel</strong>. O objetivo é impedir acesso público às estatísticas e reduzir a exposição de dados técnicos gerados pela infraestrutura.</p>
+
+                    <h3>8. Privacidade, transparência e LGPD</h3>
+                    <p>A mudança de provedor foi acompanhada de revisão da <strong>Política de Privacidade, Termos de Uso, avisos de transparência e tratamento de dados técnicos</strong>. O site não afirma que nenhum IP é processado: o código da aplicação não implementa coleta própria, mas a infraestrutura de hospedagem pode registrar informações técnicas necessárias à operação e à segurança.</p>
+                    <p>Também mantive a decisão de não introduzir um banner artificial de consentimento, já que o site não utiliza cookies próprios de rastreamento, publicidade comportamental ou analytics próprio. A abordagem adotada é de transparência e minimização.</p>
+
+                    <h3>9. Mapeamento de domínio alternativo ainda pendente</h3>
+                    <p>Tentei utilizar a função de gerenciamento de mapeamento para fazer o domínio <strong>daniel.fleck.nom.br</strong> apontar para o site principal. A configuração, porém, <strong>aparentemente ainda não funcionou como esperado</strong>. Mantive esse ponto registrado como pendência, sem considerar a funcionalidade concluída.</p>
+
+                    <h3>Resultado atual</h3>
+                    <p>Depois da propagação do DNS e da configuração da hospedagem, o site voltou a ficar disponível na mesma URL, agora com o código hospedado na infraestrutura da <strong>KingHost no Brasil</strong>. O GitHub continua sendo a fonte oficial do código e o webhook mantém o fluxo de atualização.</p>
+                    <p>Além da migração em si, o exercício envolveu DNS, Git, GitHub, webhook, SSH, FTP, organização de diretórios, revisão de permissões, 2FA, proteção de estatísticas e documentação de privacidade.</p>
+
+                    <h3>O que esta experiência demonstrou</h3>
+                    <ul class="checklist">
+                        <li>análise de requisitos e riscos antes de escolher uma infraestrutura;</li>
+                        <li>configuração de DNS e compreensão do período de propagação;</li>
+                        <li>uso de SSH para preparação controlada do ambiente remoto;</li>
+                        <li>configuração e posterior desativação de acessos FTP e SSH;</li>
+                        <li>integração GitHub/KingHost e validação de webhook;</li>
+                        <li>revisão de permissões OAuth e aplicação prática do menor privilégio;</li>
+                        <li>tratamento de uma limitação real da hospedagem em torno de <code>/stats</code>;</li>
+                        <li>revisão de privacidade, LGPD e transparência associada à operação do site;</li>
+                        <li>registro explícito de uma pendência que ainda não foi resolvida.</li>
+                    </ul>
+
+                    <h3>Próximos passos</h3>
+                    <ul class="checklist">
+                        <li>investigar e corrigir o mapeamento de <strong>daniel.fleck.nom.br</strong>;</li>
+                        <li>validar periodicamente que <code>/stats</code> permanece protegido;</li>
+                        <li>manter SSH e FTP desativados quando não houver necessidade administrativa;</li>
+                        <li>revisar periodicamente webhooks e integrações autorizadas no GitHub;</li>
+                        <li>manter Política de Privacidade e Termos coerentes com o funcionamento real da hospedagem;</li>
+                        <li>registrar evidências da migração no Jira e no Confluence;</li>
+                        <li>preencher o checklist de segurança, LGPD e OWASP antes de considerar a migração encerrada.</li>
+                    </ul>
+
+                    <h3>Conclusão</h3>
+                    <p>A principal aprendizagem foi que migrar um site não é apenas copiar arquivos. A mudança envolve contrato, DNS, controle de acesso, integração de deploy, gestão de credenciais, serviços expostos, logs técnicos e documentação. A solução final ficou deliberadamente simples: site estático, GitHub como fonte, hospedagem gerenciada, acessos administrativos desabilitados por padrão e controles adicionais nos pontos que não podem ser removidos.</p>
+                    <div class="article-links">
+                        <a class="project-link" href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a>
+                        <a class="project-link" href="#" onclick="showSection('projetos'); return false;">Ver Portfólio</a>
+                    </div>
+                </article><article id="static-post-postgresql-supabase-github-migrations" class="card article" style="margin-top:18px;">
                     <h2>GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL</h2>
                     <div class="article-meta">
                         <span class="tag brand">Projeto atual</span>
@@ -2438,6 +2594,19 @@ where schema_name = 'transicao';</code></pre>
          * }
          */
         const portfolioItems = [
+            {
+                id: 'migracao-kinghost-github-ssh-ftp',
+                title: 'Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH e hardening',
+                description: 'Migração do site pessoal para hospedagem nacional, preservando o GitHub como fonte do código e revisando DNS, acessos administrativos, webhook, permissões e privacidade.',
+                text: 'Após pausar a publicação na Vercel, contratei a KingHost, ativei 2FA, migrei o DNS no Registro.br e configurei o ambiente de hospedagem. Como a integração pela interface não atendia à organização de diretórios desejada, habilitei SSH temporariamente, clonei o repositório na pasta correta e então associei o diretório à integração GitHub. Depois de validar o webhook, revoguei a autorização OAuth ampla da aplicação KingHost e confirmei que o fluxo continuava funcional no meu cenário. FTP e SSH foram desativados após o uso. Também protegi /stats com credenciais não previsíveis e mantive registrada a pendência do mapeamento de domínio alternativo.',
+                date: 'Ago 2026',
+                featured: true,
+                tags: ['KingHost', 'GitHub', 'Git', 'SSH', 'FTP', 'DNS', 'Registro.br', 'Webhook', 'Segurança', 'LGPD', 'Infraestrutura'],
+                links: [
+                    { label: 'Ler estudo de caso completo', articleId: 'migracao-vercel-kinghost-seguranca' },
+                    { label: 'Ver código no GitHub', url: 'https://github.com/danielfleck/daniel.fleck.dev.br' }
+                ]
+            },
             {
                 id: 'postgresql-supabase-github-migrations',
                 title: 'Laboratório PostgreSQL: GitHub, Supabase e migrations versionadas',
