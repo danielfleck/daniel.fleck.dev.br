@@ -1,4 +1,4 @@
-# Daniel Rodrigo Fleck | Transição TI • Dados, BI, Automação e Requisitos
+9# Daniel Rodrigo Fleck | Transição TI • Dados, BI, Automação e Requisitos
 
 Este repositório concentra minha presença digital e documenta minha transição profissional para o mercado civil de tecnologia. O objetivo é evoluir, com evidências públicas, em **Dados/BI/Automação, SQL, Python, requisitos, processos, suporte a sistemas e sustentação**, com preparação progressiva até dezembro de 2027.
 
@@ -169,3 +169,5 @@ Este repositório deve comunicar uma transição realista:
 - **E-mail:** [danielfleck@gmail.com](mailto:danielfleck@gmail.com)
 - **LinkedIn:** [Daniel Rodrigo Fleck](https://www.linkedin.com/in/daniel-rodrigo-fleck/)
 - **Localização:** Curitiba/PR
+
+...
