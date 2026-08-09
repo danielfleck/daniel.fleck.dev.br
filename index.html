@@ -8,6 +8,41 @@
     <link rel="canonical" href="https://daniel.fleck.dev.br/">
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+    <!--
+    GUIA DE MANUTENÇÃO PARA EDITORES HUMANOS OU IA: JSON-LD DE BLOG E PORTFÓLIO
+
+    Ao inserir, remover ou alterar um post do blog ou item do portfólio, manter também
+    os dados estruturados deste bloco sincronizados com o conteúdo visível e com os
+    arrays JavaScript.
+
+    PARA UM NOVO POST DO BLOG:
+    1. Definir um slug estável, minúsculo e sem espaços, por exemplo: meu-novo-post.
+    2. Em @graph, localizar o objeto @type "Blog" e acrescentar em "blogPost":
+       {"@id":"https://daniel.fleck.dev.br/#post-meu-novo-post"}.
+    3. Criar em @graph um objeto @type "BlogPosting" com:
+       @id e url terminando em #post-meu-novo-post;
+       headline igual ao título público;
+       articleSection coerente com a categoria;
+       keywords coerentes com articles[].tags;
+       articleBody correspondente ao texto efetivamente publicado;
+       datePublished e dateModified em YYYY-MM-DD;
+       author, publisher, isPartOf e mainEntityOfPage seguindo os posts existentes.
+    4. Não inventar URL, tecnologia, data, competência ou publicação que não exista.
+
+    PARA UM NOVO ITEM DO PORTFÓLIO:
+    1. Localizar o ItemList com @id https://daniel.fleck.dev.br/#portfolio.
+    2. Acrescentar um ListItem com position sequencial e CreativeWork.
+    3. Usar @id https://daniel.fleck.dev.br/#portfolio-ID-DO-PORTFOLIO.
+    4. Se o item possuir estudo de caso no blog, o campo url pode apontar para
+       https://daniel.fleck.dev.br/#post-ID-DO-ARTIGO.
+    5. Atualizar numberOfItems e conferir todas as posições para que sejam únicas,
+       crescentes e coerentes com a ordem exibida.
+
+    IMPORTANTE:
+    URLs usadas como @id no JSON-LD são identificadores semânticos; não significam
+    carregamento automático de conteúdo externo. Não inserir scripts, imagens,
+    fontes ou bibliotecas externas para implementar um post.
+    -->
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1747,6 +1782,35 @@
             <div class="card" style="margin-top: 18px;">
                 <h3>Nuvem de tags do blog</h3>
                 <p>Selecione uma tecnologia, competência ou tema para consultar os posts relacionados.</p>
+                <!--
+                MANUTENÇÃO DA NUVEM DE TAGS DO BLOG
+
+                FONTE DE VERDADE EM TEMPO DE EXECUÇÃO:
+                a propriedade tags de cada objeto do array JavaScript articles[].
+
+                O fluxo é:
+                articles[].tags
+                -> getBlogTagMap()
+                -> renderBlogTagCloud()
+                -> links da nuvem
+                -> showTaggedPosts(tag).
+
+                Portanto:
+                1. Para atribuir uma tag a um post, inserir a tag em articles[].tags.
+                2. Reutilizar exatamente a mesma grafia, acentuação e capitalização das
+                   tags já existentes quando o conceito for o mesmo. "GitHub" e "Github",
+                   por exemplo, seriam consideradas tags diferentes.
+                3. Não inserir uma tag somente no HTML visual do artigo esperando que ela
+                   apareça na nuvem. Os spans dentro de article.html são apenas visuais.
+                4. A nuvem abaixo é uma cópia estática/fallback. O JavaScript a substitui
+                   quando renderBlogTagCloud() é executada. Ao publicar um novo post,
+                   sincronizar também esta cópia estática para navegação sem JavaScript,
+                   usando as mesmas tags de articles[].
+                5. Não manter uma lista manual paralela de tags no JavaScript. A função
+                   getBlogTagMap() deve continuar derivando a nuvem diretamente dos posts.
+                6. Não alterar palette, sizeScale, rotations ou a lógica de frequência
+                   apenas para inserir um novo post; isso é apresentação da nuvem, não dado.
+                -->
                 <div class="word-cloud" id="blogTagCloud" aria-label="Nuvem de tags do blog"><a href="#tag-GitHub" class="word-cloud-item blue" data-tag="GitHub" style="font-size:3.19rem; transform:rotate(0deg);">GitHub</a><a href="#tag-IA Generativa" class="word-cloud-item teal" data-tag="IA Generativa" style="font-size:1.87rem; transform:rotate(-5deg);">IA Generativa</a><a href="#tag-Portfólio" class="word-cloud-item orange" data-tag="Portfólio" style="font-size:2.37rem; transform:rotate(4deg);">Portfólio</a><a href="#tag-PostgreSQL" class="word-cloud-item muted" data-tag="PostgreSQL" style="font-size:1.57rem; transform:rotate(0deg);">PostgreSQL</a><a href="#tag-Sustentação" class="word-cloud-item blue" data-tag="Sustentação" style="font-size:2.12rem; transform:rotate(-3deg);">Sustentação</a><a href="#tag-Backlog" class="word-cloud-item teal" data-tag="Backlog" style="font-size:1.12rem; transform:rotate(5deg);">Backlog</a><a href="#tag-Blog" class="word-cloud-item orange" data-tag="Blog" style="font-size:1.42rem; transform:rotate(0deg);">Blog</a><a href="#tag-Carreira" class="word-cloud-item muted" data-tag="Carreira" style="font-size:1.05rem; transform:rotate(2deg);">Carreira</a><a href="#tag-Confluence" class="word-cloud-item blue" data-tag="Confluence" style="font-size:2.55rem; transform:rotate(0deg);">Confluence</a><a href="#tag-Corregedoria" class="word-cloud-item teal" data-tag="Corregedoria" style="font-size:1.55rem; transform:rotate(-5deg);">Corregedoria</a><a href="#tag-Documentação" class="word-cloud-item orange" data-tag="Documentação" style="font-size:2.05rem; transform:rotate(4deg);">Documentação</a><a href="#tag-Evidências" class="word-cloud-item muted" data-tag="Evidências" style="font-size:1.25rem; transform:rotate(0deg);">Evidências</a><a href="#tag-Jira" class="word-cloud-item blue" data-tag="Jira" style="font-size:1.80rem; transform:rotate(-3deg);">Jira</a><a href="#tag-Kanban" class="word-cloud-item teal" data-tag="Kanban" style="font-size:1.12rem; transform:rotate(5deg);">Kanban</a><a href="#tag-Migrations" class="word-cloud-item orange" data-tag="Migrations" style="font-size:1.42rem; transform:rotate(0deg);">Migrations</a><a href="#tag-pgAdmin 4" class="word-cloud-item muted" data-tag="pgAdmin 4" style="font-size:1.05rem; transform:rotate(2deg);">pgAdmin 4</a><a href="#tag-Planejamento" class="word-cloud-item blue" data-tag="Planejamento" style="font-size:2.55rem; transform:rotate(0deg);">Planejamento</a><a href="#tag-Requisitos" class="word-cloud-item teal" data-tag="Requisitos" style="font-size:1.55rem; transform:rotate(-5deg);">Requisitos</a><a href="#tag-Roadmap" class="word-cloud-item orange" data-tag="Roadmap" style="font-size:2.05rem; transform:rotate(4deg);">Roadmap</a><a href="#tag-Sistema de Corregedoria" class="word-cloud-item muted" data-tag="Sistema de Corregedoria" style="font-size:1.25rem; transform:rotate(0deg);">Sistema de Corregedoria</a><a href="#tag-Sistema de Controle Operacional" class="word-cloud-item blue" data-tag="Sistema de Controle Operacional" style="font-size:1.80rem; transform:rotate(-3deg);">Sistema de Controle Operacional</a><a href="#tag-Sistemas Corporativos" class="word-cloud-item teal" data-tag="Sistemas Corporativos" style="font-size:1.12rem; transform:rotate(5deg);">Sistemas Corporativos</a><a href="#tag-Sistemas Críticos" class="word-cloud-item orange" data-tag="Sistemas Críticos" style="font-size:1.42rem; transform:rotate(0deg);">Sistemas Críticos</a><a href="#tag-SPA" class="word-cloud-item muted" data-tag="SPA" style="font-size:1.05rem; transform:rotate(2deg);">SPA</a><a href="#tag-SQL" class="word-cloud-item blue" data-tag="SQL" style="font-size:2.55rem; transform:rotate(0deg);">SQL</a><a href="#tag-Supabase" class="word-cloud-item teal" data-tag="Supabase" style="font-size:1.55rem; transform:rotate(-5deg);">Supabase</a><a href="#tag-Vercel" class="word-cloud-item orange" data-tag="Vercel" style="font-size:2.05rem; transform:rotate(4deg);">Vercel</a><a href="#tag-Versionamento" class="word-cloud-item muted" data-tag="Versionamento" style="font-size:1.25rem; transform:rotate(0deg);">Versionamento</a><a href="#tag-Wiki" class="word-cloud-item blue" data-tag="Wiki" style="font-size:1.80rem; transform:rotate(-3deg);">Wiki</a></div>
             </div>
 
@@ -1822,6 +1886,26 @@
                 </p>
             </div>
             <div class="blog-layout">
+                <!--
+                LISTA DO BLOG: CONTEÚDO ESTÁTICO E CONTEÚDO DINÂMICO
+
+                Esta lista é fallback HTML. Quando o JavaScript é executado,
+                renderArticles() recria integralmente #articleList a partir de articles[].
+
+                Ao inserir um novo post:
+                1. O cadastro obrigatório para funcionamento normal é articles[].
+                2. Manter este fallback estático sincronizado para preservar conteúdo
+                   compreensível quando JavaScript estiver indisponível.
+                3. O botão deve usar:
+                   id="article-btn-ID-DO-ARTIGO"
+                   onclick="loadArticle('ID-DO-ARTIGO', true)".
+                4. O texto de data/categoria deve corresponder a article.date e
+                   article.category.
+                5. Se o novo post for o primeiro de articles[], ele será aberto
+                   automaticamente por renderArticles(); nesse caso, manter também o
+                   conteúdo inicial de #articleViewer coerente com esse primeiro post.
+                6. Não criar nova função de navegação para cada post.
+                -->
                 <aside class="article-list" id="articleList"><button class="article-btn active" id="article-btn-governanca-privacidade-lgpd-marco-civil" onclick="loadArticle('governanca-privacidade-lgpd-marco-civil', true)"><div class="date">09 Ago 2026 • Governança</div><div class="title">Privacidade e governança do daniel.fleck.dev.br: Termos de Uso, LGPD, Marco Civil e segurança da informação</div></button><button class="article-btn " id="article-btn-migracao-vercel-kinghost-seguranca" onclick="loadArticle('migracao-vercel-kinghost-seguranca', true)"><div class="date">08 Ago 2026 • Infraestrutura</div><div class="title">Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy</div></button><button class="article-btn " id="article-btn-postgresql-supabase-github-migrations" onclick="loadArticle('postgresql-supabase-github-migrations', true)"><div class="date">06 Ago 2026 • Projeto</div><div class="title">GitHub, Supabase e migrations: estrutura versionada para estudar SQL e PostgreSQL</div></button><button class="article-btn " id="article-btn-site-spa-ia-chatgpt" onclick="loadArticle('site-spa-ia-chatgpt', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Criação do site daniel.fleck.dev.br: SPA, IA, GitHub, Vercel e domínio próprio</div></button><button class="article-btn " id="article-btn-siscoger-portfolio-historico" onclick="loadArticle('siscoger-portfolio-historico', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Sistema de Corregedoria: sustentação e evolução de um sistema corporativo de corregedoria</div></button><button class="article-btn " id="article-btn-siscopweb-portfolio-historico" onclick="loadArticle('siscopweb-portfolio-historico', true)"><div class="date">04 Ago 2026 • Portfólio</div><div class="title">Meu primeiro grande portfólio: sustentação e evolução do Sistema de Controle Operacional em ambiente de missão crítica</div></button><button class="article-btn " id="article-btn-roadmap-transicao-ti-github" onclick="loadArticle('roadmap-transicao-ti-github', true)"><div class="date">10 Jul 2026 • GitHub</div><div class="title">Roadmap de transição no GitHub: do branch dev ao merge na main</div></button><button class="article-btn " id="article-btn-confluence-diario-tecnico-transicao" onclick="loadArticle('confluence-diario-tecnico-transicao', true)"><div class="date">07 Jul 2026 • Documentação</div><div class="title">Confluence: diário técnico da transição</div></button><button class="article-btn " id="article-btn-agilidade-autodesenvolvimento-jira-cloud" onclick="loadArticle('agilidade-autodesenvolvimento-jira-cloud', true)"><div class="date">06 Jul 2026 • Método</div><div class="title">Agilidade no Autodesenvolvimento: Jira Cloud na transição de carreira</div></button><button class="article-btn " id="article-btn-estrutura-blog-portfolio" onclick="loadArticle('estrutura-blog-portfolio', true)"><div class="date">06 Jul 2026 • Método</div><div class="title">Como este blog será usado na transição de carreira</div></button></aside>
                 <article class="card article" id="articleViewer">
                     <h2>Privacidade e governança do daniel.fleck.dev.br: Termos de Uso, LGPD, Marco Civil e segurança da informação</h2>
@@ -2234,6 +2318,28 @@
         </section>
 
 
+        <!--
+        ESPELHO ESTÁTICO PARA NAVEGAÇÃO SEM JAVASCRIPT
+
+        O bloco <noscript> mantém versões HTML dos itens do portfólio e dos artigos.
+        Ele não substitui os arrays JavaScript, mas deve acompanhar o conteúdo publicado.
+
+        PARA CADA NOVO ITEM DE PORTFÓLIO:
+        criar article id="static-portfolio-ID-DO-PORTFOLIO" com título, resumo,
+        tags e links coerentes com portfolioItems[].
+
+        PARA CADA NOVO POST:
+        criar article id="static-post-ID-DO-ARTIGO" contendo o mesmo conteúdo essencial
+        de articles[].html e os links públicos pertinentes.
+
+        Se um item do portfólio apontar para um estudo de caso, usar:
+        href="#post-ID-DO-ARTIGO"
+        onclick="openArticle('ID-DO-ARTIGO'); return false;"
+
+        Não criar IDs duplicados. O ID do item de portfólio e o ID do artigo podem ser
+        iguais por conveniência, mas são entidades diferentes e não precisam ser iguais.
+        O vínculo entre eles é feito por links[].articleId no portfólio.
+        -->
         <noscript>
             <section aria-labelledby="conteudo-estatico-titulo" style="margin-top:32px;">
                 <div class="section-head">
@@ -2731,6 +2837,239 @@ where schema_name = 'transicao';</code></pre>
             </div>
         </div>
     </footer>
+
+    <!--
+    ======================================================================
+    PROCEDIMENTO DE MANUTENÇÃO DE POSTS E PORTFÓLIO
+    LEIA ANTES DE ALTERAR O BLOG OU O PORTFÓLIO
+    DESTINADO A EDITORES HUMANOS E A OUTRAS INTELIGÊNCIAS ARTIFICIAIS
+    ======================================================================
+
+    PRINCÍPIO GERAL
+    Este index.html mantém o mesmo conteúdo em mais de uma representação:
+    dados estruturados JSON-LD, fallback HTML e dados JavaScript usados pela SPA.
+    Uma publicação só está concluída quando essas representações permanecem coerentes.
+
+    NÃO refatorar a arquitetura para criar um post.
+    NÃO renomear funções existentes.
+    NÃO criar framework, biblioteca ou dependência externa.
+    NÃO carregar imagens, fontes, scripts ou CSS de terceiros.
+    Se houver imagem, usar caminho relativo para arquivo realmente existente, por exemplo
+    images/nome-do-arquivo.png. Nunca usar base64/data URI.
+
+    IDENTIFICADORES
+    Escolher um ID/slug estável, sem espaços, preferencialmente:
+    letras minúsculas, números e hífens.
+    Exemplo: laboratorio-postgresql-indices.
+
+    Para um artigo com id "laboratorio-postgresql-indices":
+    hash público: #post-laboratorio-postgresql-indices
+    fallback HTML: static-post-laboratorio-postgresql-indices
+    botão estático: article-btn-laboratorio-postgresql-indices
+    JSON-LD: #post-laboratorio-postgresql-indices
+
+    Para um portfólio com id "postgresql-indices":
+    fallback HTML: static-portfolio-postgresql-indices
+    JSON-LD: #portfolio-postgresql-indices
+
+    ============================================================
+    A. COMO INSERIR UM NOVO POST NO BLOG
+    ============================================================
+
+    1. ARRAY JAVASCRIPT articles[]
+       Inserir um novo objeto no array const articles.
+       Preferir a ordem cronológica desejada de exibição, pois renderArticles()
+       usa exatamente a ordem desse array e abre articles[0] inicialmente.
+
+       Estrutura esperada:
+       {
+           id: 'meu-post',
+           title: 'Título completo',
+           date: '09 Ago 2026',
+           category: 'Projeto',
+           isPortfolio: true ou false,
+           tags: ['Tag 1', 'Tag 2'],
+           html: `conteúdo HTML do artigo`,
+           links: [
+               { label: 'GitHub', url: 'https://...' },
+               { label: 'Ver Portfólio', section: 'projetos' }
+           ]
+       }
+
+       Campos:
+       id: obrigatório e único.
+       title: título usado na lista do blog.
+       date: texto curto de apresentação.
+       category: categoria exibida na lista.
+       isPortfolio: marcador descritivo já usado em estudos ligados ao portfólio.
+       tags: FONTE DE VERDADE da nuvem de tags e da busca por tags.
+       html: corpo completo carregado em #articleViewer.
+       links: opcional.
+
+       ATENÇÃO A articles[].links:
+       loadArticle() suporta atualmente:
+       {label, url} para link externo;
+       {label, section} para seção interna.
+       Ele NÃO interpreta articleId nesse array.
+       Para ligar um artigo diretamente a outro artigo, inserir no próprio article.html
+       um link com openArticle('OUTRO-ID'), seguindo os exemplos existentes.
+
+    2. TAGS DO ARTIGO
+       A propriedade articles[].tags controla:
+       getBlogTagMap(), renderBlogTagCloud() e showTaggedPosts().
+
+       Regras:
+       usar termos objetivos;
+       evitar duplicatas semânticas;
+       manter grafia e capitalização consistentes;
+       não transformar frases inteiras em tags;
+       incluir tecnologias somente quando realmente relacionadas ao conteúdo;
+       não usar uma tag para sugerir competência que o artigo não demonstra.
+
+       Os <span class="tag"> dentro de article.html são elementos VISUAIS.
+       Mantê-los coerentes com a categoria e as principais tags, mas eles não
+       alimentam a nuvem automaticamente.
+
+    3. NUVEM DE TAGS
+       Em execução normal, NÃO adicionar manualmente a tag à função.
+       renderBlogTagCloud() deriva tudo de articles[].tags.
+
+       Entretanto, #blogTagCloud possui HTML estático para fallback.
+       Ao inserir/remover tags, sincronizar esse fallback com o conjunto resultante.
+       A ordem dinâmica usada pelo JavaScript é:
+       maior frequência primeiro; em empate, ordem alfabética pt-BR.
+       O tamanho visual é calculado por renderBlogTagCloud().
+       Não alterar a função somente para acomodar uma nova tag.
+
+    4. LISTA HTML ESTÁTICA DO BLOG
+       Manter #articleList sincronizada para fallback.
+       Criar button com id article-btn-ID e loadArticle('ID', true).
+       A lista dinâmica será reconstruída por renderArticles().
+
+    5. ARTICLE VIEWER INICIAL
+       renderArticles() chama loadArticle(articles[0].id).
+       Se alterar qual post ocupa a primeira posição, manter o HTML inicial de
+       #articleViewer correspondente ao mesmo post para evitar divergência antes
+       da inicialização do JavaScript ou em cenários degradados.
+
+    6. FALLBACK <noscript>
+       Criar static-post-ID com o mesmo conteúdo essencial publicado em article.html.
+
+    7. JSON-LD
+       Atualizar o objeto Blog.blogPost e criar o BlogPosting correspondente,
+       conforme o comentário junto ao JSON-LD no <head>.
+       articleBody deve representar o conteúdo real, não texto inventado apenas para SEO.
+
+    ============================================================
+    B. COMO INSERIR UM NOVO ITEM NO PORTFÓLIO
+    ============================================================
+
+    1. CRITÉRIO
+       Inserir no portfólio somente trabalho realmente construído, realizado ou
+       documentado. Não cadastrar projeto hipotético como entrega concluída.
+
+    2. ARRAY JAVASCRIPT portfolioItems[]
+       Inserir objeto seguindo:
+       {
+           id: 'meu-projeto',
+           title: 'Título',
+           description: 'Resumo curto',
+           text: 'Descrição complementar',
+           date: 'Ago 2026',
+           featured: true,
+           image: 'images/capa.png',  // opcional e somente se o arquivo existir
+           tags: ['Tag 1', 'Tag 2'],
+           links: [
+               { label: 'Estudo de caso', articleId: 'meu-post' },
+               { label: 'Seção interna', section: 'blog' },
+               { label: 'GitHub', url: 'https://...' }
+           ]
+       }
+
+       renderProjects() já renderiza o cartão, numeração, tags e links.
+       Não criar função específica para o novo projeto.
+
+       portfolioItems[].links aceita:
+       articleId: abre post através de openArticle();
+       section: abre seção com showSection();
+       url: abre endereço externo.
+
+    3. RELAÇÃO PORTFÓLIO -> BLOG
+       O campo articleId deve ser EXATAMENTE igual ao articles[].id do estudo de caso.
+       Exemplo:
+       portfolioItems[].links:
+       { label: 'Ler estudo de caso completo', articleId: 'meu-post' }
+
+       Isso gera o hash #post-meu-post e chama openArticle('meu-post').
+
+    4. FALLBACK HTML DO PORTFÓLIO
+       Criar static-portfolio-ID com conteúdo coerente com portfolioItems[].
+       Manter tags e links equivalentes.
+       Não usar caminho de imagem que não exista.
+
+    5. JSON-LD DO PORTFÓLIO
+       Atualizar o ItemList #portfolio:
+       numberOfItems;
+       positions;
+       novo ListItem/CreativeWork;
+       name, description, url, keywords e author.
+       Se houver artigo correspondente, url pode apontar para #post-ID-DO-ARTIGO.
+
+    ============================================================
+    C. O QUE NÃO PRECISA SER ALTERADO A CADA NOVO POST
+    ============================================================
+
+    Não alterar normalmente:
+    renderProjects();
+    renderArticles();
+    loadArticle();
+    getBlogTagMap();
+    showTaggedPosts();
+    renderBlogTagCloud();
+    openArticle();
+    showSection();
+    window.addEventListener('load', ...).
+
+    Essas funções são genéricas e já trabalham a partir dos arrays.
+    Modificá-las para publicar conteúdo novo aumenta risco de regressão sem necessidade.
+
+    ============================================================
+    D. CHECKLIST OBRIGATÓRIO ANTES DE ENTREGAR O index.html
+    ============================================================
+
+    1. IDs únicos e coerentes.
+    2. articles[].id corresponde aos hashes #post-ID.
+    3. portfolioItems[].links[].articleId aponta para article existente.
+    4. articles[].tags contém todas as tags que devem participar da nuvem.
+    5. Grafia/capitalização das tags foi reaproveitada quando já existente.
+    6. Nuvem estática foi sincronizada com o conjunto de tags.
+    7. articleList estática foi sincronizada.
+    8. articleViewer inicial corresponde ao primeiro item de articles[].
+    9. static-post-ID foi criado/atualizado.
+    10. static-portfolio-ID foi criado/atualizado quando houver item de portfólio.
+    11. JSON-LD Blog/BlogPosting foi atualizado.
+    12. JSON-LD ItemList do portfólio foi atualizado quando aplicável.
+    13. numberOfItems e positions do portfólio estão corretos.
+    14. Nenhum recurso externo automático foi introduzido.
+    15. Nenhuma imagem foi convertida para base64/data URI.
+    16. Todos os caminhos relativos referenciam arquivos existentes.
+    17. Aspas, template literals, vírgulas e arrays JavaScript estão válidos.
+    18. onclick, IDs, articleId e section continuam coerentes.
+    19. Executar validação de sintaxe JavaScript.
+    20. Validar JSON-LD.
+    21. Conferir fechamento das tags HTML.
+    22. Se a alteração tocar Política de Privacidade ou Termos de Uso,
+        seguir obrigatoriamente o controle de versão específico existente
+        junto às respectivas seções. Um post meramente editorial não altera
+        por si só a versão dos documentos legais.
+
+    REGRA FINAL:
+    O array JavaScript é a fonte funcional da SPA.
+    O HTML estático é o espelho/fallback.
+    O JSON-LD é o espelho semântico para mecanismos de busca.
+    Os três devem descrever a mesma publicação.
+    ======================================================================
+    -->
 
     <script>
         const roadmap = [
@@ -3856,4 +4195,4 @@ where schema_name = 'transicao';</code></pre>
         });
     </script>
 </body>
-    </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </html>
