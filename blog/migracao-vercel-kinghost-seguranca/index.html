@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+<!-- GENERATED:SEO:START --><title>Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy | Daniel Fleck</title><meta name="description" content="Migração controlada do daniel.fleck.dev.br da Vercel para a KingHost, preservando GitHub como fonte do código e ajustando DNS, diretórios, deploy, webhook e acessos administrativos."><link rel="canonical" href="https://daniel.fleck.dev.br/blog/migracao-vercel-kinghost-seguranca/"><meta property="og:type" content="article"><meta property="og:title" content="Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy"><meta property="og:description" content="Migração controlada do daniel.fleck.dev.br da Vercel para a KingHost, preservando GitHub como fonte do código e ajustando DNS, diretórios, deploy, webhook e acessos administrativos."><meta property="og:url" content="https://daniel.fleck.dev.br/blog/migracao-vercel-kinghost-seguranca/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy","name":"Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy","description":"Migração controlada do daniel.fleck.dev.br da Vercel para a KingHost, preservando GitHub como fonte do código e ajustando DNS, diretórios, deploy, webhook e acessos administrativos.","url":"https://daniel.fleck.dev.br/blog/migracao-vercel-kinghost-seguranca/","datePublished":"2026-08-08","dateModified":"2026-08-08","inLanguage":"pt-BR","keywords":["KingHost","GitHub","Git","SSH","FTP","DNS","Registro.br","Webhook","Segurança","Infraestrutura"],"author":{"@type":"Person","name":"Daniel Rodrigo Fleck","url":"https://daniel.fleck.dev.br/"},"articleSection":"Infraestrutura"}</script><!-- GENERATED:SEO:END -->
+<link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/pages.css">
+<script src="/js/main.js" defer></script>
+</head>
+<body class="content-blog">
+<!--
+AI-MAINTENANCE
+- Este site é publicado como HTML/CSS/JS estático. Python é usado somente no desenvolvimento/rebuild.
+- Navegação e rodapé vêm de templates/partials/ e são replicados por scripts/rebuild.py.
+- NÃO edite manualmente conteúdo entre marcadores GENERATED:*; altere a fonte indicada e execute: python scripts/rebuild.py.
+- Para alterações de conteúdo, pesquise referências no repositório e execute python scripts/validate.py antes do commit.
+- Instruções completas: /docs/AI-MAINTENANCE.md no repositório.
+-->
+<!-- GENERATED:SITE-NAV:START --><nav class="topbar">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Início">
+      <span class="brand-badge">D</span>
+      <span><span class="brand-title">daniel.fleck.dev.br</span><span class="brand-subtitle">Sistemas • Sustentação • Dados • Requisitos</span></span>
+    </a>
+    <div class="nav-actions" aria-label="Navegação principal">
+      <a class="nav-link" href="/">Início</a>
+      <a class="nav-link" href="/portfolio/">Portfólio</a>
+      <a class="nav-link" href="/ferramentas/">Ferramentas</a>
+      <a class="nav-link" href="/curriculo.html">Currículo</a>
+      <a class="nav-link" href="/blog/">Blog</a>
+      <a class="nav-link" href="/erros/">Erros &amp; Soluções</a>
+      <a class="nav-link" href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="nav-link" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap GitHub</a>
+    </div>
+  </div>
+</nav><!-- GENERATED:SITE-NAV:END -->
+<main class="container"><article class="section">
+<!--
+AI-CONTENT-MAINTENANCE
+- CONTENT-META é a fonte de título, resumo, data, categoria/status e tags desta página.
+- O texto editorial é editado SOMENTE entre CONTENT-BODY:START e CONTENT-BODY:END.
+- Alterou CONTENT-META? Execute python scripts/rebuild.py: ele atualiza SEO, JSON-LD, cabeçalho, índices, nuvem, páginas de tags e sitemap.
+- Não mantenha listas paralelas em JSON: os metadados permanecem neste próprio HTML.
+- Se a edição descrever problema técnico identificado e solucionado, verifique /erros/; edite registro equivalente ou crie um novo com python scripts/create_content.py erro.
+- Se faltar mensagem exata, contexto, evidência, solução ou confirmação do resultado, uma IA deve perguntar ao usuário em vez de inventar.
+-->
+<!-- CONTENT-META
+type: blog
+slug: migracao-vercel-kinghost-seguranca
+title: Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy
+summary: Migração controlada do daniel.fleck.dev.br da Vercel para a KingHost, preservando GitHub como fonte do código e ajustando DNS, diretórios, deploy, webhook e acessos administrativos.
+published: 2026-08-08
+display_date: 08 Ago 2026
+category: Infraestrutura
+status: 
+featured: true
+tags: KingHost | GitHub | Git | SSH | FTP | DNS | Registro.br | Webhook | Segurança | Infraestrutura
+-->
+<!-- GENERATED:ARTICLE-HEADER:START --><header class="page-header"><div class="article-meta"><span class="tag brand">Infraestrutura</span><span class="tag">08 Ago 2026</span></div><h1>Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy</h1><p class="page-summary">Migração controlada do daniel.fleck.dev.br da Vercel para a KingHost, preservando GitHub como fonte do código e ajustando DNS, diretórios, deploy, webhook e acessos administrativos.</p><div class="tag-row"><a class="tag" href="/tags/kinghost/">KingHost</a><a class="tag" href="/tags/github/">GitHub</a><a class="tag" href="/tags/git/">Git</a><a class="tag" href="/tags/ssh/">SSH</a><a class="tag" href="/tags/ftp/">FTP</a><a class="tag" href="/tags/dns/">DNS</a><a class="tag" href="/tags/registro-br/">Registro.br</a><a class="tag" href="/tags/webhook/">Webhook</a><a class="tag" href="/tags/seguranca/">Segurança</a><a class="tag" href="/tags/infraestrutura/">Infraestrutura</a></div></header><!-- GENERATED:ARTICLE-HEADER:END -->
+<div class="article-content"><!-- CONTENT-BODY:START -->
+<blockquote>A migração foi tratada como uma mudança controlada de infraestrutura: preservar o GitHub como fonte do código, transferir a hospedagem, ajustar DNS e diretórios, validar o deploy e reduzir os acessos administrativos mantidos permanentemente ativos.</blockquote>
+<h3>Por que migrei a hospedagem</h3>
+<p>A primeira publicação do <strong>daniel.fleck.dev.br</strong> utilizou a Vercel. Com a evolução do site de uma publicação inicial para uma presença profissional mantida continuamente, passei a avaliar uma infraestrutura em que eu pudesse administrar de forma mais direta a hospedagem, os diretórios de publicação, o DNS e os acessos administrativos, além de contar com suporte em português.</p>
+<p>A escolha da <strong>KingHost</strong> fez parte dessa evolução operacional. A avaliação contratual, de privacidade e de proteção de dados foi conduzida como uma <strong>frente própria de governança</strong>, documentada separadamente, para não confundir as tarefas de migração técnica com a construção da base jurídica e documental do site.</p>
+<h3>1. Proteção das contas administrativas</h3>
+<p>Antes de concluir a publicação, mantive a conta da hospedagem protegida por credencial própria e autenticação multifator. O mesmo princípio é aplicado ao <strong>GitHub</strong> e ao e-mail principal utilizado na administração do projeto: senhas individuais por serviço e pelo menos dois fatores de autenticação quando o recurso é disponibilizado.</p>
+<h3>2. DNS no Registro.br</h3>
+<p>Configurei no <strong>Registro.br</strong> os servidores DNS informados pela KingHost. Após o período normal de propagação, o domínio passou a resolver para a nova infraestrutura.</p>
+<p>O domínio continua administrado no Registro.br, enquanto a zona DNS e a hospedagem passaram a ser operadas na KingHost. Essa separação de responsabilidades foi importante para diagnosticar corretamente os efeitos de cada alteração durante a migração.</p>
+<h3>3. FTP apenas para uso administrativo temporário</h3>
+<p>O FTP foi habilitado durante a preparação do ambiente, com credencial própria, e depois desativado. A regra operacional adotada passou a ser simples: <strong>FTP permanece desligado por padrão</strong>; quando uma tarefa específica exigir seu uso, ele é ativado apenas pelo tempo necessário e desativado imediatamente após a conclusão.</p>
+<p>A decisão reduz a superfície de ataque sem eliminar a possibilidade de utilizar o recurso quando uma necessidade administrativa concreta justificar sua ativação.</p>
+<h3>4. Preparação inicial do diretório por SSH</h3>
+<p>Eu não queria clonar o projeto diretamente no diretório principal da hospedagem. A organização desejada exigia manter o repositório dentro de uma pasta específica sob <code>/www/</code>, e a configuração direta pela interface de integração com GitHub não atendia inicialmente a esse cenário.</p>
+<p>Na preparação inicial, utilizei <strong>acesso administrativo por SSH</strong> para organizar o diretório e realizar o primeiro clone do repositório. Em seguida, associei o diretório já preparado à ferramenta de publicação via Git da KingHost e validei o fluxo automatizado.</p>
+<p>Depois dessa etapa, o acesso administrativo manual deixou de fazer parte do processo normal de publicação. A integração gerenciada pela hospedagem utiliza os mecanismos técnicos necessários para sincronizar o repositório — a própria documentação da KingHost informa o uso de chaves SSH na Publicação via Git. Por isso, é mais preciso distinguir <strong>acesso administrativo interativo</strong> do <strong>canal técnico utilizado pelo deploy automatizado</strong>, sem expor publicamente detalhes operacionais desnecessários da configuração remota.</p>
+<h3>5. GitHub, webhook e redução de permissões</h3>
+<p>Com a integração ativa, a KingHost configurou um webhook no repositório para atualizar a hospedagem após alterações no GitHub. Durante a configuração, revisei também as permissões concedidas à integração.</p>
+<p>A aplicação aparecia entre as autorizações OAuth do GitHub com permissões que considerei mais amplas do que o necessário para o meu cenário. Após a configuração, revoguei essa autorização e testei novamente o fluxo. O webhook e a publicação continuaram funcionando. Registrei a decisão como aplicação prática do <strong>princípio do menor privilégio</strong>: reduzir permissões e, depois, comprovar que a funcionalidade necessária permanece operacional.</p>
+<h4>Diagnóstico de uma falha pontual na entrega do webhook</h4>
+<p>Em um dos pushes posteriores, percebi que a versão publicada do site não havia sido atualizada. Como o push constava normalmente no repositório, passei a verificar a etapa seguinte do fluxo: a entrega do webhook responsável por acionar a atualização na hospedagem.</p>
+<p>No GitHub, acessei <strong>repositório → Settings → Webhooks → Edit → Recent deliveries</strong>. O histórico mostrava que a entrega correspondente ao último push havia falhado com a mensagem <code>We couldn't deliver this payload: failed to connect to host</code>.</p>
+<p>Usei então o menu de ações da entrega e selecionei <strong>Redeliver</strong>. O GitHub realizou uma nova tentativa, dessa vez concluída com sucesso, e a atualização voltou a ser processada. Como a repetição da mesma entrega funcionou, registrei o episódio como uma <strong>falha pontual de entrega/conectividade</strong>, sem atribuir uma causa definitiva ao GitHub, à hospedagem ou à rede apenas com base nessa mensagem.</p>
+<p>O episódio acrescentou uma etapa útil ao procedimento de diagnóstico: quando um push chega corretamente ao GitHub, mas a publicação não ocorre, antes de alterar código, credenciais ou configuração do servidor é possível verificar o histórico de <em>Recent deliveries</em> do webhook, confirmar o resultado daquela tentativa e, quando apropriado, testar uma nova entrega controlada.</p>
+<p>O caso também foi registrado de forma estruturada na <a href="/erros/webhook-github-kinghost-failed-to-connect/"><strong>Base de Conhecimento — Erros e Soluções</strong></a>, separando contexto, evidências, diagnóstico e procedimento de recuperação.</p>
+<h3>6. Recursos de segurança da hospedagem</h3>
+<p>Os serviços web permanecem submetidos aos protocolos e controles de segurança disponibilizados pela provedora. No painel administrativo, mantenho ativados os recursos de segurança disponíveis ao meu nível de administração e compatíveis com o plano contratado, sem presumir a existência de recursos que dependam de contratação adicional.</p>
+<p>Os acessos administrativos diretamente utilizados pelo responsável são mantidos restritos ao necessário. O <strong>FTP permanece desativado por padrão</strong>; já o fluxo automatizado de publicação utiliza apenas os mecanismos técnicos exigidos pela integração gerenciada da hospedagem, sem que isso seja descrito como acesso administrativo interativo permanentemente disponível ao responsável.</p>
+<h3>7. Separação entre infraestrutura e governança jurídica</h3>
+<p>A nova hospedagem também tornou visíveis elementos administrativos relacionados a registros técnicos e estatísticas. Em vez de transformar esse tema em mais uma etapa da migração, tratei <strong>privacidade, logs, Termos de Uso, LGPD, Marco Civil da Internet e governança de dados como um trabalho próprio</strong>, com análise, documentação e controles específicos.</p>
+<p>Essa frente está descrita no estudo <a href="/blog/governanca-privacidade-lgpd-marco-civil/"><strong>“Privacidade e governança do daniel.fleck.dev.br: Termos de Uso, LGPD, Marco Civil e segurança da informação”</strong></a>.</p>
+<h3>8. Mapeamento de domínio alternativo</h3>
+<p>Também configurei o gerenciamento de mapeamento para que o domínio <strong>daniel.fleck.nom.br</strong> redirecionasse para o site principal. Após os ajustes e a validação, o teste foi concluído com sucesso e o endereço alternativo passou a encaminhar o acesso para o domínio principal.</p>
+<h3>Resultado da migração</h3>
+<p>Ao final da mudança, o site voltou a ser servido na mesma URL, agora pela infraestrutura da KingHost, enquanto o <strong>GitHub permanece como fonte oficial do código</strong>. O fluxo de publicação foi validado, e a delegação DNS foi configurada no Registro.br para os servidores DNS da KingHost. O acesso FTP administrativo permanece desativado por padrão, enquanto a publicação do código utiliza o mecanismo gerenciado de integração com Git disponibilizado pela hospedagem.</p>
+<h3>Competências demonstradas</h3>
+<ul class="checklist">
+<li>planejamento e execução de migração de hospedagem sem reconstruir a aplicação;</li>
+<li>configuração de DNS e acompanhamento de propagação;</li>
+<li>preparação controlada de diretório remoto por SSH;</li>
+<li>integração GitHub/KingHost e validação de webhook;</li>
+<li>revisão de permissões e aplicação do menor privilégio;</li>
+<li>separação entre acesso administrativo manual e mecanismos gerenciados de deploy, mantendo FTP desativado por padrão;</li>
+<li>proteção das contas administrativas com credenciais individuais e autenticação multifator;</li>
+<li>separação entre tarefas de infraestrutura e a frente de governança jurídica e de dados.</li>
+</ul>
+<h3>Conclusão</h3>
+<p>A migração mostrou que mover um site estático envolve mais do que copiar arquivos: há DNS, estrutura de diretórios, integração de deploy, credenciais, permissões e serviços administrativos. A solução final permaneceu deliberadamente simples: código versionado no GitHub, hospedagem gerenciada, recursos administrativos expostos somente quando necessários e controles de segurança aplicados de forma compatível com a infraestrutura.</p>
+<!-- CONTENT-BODY:END --></div>
+<!-- GENERATED:CONTENT-LINKS:START --><div class="content-actions"><a href="/blog/">← Voltar ao índice</a><a href="/tags/">Explorar tags</a></div><!-- GENERATED:CONTENT-LINKS:END -->
+</article></main>
+<!-- GENERATED:SITE-FOOTER:START --><footer class="footer">
+  <div class="container footer-inner">
+    <div><strong>Daniel Rodrigo Fleck</strong><br><span class="generated-note">Site pessoal, portfólio técnico e registros de aprendizado.</span></div>
+    <div class="footer-links">
+      <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="mailto:danielfleck@gmail.com">Contato</a>
+    </div>
+    <div class="footer-note"><strong>Privacidade:</strong> o código deste site não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A infraestrutura de hospedagem pode processar registros técnicos conforme o serviço e seus documentos aplicáveis. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
+  </div>
+</footer><!-- GENERATED:SITE-FOOTER:END -->
+</body></html>

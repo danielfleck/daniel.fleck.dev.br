@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+<!-- GENERATED:SEO:START --><title>Webhook GitHub → KingHost: falha “failed to connect to host” após um push | Daniel Fleck</title><meta name="description" content="Push confirmado no GitHub, mas publicação não atualizada; a entrega do webhook falhou com failed to connect to host e foi recuperada por Redeliver."><link rel="canonical" href="https://daniel.fleck.dev.br/erros/webhook-github-kinghost-failed-to-connect/"><meta property="og:type" content="article"><meta property="og:title" content="Webhook GitHub → KingHost: falha “failed to connect to host” após um push"><meta property="og:description" content="Push confirmado no GitHub, mas publicação não atualizada; a entrega do webhook falhou com failed to connect to host e foi recuperada por Redeliver."><meta property="og:url" content="https://daniel.fleck.dev.br/erros/webhook-github-kinghost-failed-to-connect/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Webhook GitHub → KingHost: falha “failed to connect to host” após um push","name":"Webhook GitHub → KingHost: falha “failed to connect to host” após um push","description":"Push confirmado no GitHub, mas publicação não atualizada; a entrega do webhook falhou com failed to connect to host e foi recuperada por Redeliver.","url":"https://daniel.fleck.dev.br/erros/webhook-github-kinghost-failed-to-connect/","datePublished":"2026-08-10","dateModified":"2026-08-10","inLanguage":"pt-BR","keywords":["GitHub","Webhook","KingHost","Deploy","Troubleshooting","Integração","Falha de conectividade"],"author":{"@type":"Person","name":"Daniel Rodrigo Fleck","url":"https://daniel.fleck.dev.br/"},"articleSection":"Base de Conhecimento — Erros e Soluções"}</script><!-- GENERATED:SEO:END -->
+<link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/pages.css">
+<script src="/js/main.js" defer></script>
+</head>
+<body class="content-error">
+<!--
+AI-MAINTENANCE
+- Este site é publicado como HTML/CSS/JS estático. Python é usado somente no desenvolvimento/rebuild.
+- Navegação e rodapé vêm de templates/partials/ e são replicados por scripts/rebuild.py.
+- NÃO edite manualmente conteúdo entre marcadores GENERATED:*; altere a fonte indicada e execute: python scripts/rebuild.py.
+- Para alterações de conteúdo, pesquise referências no repositório e execute python scripts/validate.py antes do commit.
+- Instruções completas: /docs/AI-MAINTENANCE.md no repositório.
+-->
+<!-- GENERATED:SITE-NAV:START --><nav class="topbar">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Início">
+      <span class="brand-badge">D</span>
+      <span><span class="brand-title">daniel.fleck.dev.br</span><span class="brand-subtitle">Sistemas • Sustentação • Dados • Requisitos</span></span>
+    </a>
+    <div class="nav-actions" aria-label="Navegação principal">
+      <a class="nav-link" href="/">Início</a>
+      <a class="nav-link" href="/portfolio/">Portfólio</a>
+      <a class="nav-link" href="/ferramentas/">Ferramentas</a>
+      <a class="nav-link" href="/curriculo.html">Currículo</a>
+      <a class="nav-link" href="/blog/">Blog</a>
+      <a class="nav-link" href="/erros/">Erros &amp; Soluções</a>
+      <a class="nav-link" href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="nav-link" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap GitHub</a>
+    </div>
+  </div>
+</nav><!-- GENERATED:SITE-NAV:END -->
+<main class="container"><article class="section">
+<!--
+AI-CONTENT-MAINTENANCE
+- CONTENT-META é a fonte de título, resumo, data, categoria/status e tags desta página.
+- O texto editorial é editado SOMENTE entre CONTENT-BODY:START e CONTENT-BODY:END.
+- Alterou CONTENT-META? Execute python scripts/rebuild.py: ele atualiza SEO, JSON-LD, cabeçalho, índices, nuvem, páginas de tags e sitemap.
+- Não mantenha listas paralelas em JSON: os metadados permanecem neste próprio HTML.
+- Se a edição descrever problema técnico identificado e solucionado, verifique /erros/; edite registro equivalente ou crie um novo com python scripts/create_content.py erro.
+- Se faltar mensagem exata, contexto, evidência, solução ou confirmação do resultado, uma IA deve perguntar ao usuário em vez de inventar.
+-->
+<!-- CONTENT-META
+type: error
+slug: webhook-github-kinghost-failed-to-connect
+title: Webhook GitHub → KingHost: falha “failed to connect to host” após um push
+summary: Push confirmado no GitHub, mas publicação não atualizada; a entrega do webhook falhou com failed to connect to host e foi recuperada por Redeliver.
+published: 2026-08-10
+display_date: 10 Ago 2026
+category: Deploy / Webhook
+status: Resolvido
+featured: true
+tags: GitHub | Webhook | KingHost | Deploy | Troubleshooting | Integração | Falha de conectividade
+-->
+<!-- GENERATED:ARTICLE-HEADER:START --><header class="page-header"><div class="article-meta"><span class="tag brand">Erro conhecido</span><span class="tag success">Resolvido</span><span class="tag">10 Ago 2026</span></div><h1>Webhook GitHub → KingHost: falha “failed to connect to host” após um push</h1><p class="page-summary">Push confirmado no GitHub, mas publicação não atualizada; a entrega do webhook falhou com failed to connect to host e foi recuperada por Redeliver.</p><div class="tag-row"><a class="tag" href="/tags/github/">GitHub</a><a class="tag" href="/tags/webhook/">Webhook</a><a class="tag" href="/tags/kinghost/">KingHost</a><a class="tag" href="/tags/deploy/">Deploy</a><a class="tag" href="/tags/troubleshooting/">Troubleshooting</a><a class="tag" href="/tags/integracao/">Integração</a><a class="tag" href="/tags/falha-de-conectividade/">Falha de conectividade</a></div></header><!-- GENERATED:ARTICLE-HEADER:END -->
+<div class="article-content"><!-- CONTENT-BODY:START -->
+<h2>Webhook GitHub → KingHost: falha <code>failed to connect to host</code> após um push</h2>
+
+<blockquote><strong>Resumo:</strong> após um push confirmado no GitHub, a atualização do site não ocorreu. O histórico de entregas do webhook mostrou <code>We couldn't deliver this payload: failed to connect to host</code>. A reentrega manual da mesma execução com <strong>Redeliver</strong> foi concluída com sucesso.</blockquote>
+<h3>Contexto</h3>
+<p>O código do <strong>daniel.fleck.dev.br</strong> é versionado no GitHub e a publicação na hospedagem utiliza a integração via Git disponibilizada pela KingHost. Um webhook associado ao repositório participa do fluxo que aciona a atualização após novos pushes.</p>
+<p>O caso ocorreu depois que o fluxo de publicação já havia sido configurado e utilizado com sucesso anteriormente.</p>
+<h3>Problema observado</h3>
+<p>Após realizar um push do projeto, percebi que o código estava atualizado no repositório, mas a versão publicada do site permanecia inalterada. Isso indicava que o problema não estava necessariamente no envio do commit ao GitHub e que era preciso verificar as etapas posteriores do processo de deploy.</p>
+<h3>Evidências</h3>
+<ul class="checklist">
+<li>o commit/push aparecia normalmente no repositório;</li>
+<li>o site hospedado não refletia a nova versão;</li>
+<li>em <strong>Settings → Webhooks → webhook correspondente → Recent deliveries</strong>, a entrega associada ao evento apresentava falha;</li>
+<li>a mensagem registrada pelo GitHub era <code>We couldn't deliver this payload: failed to connect to host</code>;</li>
+<li>a reentrega da mesma execução foi posteriormente concluída com sucesso.</li>
+</ul>
+<h3>Diagnóstico</h3>
+<p>A evidência permitiu localizar a falha na <strong>etapa de entrega do webhook</strong>: naquela tentativa, o GitHub não conseguiu estabelecer a conexão necessária com o destino configurado.</p>
+<p>A mensagem isolada não permite determinar a causa raiz com segurança. Ela não comprova, por si só, falha permanente do GitHub, da KingHost, da rede ou da configuração. Como uma nova tentativa da mesma entrega funcionou sem alteração de código ou credenciais, o evento foi classificado como <strong>falha pontual de entrega/conectividade</strong>.</p>
+<h3>Solução aplicada</h3>
+<ol>
+<li>Confirmei primeiro que o push estava presente no repositório do GitHub.</li>
+<li>Acessei <strong>Settings</strong> no repositório.</li>
+<li>Entrei em <strong>Webhooks</strong> e abri o webhook utilizado pela integração.</li>
+<li>Acessei <strong>Recent deliveries</strong> e identifiquei a entrega com falha.</li>
+<li>Revisei a mensagem de erro antes de alterar qualquer configuração.</li>
+<li>No menu da entrega, utilizei a opção <strong>Redeliver</strong>.</li>
+<li>O GitHub realizou uma nova tentativa e a entrega foi concluída com sucesso.</li>
+<li>Confirmei posteriormente que a atualização voltou a ser processada.</li>
+</ol>
+<h3>Resultado</h3>
+<p>Não foi necessário modificar o código do site, recriar o webhook, alterar credenciais ou refazer a integração. A reentrega controlada foi suficiente para restabelecer o fluxo naquele evento.</p>
+<h3>Procedimento aprendido</h3>
+<p>Quando o código está atualizado no GitHub, mas a publicação não ocorre, o histórico do webhook deve ser verificado <strong>antes de alterar o servidor, credenciais ou código</strong>. Isso ajuda a separar problemas de versionamento, entrega do evento e execução do deploy.</p>
+<p>Fluxo de diagnóstico utilizado:</p>
+<p><code>push → confirmar commit no GitHub → verificar Recent deliveries → analisar erro → Redeliver quando apropriado → validar publicação</code></p>
+<h3>Referências</h3>
+<ul>
+<li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/viewing-webhook-deliveries" rel="noopener noreferrer" target="_blank">GitHub Docs — Viewing webhook deliveries</a></li>
+<li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/redelivering-webhooks" rel="noopener noreferrer" target="_blank">GitHub Docs — Redelivering webhooks</a></li>
+<li><a href="/blog/migracao-vercel-kinghost-seguranca/">Post relacionado — Migração da Vercel para a KingHost</a></li>
+</ul>
+<h3>Classificação</h3>
+<div class="tag-row">
+<span class="tag">GitHub</span>
+<span class="tag">Webhook</span>
+<span class="tag">KingHost</span>
+<span class="tag">Deploy</span>
+<span class="tag">Troubleshooting</span>
+<span class="tag">Integração</span>
+<span class="tag">Falha de conectividade</span>
+</div>
+<!-- CONTENT-BODY:END --></div>
+<!-- GENERATED:CONTENT-LINKS:START --><div class="content-actions"><a href="/erros/">← Voltar ao índice</a><a href="/tags/">Explorar tags</a></div><!-- GENERATED:CONTENT-LINKS:END -->
+</article></main>
+<!-- GENERATED:SITE-FOOTER:START --><footer class="footer">
+  <div class="container footer-inner">
+    <div><strong>Daniel Rodrigo Fleck</strong><br><span class="generated-note">Site pessoal, portfólio técnico e registros de aprendizado.</span></div>
+    <div class="footer-links">
+      <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="mailto:danielfleck@gmail.com">Contato</a>
+    </div>
+    <div class="footer-note"><strong>Privacidade:</strong> o código deste site não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A infraestrutura de hospedagem pode processar registros técnicos conforme o serviço e seus documentos aplicáveis. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
+  </div>
+</footer><!-- GENERATED:SITE-FOOTER:END -->
+</body></html>

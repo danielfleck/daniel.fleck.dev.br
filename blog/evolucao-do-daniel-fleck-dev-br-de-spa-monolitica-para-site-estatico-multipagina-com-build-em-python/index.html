@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+<!-- GENERATED:SEO:START --><title>Evolução do daniel.fleck.dev.br: de SPA monolítica para site estático multipágina com build em Python | Daniel Fleck</title><meta name="description" content="Reestruturação do site para separar blog, portfólio, erros e soluções, tags e páginas institucionais em URLs próprias, mantendo a publicação totalmente estática e acrescentando scripts Python para criação de conteúdo, rebuild, validação, sitemap e controle pré-commit."><link rel="canonical" href="https://daniel.fleck.dev.br/blog/evolucao-do-daniel-fleck-dev-br-de-spa-monolitica-para-site-estatico-multipagina-com-build-em-python/"><meta property="og:type" content="article"><meta property="og:title" content="Evolução do daniel.fleck.dev.br: de SPA monolítica para site estático multipágina com build em Python"><meta property="og:description" content="Reestruturação do site para separar blog, portfólio, erros e soluções, tags e páginas institucionais em URLs próprias, mantendo a publicação totalmente estática e acrescentando scripts Python para criação de conteúdo, rebuild, validação, sitemap e controle pré-commit."><meta property="og:url" content="https://daniel.fleck.dev.br/blog/evolucao-do-daniel-fleck-dev-br-de-spa-monolitica-para-site-estatico-multipagina-com-build-em-python/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Evolução do daniel.fleck.dev.br: de SPA monolítica para site estático multipágina com build em Python","name":"Evolução do daniel.fleck.dev.br: de SPA monolítica para site estático multipágina com build em Python","description":"Reestruturação do site para separar blog, portfólio, erros e soluções, tags e páginas institucionais em URLs próprias, mantendo a publicação totalmente estática e acrescentando scripts Python para criação de conteúdo, rebuild, validação, sitemap e controle pré-commit.","url":"https://daniel.fleck.dev.br/blog/evolucao-do-daniel-fleck-dev-br-de-spa-monolitica-para-site-estatico-multipagina-com-build-em-python/","datePublished":"2026-08-10","dateModified":"2026-08-10","inLanguage":"pt-BR","keywords":["Python","HTML","JavaScript","CSS","IA","supervisão humana"],"author":{"@type":"Person","name":"Daniel Rodrigo Fleck","url":"https://daniel.fleck.dev.br/"},"articleSection":"Técnico"}</script><!-- GENERATED:SEO:END -->
+<link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/pages.css">
+<script src="/js/main.js" defer></script>
+</head>
+<body class="content-blog">
+<!--
+AI-MAINTENANCE
+- Este site é publicado como HTML/CSS/JS estático. Python é usado somente no desenvolvimento/rebuild.
+- Navegação e rodapé vêm de templates/partials/ e são replicados por scripts/rebuild.py.
+- NÃO edite manualmente conteúdo entre marcadores GENERATED:*; altere a fonte indicada e execute: python scripts/rebuild.py.
+- Para alterações de conteúdo, pesquise referências no repositório e execute python scripts/validate.py antes do commit.
+- Instruções completas: /docs/AI-MAINTENANCE.md no repositório.
+-->
+<!-- GENERATED:SITE-NAV:START --><nav class="topbar">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Início">
+      <span class="brand-badge">D</span>
+      <span><span class="brand-title">daniel.fleck.dev.br</span><span class="brand-subtitle">Sistemas • Sustentação • Dados • Requisitos</span></span>
+    </a>
+    <div class="nav-actions" aria-label="Navegação principal">
+      <a class="nav-link" href="/">Início</a>
+      <a class="nav-link" href="/portfolio/">Portfólio</a>
+      <a class="nav-link" href="/ferramentas/">Ferramentas</a>
+      <a class="nav-link" href="/curriculo.html">Currículo</a>
+      <a class="nav-link" href="/blog/">Blog</a>
+      <a class="nav-link" href="/erros/">Erros &amp; Soluções</a>
+      <a class="nav-link" href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="nav-link" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap GitHub</a>
+    </div>
+  </div>
+</nav><!-- GENERATED:SITE-NAV:END -->
+<main class="container"><article class="section">
+<!--
+AI-CONTENT-MAINTENANCE
+- CONTENT-META é a fonte de título, resumo, data, categoria/status e tags desta página.
+- O texto editorial é editado SOMENTE entre CONTENT-BODY:START e CONTENT-BODY:END.
+- Alterou CONTENT-META? Execute python scripts/rebuild.py: ele atualiza SEO, JSON-LD, cabeçalho, índices, nuvem, páginas de tags e sitemap.
+- Não mantenha listas paralelas em JSON: os metadados permanecem neste próprio HTML.
+- Se a edição descrever problema técnico identificado e solucionado, verifique /erros/; edite registro equivalente ou crie um novo com python scripts/create_content.py erro.
+- Se faltar mensagem exata, contexto, evidência, solução ou confirmação do resultado, uma IA deve perguntar ao usuário em vez de inventar.
+-->
+<!-- CONTENT-META
+type: blog
+slug: evolucao-do-daniel-fleck-dev-br-de-spa-monolitica-para-site-estatico-multipagina-com-build-em-python
+title: Evolução do daniel.fleck.dev.br: de SPA monolítica para site estático multipágina com build em Python
+summary: Reestruturação do site para separar blog, portfólio, erros e soluções, tags e páginas institucionais em URLs próprias, mantendo a publicação totalmente estática e acrescentando scripts Python para criação de conteúdo, rebuild, validação, sitemap e controle pré-commit.
+published: 2026-08-10
+display_date: 10 Ago 2026
+category: Técnico
+status: 
+featured: false
+tags: Python | HTML | JavaScript | CSS | IA | supervisão humana
+-->
+<!-- GENERATED:ARTICLE-HEADER:START --><header class="page-header"><div class="article-meta"><span class="tag brand">Técnico</span><span class="tag">10 Ago 2026</span></div><h1>Evolução do daniel.fleck.dev.br: de SPA monolítica para site estático multipágina com build em Python</h1><p class="page-summary">Reestruturação do site para separar blog, portfólio, erros e soluções, tags e páginas institucionais em URLs próprias, mantendo a publicação totalmente estática e acrescentando scripts Python para criação de conteúdo, rebuild, validação, sitemap e controle pré-commit.</p><div class="tag-row"><a class="tag" href="/tags/python/">Python</a><a class="tag" href="/tags/html/">HTML</a><a class="tag" href="/tags/javascript/">JavaScript</a><a class="tag" href="/tags/css/">CSS</a><a class="tag" href="/tags/ia/">IA</a><a class="tag" href="/tags/supervisao-humana/">supervisão humana</a></div></header><!-- GENERATED:ARTICLE-HEADER:END -->
+<div class="article-content"><!-- CONTENT-BODY:START -->
+<h2>Contexto</h2>
+<h2>Contexto</h2>
+
+<p>
+    O <strong>daniel.fleck.dev.br</strong> nasceu como uma aplicação de página única
+    desenvolvida com HTML, CSS e JavaScript. Blog, portfólio, currículo resumido,
+    ferramentas, documentos institucionais e outros conteúdos eram concentrados
+    principalmente em um único <code>index.html</code>, com JavaScript responsável por
+    alternar as seções exibidas ao visitante.
+</p>
+
+<p>
+    Essa abordagem foi adequada para a primeira versão do projeto: permitiu desenvolver
+    e publicar rapidamente um site sem framework, backend ou banco de dados. Com o
+    crescimento do conteúdo, porém, o arquivo principal passou a concentrar muitas
+    responsabilidades.
+</p>
+
+<p>
+    Posts do blog, itens do portfólio, registros da Base de Conhecimento — Erros e
+    Soluções, tags, metadados para mecanismos de busca e diversos elementos de navegação
+    passaram a compartilhar a mesma estrutura. A manutenção continuava possível, mas
+    exigia cada vez mais cuidado para manter referências e representações sincronizadas.
+</p>
+
+
+<h2>Problema de arquitetura</h2>
+
+<p>
+    O principal problema não era o uso de HTML, CSS ou JavaScript puro. Essas tecnologias
+    continuam adequadas para o projeto. O ponto a ser revisto era a concentração de
+    conteúdos independentes dentro de uma única página.
+</p>
+
+<p>
+    Um artigo de blog, por exemplo, deveria poder possuir sua própria URL, título,
+    descrição, canonical e dados estruturados. O mesmo vale para um item de portfólio ou
+    para o registro de um erro conhecido.
+</p>
+
+<p>
+    A arquitetura anterior utilizava referências internas semelhantes a:
+</p>
+
+<pre><code>daniel.fleck.dev.br/#post-identificador</code></pre>
+
+<p>
+    Na nova estrutura, cada conteúdo relevante passa a possuir uma página HTML real,
+    como:
+</p>
+
+<pre><code>daniel.fleck.dev.br/blog/evolucao-site-estatico-multipagina-python/
+
+daniel.fleck.dev.br/portfolio/...
+
+daniel.fleck.dev.br/erros/...</code></pre>
+
+
+<h2>Decisão: continuar com um site totalmente estático</h2>
+
+<p>
+    A mudança não introduziu CMS, banco de dados, backend ou framework JavaScript.
+    A hospedagem continua recebendo apenas arquivos estáticos.
+</p>
+
+<p>
+    O resultado publicado continua sendo composto essencialmente por:
+</p>
+
+<ul>
+    <li>HTML;</li>
+    <li>CSS;</li>
+    <li>JavaScript;</li>
+    <li>imagens e demais arquivos estáticos.</li>
+</ul>
+
+<p>
+    O Python foi introduzido somente no <strong>ambiente de desenvolvimento</strong>.
+    Ele não é necessário para atender uma requisição do visitante e não precisa ser
+    executado pela hospedagem.
+</p>
+
+<p>
+    A ideia foi manter a simplicidade operacional do site estático e utilizar Python
+    apenas para automatizar tarefas que anteriormente precisariam ser feitas manualmente.
+</p>
+
+
+<h2>Nova organização do conteúdo</h2>
+
+<p>
+    Os principais tipos de conteúdo passaram a ter diretórios próprios.
+</p>
+
+<pre><code>/
+├── index.html
+├── curriculo.html
+│
+├── blog/
+│   ├── index.html
+│   └── &lt;slug-do-post&gt;/
+│       └── index.html
+│
+├── portfolio/
+│   ├── index.html
+│   └── &lt;slug-do-projeto&gt;/
+│       └── index.html
+│
+├── erros/
+│   ├── index.html
+│   └── &lt;slug-do-erro&gt;/
+│       └── index.html
+│
+├── tags/
+│   ├── index.html
+│   └── &lt;tag&gt;/
+│       └── index.html
+│
+├── privacidade/
+│   └── index.html
+│
+└── termos/
+    └── index.html</code></pre>
+
+<p>
+    A página inicial passa a atuar principalmente como um hub para apresentação,
+    conteúdos em destaque, portfólio, blog, Base de Conhecimento e navegação.
+</p>
+
+
+<h2>URLs próprias e SEO</h2>
+
+<p>
+    Uma das motivações da reorganização foi melhorar a relação entre conteúdo e URL.
+    Cada post agora pode possuir elementos de SEO específicos.
+</p>
+
+<p>
+    Entre eles:
+</p>
+
+<ul>
+    <li><code>&lt;title&gt;</code> próprio;</li>
+    <li>meta description específica;</li>
+    <li>URL canonical;</li>
+    <li>dados estruturados JSON-LD;</li>
+    <li>tags relacionadas;</li>
+    <li>entrada individual no <code>sitemap.xml</code>.</li>
+</ul>
+
+<p>
+    Isso também torna os links mais compreensíveis para pessoas e mecanismos de busca,
+    porque a própria URL identifica a área e o conteúdo acessado.
+</p>
+
+
+<h2>Templates para novos conteúdos</h2>
+
+<p>
+    Para evitar a cópia manual de páginas antigas, foram criados templates independentes:
+</p>
+
+<pre><code>templates/
+├── blog.html
+├── portfolio.html
+└── erro.html</code></pre>
+
+<p>
+    Cada tipo possui estrutura e metadados adequados à sua finalidade.
+</p>
+
+<p>
+    Um novo conteúdo é criado pelo script:
+</p>
+
+<pre><code>python scripts/create_content.py blog
+
+python scripts/create_content.py portfolio
+
+python scripts/create_content.py erro</code></pre>
+
+<p>
+    O script pergunta os principais metadados e cria automaticamente o diretório e o
+    <code>index.html</code> correspondente.
+</p>
+
+
+<h2>Metadados no próprio HTML</h2>
+
+<p>
+    Optei por não criar um arquivo JSON de conteúdo que precisasse ser mantido
+    manualmente em paralelo às páginas.
+</p>
+
+<p>
+    As informações necessárias para o processo de build ficam junto do próprio documento,
+    em uma área de metadados prevista no template.
+</p>
+
+<p>
+    Dessa forma, o HTML individual continua sendo a referência do conteúdo, enquanto os
+    scripts conseguem descobrir automaticamente título, resumo, data, categoria, tags e
+    demais atributos necessários para montar os índices.
+</p>
+
+
+<h2>Rebuild automático</h2>
+
+<p>
+    O script central de manutenção é:
+</p>
+
+<pre><code>python scripts/rebuild.py</code></pre>
+
+<p>
+    Ele percorre os conteúdos do site e reconstrói somente aquilo que depende deles.
+</p>
+
+<p>
+    Entre os elementos gerados ou atualizados estão:
+</p>
+
+<ul>
+    <li>índice do blog;</li>
+    <li>índice do portfólio;</li>
+    <li>índice de erros e soluções;</li>
+    <li>cards da página inicial;</li>
+    <li>páginas de tags;</li>
+    <li>nuvem de tags;</li>
+    <li>metadados de SEO;</li>
+    <li>JSON-LD;</li>
+    <li><code>sitemap.xml</code>;</li>
+    <li><code>robots.txt</code>.</li>
+</ul>
+
+<p>
+    O rebuild foi desenvolvido para ser idempotente: se nenhuma informação tiver mudado,
+    executá-lo novamente não deve produzir modificações desnecessárias.
+</p>
+
+
+<h2>Nuvem de tags gerada a partir do conteúdo real</h2>
+
+<p>
+    As tags não precisam ser mantidas em um catálogo separado.
+</p>
+
+<p>
+    Durante o rebuild, os scripts percorrem os metadados dos posts do Blog, itens do
+    Portfólio e registros da Base de Conhecimento, contam as ocorrências e geram a
+    estrutura de tags.
+</p>
+
+<p>
+    Assim, uma tag utilizada em diversos conteúdos recebe maior peso visual na nuvem,
+    enquanto uma tag pouco utilizada aparece proporcionalmente menor.
+</p>
+
+<p>
+    Também são criadas páginas estáticas específicas, por exemplo:
+</p>
+
+<pre><code>/tags/github/
+/tags/python/
+/tags/postgresql/</code></pre>
+
+<p>
+    Cada uma reúne links para conteúdos relacionados àquele assunto.
+</p>
+
+
+<h2>Validação antes da publicação</h2>
+
+<p>
+    Outro script importante é:
+</p>
+
+<pre><code>python scripts/validate.py</code></pre>
+
+<p>
+    Ele executa verificações antes da publicação, procurando problemas como:
+</p>
+
+<ul>
+    <li>metadados ausentes;</li>
+    <li>slugs duplicados;</li>
+    <li>links internos inválidos;</li>
+    <li>recursos locais inexistentes;</li>
+    <li>canonical incorreto ou ausente;</li>
+    <li>JSON-LD inválido;</li>
+    <li>placeholders de template ainda presentes;</li>
+    <li>artefatos de build desatualizados.</li>
+</ul>
+
+
+<h2>Servidor local para conferência</h2>
+
+<p>
+    Para conferir o resultado antes do commit, o projeto possui um servidor HTTP local
+    baseado somente na biblioteca padrão do Python:
+</p>
+
+<pre><code>python scripts/serve.py</code></pre>
+
+<p>
+    Com ele, o site pode ser revisado em:
+</p>
+
+<pre><code>http://127.0.0.1:8000/</code></pre>
+
+<p>
+    Isso permite conferir visualmente navegação, CSS, JavaScript, páginas de conteúdo,
+    tags e links antes de publicar.
+</p>
+
+
+<h2>Proteção no processo de commit</h2>
+
+<p>
+    Para reduzir a possibilidade de enviar ao Git um site parcialmente reconstruído,
+    foi criado um hook <code>pre-commit</code>.
+</p>
+
+<p>
+    A configuração local é feita uma vez com:
+</p>
+
+<pre><code>python scripts/install_hooks.py</code></pre>
+
+<p>
+    Durante um commit, o hook executa o rebuild e a validação.
+</p>
+
+<p>
+    Se o rebuild detectar que algum arquivo precisava ser atualizado, o commit é
+    interrompido. A alteração gerada precisa ser revisada e adicionada conscientemente
+    antes de uma nova tentativa.
+</p>
+
+<p>
+    Essa decisão evita utilizar <code>git add</code> automaticamente dentro do hook.
+</p>
+
+
+<h2>Manutenção e apoio de IA</h2>
+
+<p>
+    Como o site passou a possuir várias páginas independentes, também foi necessário
+    considerar como uma IA poderá analisar o projeto completo sem depender do envio
+    manual de dezenas de arquivos.
+</p>
+
+<p>
+    Para isso foi criado:
+</p>
+
+<pre><code>python scripts/package_for_ai.py</code></pre>
+
+<p>
+    O script gera:
+</p>
+
+<pre><code>dist/site-for-ai.zip</code></pre>
+
+<p>
+    Esse pacote reúne o código e os documentos relevantes para uma análise global,
+    excluindo diretórios locais e artefatos desnecessários.
+</p>
+
+<p>
+    Além disso, os HTMLs e a documentação do projeto contêm instruções de manutenção para
+    indicar quais regiões são editáveis, quais são geradas automaticamente e quais
+    alterações exigem rebuild de outros arquivos.
+</p>
+
+
+<h2>Fluxo de trabalho resultante</h2>
+
+<p>
+    Para uma alteração comum, o processo passou a seguir aproximadamente esta sequência:
+</p>
+
+<pre><code>ativar .venv
+        ↓
+editar conteúdo ou código
+        ↓
+python scripts/rebuild.py
+        ↓
+python scripts/validate.py
+        ↓
+python scripts/serve.py
+        ↓
+git diff
+        ↓
+git add
+        ↓
+git commit
+        ↓
+pre-commit valida novamente
+        ↓
+git push
+        ↓
+deploy</code></pre>
+
+
+<h2>Resultado</h2>
+
+<p>
+    A nova estrutura mantém a característica que considero importante para este projeto:
+    o site continua simples de publicar e servir.
+</p>
+
+<p>
+    A diferença é que a simplicidade da infraestrutura deixou de significar concentração
+    de todo o conteúdo em um único documento.
+</p>
+
+<p>
+    O site agora combina:
+</p>
+
+<ul>
+    <li>páginas HTML independentes;</li>
+    <li>URLs permanentes por conteúdo;</li>
+    <li>melhor separação entre Blog, Portfólio e Base de Conhecimento;</li>
+    <li>tags com páginas próprias;</li>
+    <li>sitemap gerado automaticamente;</li>
+    <li>validação local;</li>
+    <li>automação do processo de manutenção;</li>
+    <li>publicação final totalmente estática.</li>
+</ul>
+
+<p>
+    A mudança representa uma evolução do projeto sem abandonar sua premissa inicial:
+    utilizar tecnologias simples, compreender o funcionamento do que está sendo
+    publicado e automatizar apenas as tarefas em que a automação reduz erros e trabalho
+    repetitivo.
+</p>
+<!-- CONTENT-BODY:END --></div>
+<!-- GENERATED:CONTENT-LINKS:START --><div class="content-actions"><a href="/blog/">← Voltar ao índice</a><a href="/tags/">Explorar tags</a></div><!-- GENERATED:CONTENT-LINKS:END -->
+</article></main>
+<!-- GENERATED:SITE-FOOTER:START --><footer class="footer">
+  <div class="container footer-inner">
+    <div><strong>Daniel Rodrigo Fleck</strong><br><span class="generated-note">Site pessoal, portfólio técnico e registros de aprendizado.</span></div>
+    <div class="footer-links">
+      <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="mailto:danielfleck@gmail.com">Contato</a>
+    </div>
+    <div class="footer-note"><strong>Privacidade:</strong> o código deste site não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A infraestrutura de hospedagem pode processar registros técnicos conforme o serviço e seus documentos aplicáveis. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
+  </div>
+</footer><!-- GENERATED:SITE-FOOTER:END -->
+</body></html>

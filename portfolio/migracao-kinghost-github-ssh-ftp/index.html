@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+<!-- GENERATED:SEO:START --><title>Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH, FTP e deploy | Daniel Fleck</title><meta name="description" content="Migração técnica do site para a KingHost, preservando o GitHub como fonte do código e separando infraestrutura da frente própria de governança jurídica e de dados."><link rel="canonical" href="https://daniel.fleck.dev.br/portfolio/migracao-kinghost-github-ssh-ftp/"><meta property="og:type" content="article"><meta property="og:title" content="Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH, FTP e deploy"><meta property="og:description" content="Migração técnica do site para a KingHost, preservando o GitHub como fonte do código e separando infraestrutura da frente própria de governança jurídica e de dados."><meta property="og:url" content="https://daniel.fleck.dev.br/portfolio/migracao-kinghost-github-ssh-ftp/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","headline":"Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH, FTP e deploy","name":"Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH, FTP e deploy","description":"Migração técnica do site para a KingHost, preservando o GitHub como fonte do código e separando infraestrutura da frente própria de governança jurídica e de dados.","url":"https://daniel.fleck.dev.br/portfolio/migracao-kinghost-github-ssh-ftp/","datePublished":"2026-08-08","dateModified":"2026-08-08","inLanguage":"pt-BR","keywords":["KingHost","GitHub","Git","SSH","FTP","DNS","Registro.br","Webhook","Segurança","Infraestrutura"],"author":{"@type":"Person","name":"Daniel Rodrigo Fleck","url":"https://daniel.fleck.dev.br/"}}</script><!-- GENERATED:SEO:END -->
+<link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/layout.css"><link rel="stylesheet" href="/css/components.css"><link rel="stylesheet" href="/css/pages.css">
+<script src="/js/main.js" defer></script>
+</head>
+<body class="content-portfolio">
+<!--
+AI-MAINTENANCE
+- Este site é publicado como HTML/CSS/JS estático. Python é usado somente no desenvolvimento/rebuild.
+- Navegação e rodapé vêm de templates/partials/ e são replicados por scripts/rebuild.py.
+- NÃO edite manualmente conteúdo entre marcadores GENERATED:*; altere a fonte indicada e execute: python scripts/rebuild.py.
+- Para alterações de conteúdo, pesquise referências no repositório e execute python scripts/validate.py antes do commit.
+- Instruções completas: /docs/AI-MAINTENANCE.md no repositório.
+-->
+<!-- GENERATED:SITE-NAV:START --><nav class="topbar">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Início">
+      <span class="brand-badge">D</span>
+      <span><span class="brand-title">daniel.fleck.dev.br</span><span class="brand-subtitle">Sistemas • Sustentação • Dados • Requisitos</span></span>
+    </a>
+    <div class="nav-actions" aria-label="Navegação principal">
+      <a class="nav-link" href="/">Início</a>
+      <a class="nav-link" href="/portfolio/">Portfólio</a>
+      <a class="nav-link" href="/ferramentas/">Ferramentas</a>
+      <a class="nav-link" href="/curriculo.html">Currículo</a>
+      <a class="nav-link" href="/blog/">Blog</a>
+      <a class="nav-link" href="/erros/">Erros &amp; Soluções</a>
+      <a class="nav-link" href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="nav-link" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap GitHub</a>
+    </div>
+  </div>
+</nav><!-- GENERATED:SITE-NAV:END -->
+<main class="container"><article class="section">
+<!--
+AI-CONTENT-MAINTENANCE
+- CONTENT-META é a fonte de título, resumo, data, categoria/status e tags desta página.
+- O texto editorial é editado SOMENTE entre CONTENT-BODY:START e CONTENT-BODY:END.
+- Alterou CONTENT-META? Execute python scripts/rebuild.py: ele atualiza SEO, JSON-LD, cabeçalho, índices, nuvem, páginas de tags e sitemap.
+- Não mantenha listas paralelas em JSON: os metadados permanecem neste próprio HTML.
+- Se a edição descrever problema técnico identificado e solucionado, verifique /erros/; edite registro equivalente ou crie um novo com python scripts/create_content.py erro.
+- Se faltar mensagem exata, contexto, evidência, solução ou confirmação do resultado, uma IA deve perguntar ao usuário em vez de inventar.
+-->
+<!-- CONTENT-META
+type: portfolio
+slug: migracao-kinghost-github-ssh-ftp
+title: Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH, FTP e deploy
+summary: Migração técnica do site para a KingHost, preservando o GitHub como fonte do código e separando infraestrutura da frente própria de governança jurídica e de dados.
+published: 2026-08-08
+display_date: Ago 2026
+category: Portfólio
+status: 
+featured: true
+tags: KingHost | GitHub | Git | SSH | FTP | DNS | Registro.br | Webhook | Segurança | Infraestrutura
+-->
+<!-- GENERATED:ARTICLE-HEADER:START --><header class="page-header"><div class="article-meta"><span class="tag brand">Portfólio</span><span class="tag">Ago 2026</span></div><h1>Migração de hospedagem: Vercel → KingHost com GitHub, DNS, SSH, FTP e deploy</h1><p class="page-summary">Migração técnica do site para a KingHost, preservando o GitHub como fonte do código e separando infraestrutura da frente própria de governança jurídica e de dados.</p><div class="tag-row"><a class="tag" href="/tags/kinghost/">KingHost</a><a class="tag" href="/tags/github/">GitHub</a><a class="tag" href="/tags/git/">Git</a><a class="tag" href="/tags/ssh/">SSH</a><a class="tag" href="/tags/ftp/">FTP</a><a class="tag" href="/tags/dns/">DNS</a><a class="tag" href="/tags/registro-br/">Registro.br</a><a class="tag" href="/tags/webhook/">Webhook</a><a class="tag" href="/tags/seguranca/">Segurança</a><a class="tag" href="/tags/infraestrutura/">Infraestrutura</a></div></header><!-- GENERATED:ARTICLE-HEADER:END -->
+<div class="article-content"><!-- CONTENT-BODY:START -->
+<h2>Descrição</h2><p>O trabalho envolveu Registro.br e DNS, preparação inicial do diretório remoto via SSH, integração GitHub/KingHost, validação de webhook, revisão e redução de permissões OAuth e proteção das contas administrativas. O FTP administrativo permanece desativado por padrão; a publicação posterior ocorre pelo mecanismo gerenciado de integração com Git da hospedagem. A construção de Termos de Uso, Política de Privacidade, LGPD, Marco Civil e governança de logs foi documentada em um item próprio do portfólio.</p><h2>Links e evidências</h2><div class="portfolio-links"><a class="project-link" href="/blog/migracao-vercel-kinghost-seguranca/">Ler estudo de caso completo</a><a class="project-link" href="https://github.com/danielfleck/daniel.fleck.dev.br" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a></div>
+<!-- CONTENT-BODY:END --></div>
+<!-- GENERATED:CONTENT-LINKS:START --><div class="content-actions"><a href="/portfolio/">← Voltar ao índice</a><a href="/tags/">Explorar tags</a></div><!-- GENERATED:CONTENT-LINKS:END -->
+</article></main>
+<!-- GENERATED:SITE-FOOTER:START --><footer class="footer">
+  <div class="container footer-inner">
+    <div><strong>Daniel Rodrigo Fleck</strong><br><span class="generated-note">Site pessoal, portfólio técnico e registros de aprendizado.</span></div>
+    <div class="footer-links">
+      <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="mailto:danielfleck@gmail.com">Contato</a>
+    </div>
+    <div class="footer-note"><strong>Privacidade:</strong> o código deste site não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A infraestrutura de hospedagem pode processar registros técnicos conforme o serviço e seus documentos aplicáveis. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
+  </div>
+</footer><!-- GENERATED:SITE-FOOTER:END -->
+</body></html>
