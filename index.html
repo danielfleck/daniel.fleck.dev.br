@@ -708,11 +708,12 @@
         }
 
         .nav {
-            height: 68px;
+            min-height: 68px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 18px;
+            gap: 14px 18px;
+            padding: 8px 0;
         }
 
         .brand {
@@ -737,10 +738,14 @@
         .brand-subtitle { display: block; color: var(--muted); font-size: 12px; font-weight: 600; }
 
         .nav-actions {
+            flex: 1 1 620px;
             display: flex;
             align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
             gap: 6px;
-            overflow-x: auto;
+            min-width: 0;
+            overflow: visible;
         }
 
         .nav-btn {
@@ -974,17 +979,17 @@
         .tag.warn { background: #fef3c7; color: #92400e; border-color: #fde68a; }
 
         .word-cloud {
-            min-height: 280px;
-            margin-top: 16px;
-            padding: 34px 42px;
+            min-height: 0;
+            margin-top: 12px;
+            padding: 12px 14px;
             display: flex;
             flex-wrap: wrap;
-            align-content: center;
-            align-items: center;
+            align-content: flex-start;
+            align-items: baseline;
             justify-content: center;
-            gap: 12px 24px;
-            overflow: hidden;
-            border-radius: 22px;
+            gap: 4px 9px;
+            overflow: visible;
+            border-radius: 16px;
             border: 1px solid var(--line);
             background:
                 radial-gradient(ellipse at center, rgba(255,255,255,.98) 0%, rgba(248,250,252,.92) 58%, rgba(239,246,255,.88) 100%);
@@ -995,20 +1000,20 @@
             display: inline-block;
             border: 0;
             background: transparent;
-            padding: 3px 5px;
+            padding: 1px 2px;
+            max-width: 100%;
             font-weight: 900;
-            line-height: 1.05;
+            line-height: 1;
             cursor: pointer;
             white-space: nowrap;
             opacity: .9;
-            transform-origin: center;
-            transition: transform .15s ease, opacity .15s ease;
+            transform: none !important;
+            transition: opacity .15s ease, text-decoration-color .15s ease;
         }
 
         .word-cloud-item:hover {
             opacity: 1;
             text-decoration: underline;
-            transform: scale(1.07) !important;
         }
 
         .word-cloud-item.blue { color: #1f4e79; }
@@ -1051,7 +1056,8 @@
 
         .profile-answer-card .answer-label,
         .home-block-head .answer-label,
-        .home-evidence-card .answer-label {
+        .home-evidence-card .answer-label,
+        .contact-card .answer-label {
             color: var(--brand);
             font-size: 11px;
             font-weight: 950;
@@ -1089,7 +1095,7 @@
 
         .home-evidence-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px;
         }
 
@@ -1121,8 +1127,26 @@
             line-height: 1.55;
         }
 
-        .contact-card { margin-top: 18px; }
-        .contact-card .project-links { margin-top: 18px; }
+        .contact-card {
+            margin-top: 18px;
+            display: block;
+        }
+
+        .contact-card h3 {
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+
+        .contact-card > p {
+            max-width: 920px;
+        }
+
+        .contact-card .project-links {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
         .dashboard-grid {
             display: grid;
@@ -1565,16 +1589,26 @@
         @media (max-width: 920px) {
             .hero-grid, .dashboard-grid, .grid-2, .tools-layout, .blog-layout { grid-template-columns: 1fr; }
             .grid-3, .project-grid, .profile-answer-grid { grid-template-columns: repeat(2, 1fr); }
-            .home-evidence-grid { grid-template-columns: 1fr; }
+            .home-evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .home-block-head { align-items: flex-start; flex-direction: column; }
             .section-head { align-items: flex-start; flex-direction: column; }
             .article-list { position: static; max-height: none; overflow: visible; padding-right: 0; }
             .brand { min-width: auto; }
+            .nav {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .nav-actions {
+                width: 100%;
+                flex-basis: auto;
+                justify-content: flex-start;
+            }
         }
 
         @media (max-width: 640px) {
-            .nav { height: auto; align-items: flex-start; padding: 12px 0; flex-direction: column; }
-            .nav-actions { width: 100%; padding-bottom: 2px; }
+            .nav { min-height: 0; padding: 10px 0; }
+            .nav-actions { width: 100%; padding-bottom: 2px; gap: 4px; }
+            .nav-btn { padding: 8px 10px; font-size: 13px; }
             .brand-subtitle { display: none; }
             .hero { padding: 44px 0 32px; }
             .countdown { grid-template-columns: repeat(2, 1fr); }
@@ -1582,7 +1616,7 @@
             .phase { grid-template-columns: 1fr; }
             .phase-status { width: max-content; }
             .footer-inner { flex-direction: column; align-items: flex-start; }
-            .word-cloud { min-height: 300px; padding: 24px 16px; gap: 10px 15px; }
+            .word-cloud { min-height: 0; padding: 10px; gap: 4px 7px; }
             .link-preview-grid { grid-template-columns: 1fr; }
             .link-preview img { height: 170px; }
         }
@@ -1664,7 +1698,6 @@
             </a>
             <div class="nav-actions" aria-label="Navegação principal">
                 <button class="nav-btn active" id="btn-painel" onclick="showSection('painel')">Painel</button>
-                <button class="nav-btn" id="btn-roadmap" onclick="showSection('roadmap')">Plano 2026</button>
                 <button class="nav-btn" id="btn-projetos" onclick="showSection('projetos')">Portfólio</button>
                 <button class="nav-btn" id="btn-ferramentas" onclick="showSection('ferramentas')">Ferramentas</button>
                 <a class="nav-btn" href="/curriculo.html">Currículo</a>
@@ -1761,7 +1794,7 @@
                     <div class="answer-label">Experiências e entregas</div>
                     <h3>Evidências principais do portfólio</h3>
                 </div>
-                <p>Dois sistemas corporativos utilizados em produção e três entregas/casos atuais, com código público, migrations, integração de deploy, migração de hospedagem e domínio próprio.</p>
+                <p>Experiências e entregas selecionadas, com sistemas utilizados em produção, código público, migrations, integração de deploy, migração de hospedagem, domínio próprio e troubleshooting documentado.</p>
             </div>
 
             <div class="home-evidence-grid">
@@ -1797,6 +1830,18 @@
                     </div>
                     <div class="project-links"><a class="project-link" href="#" onclick="openArticleFromTag('siscopweb-portfolio-historico'); return false;">Ler estudo de caso</a></div>
                 </article>
+
+                <article class="card home-evidence-card">
+                    <div class="answer-label">Troubleshooting documentado • 2026</div>
+                    <h3>Base de Conhecimento — Erros e Soluções</h3>
+                    <p>Registro estruturado de problemas reais encontrados durante desenvolvimento, integração, deploy e sustentação, com contexto, evidências, diagnóstico, solução aplicada e aprendizado para ocorrências futuras.</p>
+                    <div class="tag-row">
+                        <span class="tag brand">Troubleshooting</span><span class="tag">Erros conhecidos</span><span class="tag">Soluções</span>
+                    </div>
+                    <div class="project-links">
+                        <a class="project-link" href="#erros" onclick="openKnownErrors(); return false;">Consultar erros e soluções</a>
+                    </div>
+                </article>
             </div>
 
             <div class="dashboard-grid" style="margin-top: 28px;">
@@ -1826,7 +1871,7 @@
                 </div>
             </div>
 
-            <div class="card contact-card">
+            <article class="card contact-card">
                 <div class="answer-label">Currículo, código e contato</div>
                 <h3>Onde consultar informações profissionais</h3>
                 <p>O currículo detalha experiência, formação e competências. O GitHub concentra código e documentação, enquanto o e-mail e o LinkedIn são os canais para conversas profissionais e sondagens de mercado.</p>
@@ -1837,7 +1882,7 @@
                     <a class="project-link" href="https://www.linkedin.com/in/daniel-rodrigo-fleck/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a class="project-link" href="mailto:danielfleck@gmail.com">E-mail</a>
                 </div>
-            </div>
+            </article>
 
             <div class="card" style="margin-top: 18px;">
                 <h3>Nuvem de tags do conteúdo técnico</h3>
@@ -1869,10 +1914,15 @@
                    sincronizar também esta cópia estática.
                 6. Não manter uma terceira lista manual de tags no JavaScript. A função
                    getBlogTagMap() deve derivar a nuvem de articles[] e knownErrors[].
-                7. Não alterar palette, sizeScale, rotations ou a lógica de frequência
-                   apenas para inserir conteúdo; isso é apresentação da nuvem, não dado.
+                7. O tamanho visual deve ser calculado diretamente pela frequência:
+                   maior frequência = maior fonte; menor frequência = menor fonte.
+                   A fonte deve permanecer entre 11px e 20px. Não voltar a usar uma
+                   escala cíclica por posição, pois tags com a mesma frequência devem
+                   receber o mesmo tamanho.
+                8. Manter a nuvem compacta: sem rotações, com pequenos gaps e sem
+                   min-height artificial.
                 -->
-                <div class="word-cloud" id="blogTagCloud" aria-label="Nuvem de tags do conteúdo técnico"><a href="#tag-GitHub" class="word-cloud-item blue" data-tag="GitHub" style="font-size:3.51rem; transform:rotate(0deg);">GitHub</a><a href="#tag-KingHost" class="word-cloud-item teal" data-tag="KingHost" style="font-size:2.19rem; transform:rotate(-5deg);">KingHost</a><a href="#tag-IA%20Generativa" class="word-cloud-item orange" data-tag="IA Generativa" style="font-size:2.37rem; transform:rotate(4deg);">IA Generativa</a><a href="#tag-Portf%C3%B3lio" class="word-cloud-item muted" data-tag="Portfólio" style="font-size:1.57rem; transform:rotate(0deg);">Portfólio</a><a href="#tag-PostgreSQL" class="word-cloud-item blue" data-tag="PostgreSQL" style="font-size:2.12rem; transform:rotate(-3deg);">PostgreSQL</a><a href="#tag-Sustenta%C3%A7%C3%A3o" class="word-cloud-item teal" data-tag="Sustentação" style="font-size:1.44rem; transform:rotate(5deg);">Sustentação</a><a href="#tag-Webhook" class="word-cloud-item orange" data-tag="Webhook" style="font-size:1.74rem; transform:rotate(0deg);">Webhook</a><a href="#tag-Backlog" class="word-cloud-item muted" data-tag="Backlog" style="font-size:1.05rem; transform:rotate(2deg);">Backlog</a><a href="#tag-Blog" class="word-cloud-item blue" data-tag="Blog" style="font-size:2.55rem; transform:rotate(0deg);">Blog</a><a href="#tag-Carreira" class="word-cloud-item teal" data-tag="Carreira" style="font-size:1.55rem; transform:rotate(-5deg);">Carreira</a><a href="#tag-Confluence" class="word-cloud-item orange" data-tag="Confluence" style="font-size:2.05rem; transform:rotate(4deg);">Confluence</a><a href="#tag-Corregedoria" class="word-cloud-item muted" data-tag="Corregedoria" style="font-size:1.25rem; transform:rotate(0deg);">Corregedoria</a><a href="#tag-Deploy" class="word-cloud-item blue" data-tag="Deploy" style="font-size:1.80rem; transform:rotate(-3deg);">Deploy</a><a href="#tag-DNS" class="word-cloud-item teal" data-tag="DNS" style="font-size:1.12rem; transform:rotate(5deg);">DNS</a><a href="#tag-Documenta%C3%A7%C3%A3o" class="word-cloud-item orange" data-tag="Documentação" style="font-size:1.42rem; transform:rotate(0deg);">Documentação</a><a href="#tag-Evid%C3%AAncias" class="word-cloud-item muted" data-tag="Evidências" style="font-size:1.05rem; transform:rotate(2deg);">Evidências</a><a href="#tag-Falha%20de%20conectividade" class="word-cloud-item blue" data-tag="Falha de conectividade" style="font-size:2.55rem; transform:rotate(0deg);">Falha de conectividade</a><a href="#tag-FTP" class="word-cloud-item teal" data-tag="FTP" style="font-size:1.55rem; transform:rotate(-5deg);">FTP</a><a href="#tag-Git" class="word-cloud-item orange" data-tag="Git" style="font-size:2.05rem; transform:rotate(4deg);">Git</a><a href="#tag-Governan%C3%A7a%20de%20Dados" class="word-cloud-item muted" data-tag="Governança de Dados" style="font-size:1.25rem; transform:rotate(0deg);">Governança de Dados</a><a href="#tag-Infraestrutura" class="word-cloud-item blue" data-tag="Infraestrutura" style="font-size:1.80rem; transform:rotate(-3deg);">Infraestrutura</a><a href="#tag-Integra%C3%A7%C3%A3o" class="word-cloud-item teal" data-tag="Integração" style="font-size:1.12rem; transform:rotate(5deg);">Integração</a><a href="#tag-Jira" class="word-cloud-item orange" data-tag="Jira" style="font-size:1.42rem; transform:rotate(0deg);">Jira</a><a href="#tag-Kanban" class="word-cloud-item muted" data-tag="Kanban" style="font-size:1.05rem; transform:rotate(2deg);">Kanban</a><a href="#tag-LGPD" class="word-cloud-item blue" data-tag="LGPD" style="font-size:2.55rem; transform:rotate(0deg);">LGPD</a><a href="#tag-Logs" class="word-cloud-item teal" data-tag="Logs" style="font-size:1.55rem; transform:rotate(-5deg);">Logs</a><a href="#tag-Marco%20Civil" class="word-cloud-item orange" data-tag="Marco Civil" style="font-size:2.05rem; transform:rotate(4deg);">Marco Civil</a><a href="#tag-Migrations" class="word-cloud-item muted" data-tag="Migrations" style="font-size:1.25rem; transform:rotate(0deg);">Migrations</a><a href="#tag-pgAdmin%204" class="word-cloud-item blue" data-tag="pgAdmin 4" style="font-size:1.80rem; transform:rotate(-3deg);">pgAdmin 4</a><a href="#tag-Planejamento" class="word-cloud-item teal" data-tag="Planejamento" style="font-size:1.12rem; transform:rotate(5deg);">Planejamento</a><a href="#tag-Privacidade" class="word-cloud-item orange" data-tag="Privacidade" style="font-size:1.42rem; transform:rotate(0deg);">Privacidade</a><a href="#tag-Registro.br" class="word-cloud-item muted" data-tag="Registro.br" style="font-size:1.05rem; transform:rotate(2deg);">Registro.br</a><a href="#tag-Requisitos" class="word-cloud-item blue" data-tag="Requisitos" style="font-size:2.55rem; transform:rotate(0deg);">Requisitos</a><a href="#tag-Roadmap" class="word-cloud-item teal" data-tag="Roadmap" style="font-size:1.55rem; transform:rotate(-5deg);">Roadmap</a><a href="#tag-Seguran%C3%A7a" class="word-cloud-item orange" data-tag="Segurança" style="font-size:2.05rem; transform:rotate(4deg);">Segurança</a><a href="#tag-Seguran%C3%A7a%20da%20Informa%C3%A7%C3%A3o" class="word-cloud-item muted" data-tag="Segurança da Informação" style="font-size:1.25rem; transform:rotate(0deg);">Segurança da Informação</a><a href="#tag-Sistema%20de%20Controle%20Operacional" class="word-cloud-item blue" data-tag="Sistema de Controle Operacional" style="font-size:1.80rem; transform:rotate(-3deg);">Sistema de Controle Operacional</a><a href="#tag-Sistema%20de%20Corregedoria" class="word-cloud-item teal" data-tag="Sistema de Corregedoria" style="font-size:1.12rem; transform:rotate(5deg);">Sistema de Corregedoria</a><a href="#tag-Sistemas%20Corporativos" class="word-cloud-item orange" data-tag="Sistemas Corporativos" style="font-size:1.42rem; transform:rotate(0deg);">Sistemas Corporativos</a><a href="#tag-Sistemas%20Cr%C3%ADticos" class="word-cloud-item muted" data-tag="Sistemas Críticos" style="font-size:1.05rem; transform:rotate(2deg);">Sistemas Críticos</a><a href="#tag-SPA" class="word-cloud-item blue" data-tag="SPA" style="font-size:2.55rem; transform:rotate(0deg);">SPA</a><a href="#tag-SQL" class="word-cloud-item teal" data-tag="SQL" style="font-size:1.55rem; transform:rotate(-5deg);">SQL</a><a href="#tag-SSH" class="word-cloud-item orange" data-tag="SSH" style="font-size:2.05rem; transform:rotate(4deg);">SSH</a><a href="#tag-Supabase" class="word-cloud-item muted" data-tag="Supabase" style="font-size:1.25rem; transform:rotate(0deg);">Supabase</a><a href="#tag-Termos%20de%20Uso" class="word-cloud-item blue" data-tag="Termos de Uso" style="font-size:1.80rem; transform:rotate(-3deg);">Termos de Uso</a><a href="#tag-Troubleshooting" class="word-cloud-item teal" data-tag="Troubleshooting" style="font-size:1.12rem; transform:rotate(5deg);">Troubleshooting</a><a href="#tag-Vercel" class="word-cloud-item orange" data-tag="Vercel" style="font-size:1.42rem; transform:rotate(0deg);">Vercel</a><a href="#tag-Versionamento" class="word-cloud-item muted" data-tag="Versionamento" style="font-size:1.05rem; transform:rotate(2deg);">Versionamento</a><a href="#tag-Wiki" class="word-cloud-item blue" data-tag="Wiki" style="font-size:2.55rem; transform:rotate(0deg);">Wiki</a></div>
+                <div class="word-cloud" id="blogTagCloud" aria-label="Nuvem de tags do conteúdo técnico"><a href="#tag-GitHub" class="word-cloud-item blue" data-tag="GitHub" title="GitHub — 4 ocorrência(s)" style="font-size:20.0px;">GitHub</a><a href="#tag-KingHost" class="word-cloud-item teal" data-tag="KingHost" title="KingHost — 3 ocorrência(s)" style="font-size:17.0px;">KingHost</a><a href="#tag-IA%20Generativa" class="word-cloud-item orange" data-tag="IA Generativa" title="IA Generativa — 2 ocorrência(s)" style="font-size:14.0px;">IA Generativa</a><a href="#tag-PostgreSQL" class="word-cloud-item muted" data-tag="PostgreSQL" title="PostgreSQL — 2 ocorrência(s)" style="font-size:14.0px;">PostgreSQL</a><a href="#tag-Sustenta%C3%A7%C3%A3o" class="word-cloud-item blue" data-tag="Sustentação" title="Sustentação — 2 ocorrência(s)" style="font-size:14.0px;">Sustentação</a><a href="#tag-Webhook" class="word-cloud-item teal" data-tag="Webhook" title="Webhook — 2 ocorrência(s)" style="font-size:14.0px;">Webhook</a><a href="#tag-Blog" class="word-cloud-item orange" data-tag="Blog" title="Blog — 1 ocorrência(s)" style="font-size:11.0px;">Blog</a><a href="#tag-Carreira" class="word-cloud-item muted" data-tag="Carreira" title="Carreira — 1 ocorrência(s)" style="font-size:11.0px;">Carreira</a><a href="#tag-Confluence" class="word-cloud-item blue" data-tag="Confluence" title="Confluence — 1 ocorrência(s)" style="font-size:11.0px;">Confluence</a><a href="#tag-Corregedoria" class="word-cloud-item teal" data-tag="Corregedoria" title="Corregedoria — 1 ocorrência(s)" style="font-size:11.0px;">Corregedoria</a><a href="#tag-Deploy" class="word-cloud-item orange" data-tag="Deploy" title="Deploy — 1 ocorrência(s)" style="font-size:11.0px;">Deploy</a><a href="#tag-DNS" class="word-cloud-item muted" data-tag="DNS" title="DNS — 1 ocorrência(s)" style="font-size:11.0px;">DNS</a><a href="#tag-Documenta%C3%A7%C3%A3o" class="word-cloud-item blue" data-tag="Documentação" title="Documentação — 1 ocorrência(s)" style="font-size:11.0px;">Documentação</a><a href="#tag-Evid%C3%AAncias" class="word-cloud-item teal" data-tag="Evidências" title="Evidências — 1 ocorrência(s)" style="font-size:11.0px;">Evidências</a><a href="#tag-Falha%20de%20conectividade" class="word-cloud-item orange" data-tag="Falha de conectividade" title="Falha de conectividade — 1 ocorrência(s)" style="font-size:11.0px;">Falha de conectividade</a><a href="#tag-FTP" class="word-cloud-item muted" data-tag="FTP" title="FTP — 1 ocorrência(s)" style="font-size:11.0px;">FTP</a><a href="#tag-Git" class="word-cloud-item blue" data-tag="Git" title="Git — 1 ocorrência(s)" style="font-size:11.0px;">Git</a><a href="#tag-Governan%C3%A7a%20de%20Dados" class="word-cloud-item teal" data-tag="Governança de Dados" title="Governança de Dados — 1 ocorrência(s)" style="font-size:11.0px;">Governança de Dados</a><a href="#tag-Infraestrutura" class="word-cloud-item orange" data-tag="Infraestrutura" title="Infraestrutura — 1 ocorrência(s)" style="font-size:11.0px;">Infraestrutura</a><a href="#tag-Integra%C3%A7%C3%A3o" class="word-cloud-item muted" data-tag="Integração" title="Integração — 1 ocorrência(s)" style="font-size:11.0px;">Integração</a><a href="#tag-LGPD" class="word-cloud-item blue" data-tag="LGPD" title="LGPD — 1 ocorrência(s)" style="font-size:11.0px;">LGPD</a><a href="#tag-Logs" class="word-cloud-item teal" data-tag="Logs" title="Logs — 1 ocorrência(s)" style="font-size:11.0px;">Logs</a><a href="#tag-Marco%20Civil" class="word-cloud-item orange" data-tag="Marco Civil" title="Marco Civil — 1 ocorrência(s)" style="font-size:11.0px;">Marco Civil</a><a href="#tag-Migrations" class="word-cloud-item muted" data-tag="Migrations" title="Migrations — 1 ocorrência(s)" style="font-size:11.0px;">Migrations</a><a href="#tag-pgAdmin%204" class="word-cloud-item blue" data-tag="pgAdmin 4" title="pgAdmin 4 — 1 ocorrência(s)" style="font-size:11.0px;">pgAdmin 4</a><a href="#tag-Portf%C3%B3lio" class="word-cloud-item teal" data-tag="Portfólio" title="Portfólio — 1 ocorrência(s)" style="font-size:11.0px;">Portfólio</a><a href="#tag-Privacidade" class="word-cloud-item orange" data-tag="Privacidade" title="Privacidade — 1 ocorrência(s)" style="font-size:11.0px;">Privacidade</a><a href="#tag-Registro.br" class="word-cloud-item muted" data-tag="Registro.br" title="Registro.br — 1 ocorrência(s)" style="font-size:11.0px;">Registro.br</a><a href="#tag-Requisitos" class="word-cloud-item blue" data-tag="Requisitos" title="Requisitos — 1 ocorrência(s)" style="font-size:11.0px;">Requisitos</a><a href="#tag-Seguran%C3%A7a" class="word-cloud-item teal" data-tag="Segurança" title="Segurança — 1 ocorrência(s)" style="font-size:11.0px;">Segurança</a><a href="#tag-Seguran%C3%A7a%20da%20Informa%C3%A7%C3%A3o" class="word-cloud-item orange" data-tag="Segurança da Informação" title="Segurança da Informação — 1 ocorrência(s)" style="font-size:11.0px;">Segurança da Informação</a><a href="#tag-Sistema%20de%20Controle%20Operacional" class="word-cloud-item muted" data-tag="Sistema de Controle Operacional" title="Sistema de Controle Operacional — 1 ocorrência(s)" style="font-size:11.0px;">Sistema de Controle Operacional</a><a href="#tag-Sistema%20de%20Corregedoria" class="word-cloud-item blue" data-tag="Sistema de Corregedoria" title="Sistema de Corregedoria — 1 ocorrência(s)" style="font-size:11.0px;">Sistema de Corregedoria</a><a href="#tag-Sistemas%20Corporativos" class="word-cloud-item teal" data-tag="Sistemas Corporativos" title="Sistemas Corporativos — 1 ocorrência(s)" style="font-size:11.0px;">Sistemas Corporativos</a><a href="#tag-Sistemas%20Cr%C3%ADticos" class="word-cloud-item orange" data-tag="Sistemas Críticos" title="Sistemas Críticos — 1 ocorrência(s)" style="font-size:11.0px;">Sistemas Críticos</a><a href="#tag-SPA" class="word-cloud-item muted" data-tag="SPA" title="SPA — 1 ocorrência(s)" style="font-size:11.0px;">SPA</a><a href="#tag-SQL" class="word-cloud-item blue" data-tag="SQL" title="SQL — 1 ocorrência(s)" style="font-size:11.0px;">SQL</a><a href="#tag-SSH" class="word-cloud-item teal" data-tag="SSH" title="SSH — 1 ocorrência(s)" style="font-size:11.0px;">SSH</a><a href="#tag-Supabase" class="word-cloud-item orange" data-tag="Supabase" title="Supabase — 1 ocorrência(s)" style="font-size:11.0px;">Supabase</a><a href="#tag-Termos%20de%20Uso" class="word-cloud-item muted" data-tag="Termos de Uso" title="Termos de Uso — 1 ocorrência(s)" style="font-size:11.0px;">Termos de Uso</a><a href="#tag-Troubleshooting" class="word-cloud-item blue" data-tag="Troubleshooting" title="Troubleshooting — 1 ocorrência(s)" style="font-size:11.0px;">Troubleshooting</a><a href="#tag-Vercel" class="word-cloud-item teal" data-tag="Vercel" title="Vercel — 1 ocorrência(s)" style="font-size:11.0px;">Vercel</a><a href="#tag-Wiki" class="word-cloud-item orange" data-tag="Wiki" title="Wiki — 1 ocorrência(s)" style="font-size:11.0px;">Wiki</a></div>
             </div>
 
             <div class="grid-3" style="margin-top: 18px;">
@@ -3169,6 +3219,12 @@ where schema_name = 'transicao';</code></pre>
     NÃO carregar imagens, fontes, scripts ou CSS de terceiros.
     Se houver imagem, usar caminho relativo para arquivo realmente existente, por exemplo
     images/nome-do-arquivo.png. Nunca usar base64/data URI.
+
+    NAVEGAÇÃO SUPERIOR:
+    - manter .nav-actions com flex-wrap; não usar overflow-x:auto na navegação;
+    - se novos itens tornarem o menu largo, permitir segunda linha em vez de criar
+      rolagem horizontal;
+    - evitar reinserir "Plano 2026" no menu superior sem solicitação explícita.
 
     IDENTIFICADORES
     Escolher um ID/slug estável, sem espaços, preferencialmente:
@@ -4520,17 +4576,32 @@ where schema_name = 'transicao';</code></pre>
                 return a.localeCompare(b, 'pt-BR');
             });
 
+            if (!tags.length) {
+                cloud.innerHTML = '';
+                return;
+            }
+
             const palette = ['blue', 'teal', 'orange', 'muted'];
-            const sizeScale = [2.55, 1.55, 2.05, 1.25, 1.8, 1.12, 1.42, 1.05];
-            const rotations = [0, -5, 4, 0, -3, 5, 0, 2];
+            const frequencies = tags.map(tag => tagMap[tag].length);
+            const minFrequency = Math.min(...frequencies);
+            const maxFrequency = Math.max(...frequencies);
+            const minFontPx = 11;
+            const maxFontPx = 20;
 
             cloud.innerHTML = tags.map((tag, index) => {
-                const frequencyBoost = Math.min((tagMap[tag].length - 1) * 0.32, 0.96);
-                const fontSize = sizeScale[index % sizeScale.length] + frequencyBoost;
+                const frequency = tagMap[tag].length;
+                const ratio = maxFrequency === minFrequency
+                    ? 0.5
+                    : (frequency - minFrequency) / (maxFrequency - minFrequency);
+                const fontSizePx = minFontPx + ratio * (maxFontPx - minFontPx);
                 const color = palette[index % palette.length];
-                const rotation = rotations[index % rotations.length];
 
-                return '<a href="#tag-' + encodeURIComponent(tag) + '" class="word-cloud-item ' + color + '" data-tag="' + escapeHtml(tag) + '" style="font-size:' + fontSize + 'rem; transform:rotate(' + rotation + 'deg);">' + escapeHtml(tag) + '</a>';
+                return '<a href="#tag-' + encodeURIComponent(tag) +
+                    '" class="word-cloud-item ' + color +
+                    '" data-tag="' + escapeHtml(tag) +
+                    '" title="' + escapeHtml(tag) + ' — ' + frequency + ' ocorrência(s)"' +
+                    ' style="font-size:' + fontSizePx.toFixed(1) + 'px;">' +
+                    escapeHtml(tag) + '</a>';
             }).join('');
 
             cloud.querySelectorAll('.word-cloud-item').forEach(link => {
