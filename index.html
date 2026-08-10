@@ -9,7 +9,7 @@
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
     <!--
-    GUIA DE MANUTENÇÃO PARA EDITORES HUMANOS OU IA: JSON-LD DE BLOG E PORTFÓLIO
+    GUIA DE MANUTENÇÃO PARA EDITORES HUMANOS OU IA: JSON-LD DE BLOG, PORTFÓLIO E BASE DE ERROS
 
     Ao inserir, remover ou alterar um post do blog ou item do portfólio, manter também
     os dados estruturados deste bloco sincronizados com o conteúdo visível e com os
@@ -28,6 +28,19 @@
        datePublished e dateModified em YYYY-MM-DD;
        author, publisher, isPartOf e mainEntityOfPage seguindo os posts existentes.
     4. Não inventar URL, tecnologia, data, competência ou publicação que não exista.
+
+    PARA UM NOVO REGISTRO DE ERRO/SOLUÇÃO:
+    1. Manter uma CollectionPage com @id
+       https://daniel.fleck.dev.br/#known-errors.
+    2. Acrescentar o novo registro em hasPart.
+    3. Criar um objeto Article/TechArticle com:
+       @id e url terminando em #erro-ID;
+       headline e description fiéis ao conteúdo;
+       articleSection = "Base de Conhecimento — Erros e Soluções";
+       keywords coerentes com knownErrors[].tags;
+       articleBody correspondente ao texto efetivamente publicado;
+       datePublished/dateModified e author.
+    4. Não registrar hipótese como causa comprovada.
 
     PARA UM NOVO ITEM DO PORTFÓLIO:
     1. Localizar o ItemList com @id https://daniel.fleck.dev.br/#portfolio.
@@ -136,6 +149,52 @@
           "@id": "https://daniel.fleck.dev.br/#post-estrutura-blog-portfolio"
         }
       ]
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://daniel.fleck.dev.br/#known-errors",
+      "url": "https://daniel.fleck.dev.br/#erros",
+      "name": "Base de Conhecimento — Erros e Soluções",
+      "description": "Problemas técnicos reais encontrados, evidências, diagnóstico e soluções aplicadas.",
+      "inLanguage": "pt-BR",
+      "author": {
+        "@id": "https://daniel.fleck.dev.br/#daniel-fleck"
+      },
+      "isPartOf": {
+        "@id": "https://daniel.fleck.dev.br/#website"
+      },
+      "hasPart": [
+        {
+          "@id": "https://daniel.fleck.dev.br/#erro-webhook-github-kinghost-failed-to-connect"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://daniel.fleck.dev.br/#erro-webhook-github-kinghost-failed-to-connect",
+      "url": "https://daniel.fleck.dev.br/#erro-webhook-github-kinghost-failed-to-connect",
+      "headline": "Webhook GitHub → KingHost: falha “failed to connect to host” após um push",
+      "description": "Push confirmado no GitHub, mas publicação não atualizada; uma falha de entrega do webhook foi identificada e recuperada por Redeliver.",
+      "articleSection": "Base de Conhecimento — Erros e Soluções",
+      "keywords": [
+        "GitHub",
+        "Webhook",
+        "KingHost",
+        "Deploy",
+        "Troubleshooting",
+        "Integração",
+        "Falha de conectividade"
+      ],
+      "articleBody": "Webhook GitHub → KingHost: falha failed to connect to host após um push. Resumo: após um push confirmado no GitHub, a atualização do site não ocorreu. O histórico de entregas do webhook mostrou We couldn't deliver this payload: failed to connect to host. A reentrega manual da mesma execução com Redeliver foi concluída com sucesso. Contexto: o código do daniel.fleck.dev.br é versionado no GitHub e a publicação utiliza a integração via Git da KingHost. Problema: o commit estava no repositório, mas a versão publicada permanecia inalterada. Evidências: Recent deliveries indicou falha de entrega e a mesma entrega funcionou quando reenviada. Diagnóstico: falha localizada na etapa de entrega do webhook; a mensagem isolada não comprova causa raiz específica. Solução: Settings, Webhooks, webhook correspondente, Recent deliveries, selecionar a entrega e usar Redeliver; depois validar a publicação. Resultado: não foi necessário alterar código, credenciais ou recriar a integração. Aprendizado: verificar o histórico do webhook antes de modificar servidor, credenciais ou código.",
+      "inLanguage": "pt-BR",
+      "datePublished": "2026-08-10",
+      "dateModified": "2026-08-10",
+      "author": {
+        "@id": "https://daniel.fleck.dev.br/#daniel-fleck"
+      },
+      "isPartOf": {
+        "@id": "https://daniel.fleck.dev.br/#known-errors"
+      }
     },
     {
       "@type": "BlogPosting",
@@ -426,7 +485,7 @@
         "Infraestrutura",
         "Vercel"
       ],
-      "articleBody": "Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy Infraestrutura KingHost GitHub SSH FTP DNS Webhook Segurança A migração foi tratada como uma mudança controlada de infraestrutura: preservar o GitHub como fonte do código, transferir a hospedagem, ajustar DNS e diretórios, validar o deploy e reduzir os acessos administrativos mantidos permanentemente ativos. Por que migrei a hospedagem A primeira publicação do daniel.fleck.dev.br utilizou a Vercel. Com a evolução do site de uma publicação inicial para uma presença profissional mantida continuamente, passei a avaliar uma infraestrutura em que eu pudesse administrar de forma mais direta a hospedagem, os diretórios de publicação, o DNS e os acessos administrativos, além de contar com suporte em português. A escolha da KingHost fez parte dessa evolução operacional. A avaliação contratual, de privacidade e de proteção de dados foi conduzida como uma frente própria de governança , documentada separadamente, para não confundir as tarefas de migração técnica com a construção da base jurídica e documental do site. 1. Proteção das contas administrativas Antes de concluir a publicação, mantive a conta da hospedagem protegida por credencial própria e autenticação multifator. O mesmo princípio é aplicado ao GitHub e ao e-mail principal utilizado na administração do projeto: senhas individuais por serviço e pelo menos dois fatores de autenticação quando o recurso é disponibilizado. 2. DNS no Registro.br Configurei no Registro.br os servidores DNS informados pela KingHost. Após o período normal de propagação, o domínio passou a resolver para a nova infraestrutura. O domínio continua administrado no Registro.br, enquanto a zona DNS e a hospedagem passaram a ser operadas na KingHost. Essa separação de responsabilidades foi importante para diagnosticar corretamente os efeitos de cada alteração durante a migração. 3. FTP apenas para uso administrativo temporário O FTP foi habilitado durante a preparação do ambiente, com credencial própria, e depois desativado. A regra operacional adotada passou a ser simples: FTP permanece desligado por padrão ; quando uma tarefa específica exigir seu uso, ele é ativado apenas pelo tempo necessário e desativado imediatamente após a conclusão. A decisão reduz a superfície de ataque sem eliminar a possibilidade de utilizar o recurso quando uma necessidade administrativa concreta justificar sua ativação. 4. Preparação inicial do diretório por SSH Eu não queria clonar o projeto diretamente no diretório principal da hospedagem. A organização desejada exigia manter o repositório dentro de uma pasta específica sob /www/ , e a configuração direta pela interface de integração com GitHub não atendia inicialmente a esse cenário. Na preparação inicial, utilizei acesso administrativo por SSH para organizar o diretório e realizar o primeiro clone do repositório. Em seguida, associei o diretório já preparado à ferramenta de publicação via Git da KingHost e validei o fluxo automatizado. Depois dessa etapa, o acesso administrativo manual deixou de fazer parte do processo normal de publicação. A integração gerenciada pela hospedagem utiliza os mecanismos técnicos necessários para sincronizar o repositório — a própria documentação da KingHost informa o uso de chaves SSH na Publicação via Git. Por isso, é mais preciso distinguir acesso administrativo interativo do canal técnico utilizado pelo deploy automatizado, sem expor publicamente detalhes operacionais desnecessários da configuração remota. 5. GitHub, webhook e redução de permissões Com a integração ativa, a KingHost configurou um webhook no repositório para atualizar a hospedagem após alterações no GitHub. Durante a configuração, revisei também as permissões concedidas à integração. A aplicação aparecia entre as autorizações OAuth do GitHub com permissões que considerei mais amplas do que o necessário para o meu cenário. Após a configuração, revoguei essa autorização e testei novamente o fluxo. O webhook e a publicação continuaram funcionando. Registrei a decisão como aplicação prática do princípio do menor privilégio : reduzir permissões e, depois, comprovar que a funcionalidade necessária permanece operacional. 6. Recursos de segurança da hospedagem Os serviços web permanecem submetidos aos protocolos e controles de segurança disponibilizados pela provedora. No painel administrativo, mantenho ativados os recursos de segurança disponíveis ao meu nível de administração e compatíveis com o plano contratado, sem presumir a existência de recursos que dependam de contratação adicional. Os acessos administrativos diretamente utilizados pelo responsável são mantidos restritos ao necessário. O FTP permanece desativado por padrão; já o fluxo automatizado de publicação utiliza apenas os mecanismos técnicos exigidos pela integração gerenciada da hospedagem, sem que isso seja descrito como acesso administrativo interativo permanentemente disponível ao responsável. 7. Separação entre infraestrutura e governança jurídica A nova hospedagem também tornou visíveis elementos administrativos relacionados a registros técnicos e estatísticas. Em vez de transformar esse tema em mais uma etapa da migração, tratei privacidade, logs, Termos de Uso, LGPD, Marco Civil da Internet e governança de dados como um trabalho próprio , com análise, documentação e controles específicos. Essa frente está descrita no estudo “Privacidade e governança do daniel.fleck.dev.br: Termos de Uso, LGPD, Marco Civil e segurança da informação” . 8. Mapeamento de domínio alternativo Também configurei o gerenciamento de mapeamento para que o domínio daniel.fleck.nom.br redirecionasse para o site principal. Após os ajustes e a validação, o teste foi concluído com sucesso e o endereço alternativo passou a encaminhar o acesso para o domínio principal. Resultado da migração Ao final da mudança, o site voltou a ser servido na mesma URL, agora pela infraestrutura da KingHost, enquanto o GitHub permanece como fonte oficial do código . O fluxo de publicação foi validado, e a delegação DNS foi configurada no Registro.br para os servidores DNS da KingHost. O acesso FTP administrativo permanece desativado por padrão, enquanto a publicação do código utiliza o mecanismo gerenciado de integração com Git disponibilizado pela hospedagem. Competências demonstradas planejamento e execução de migração de hospedagem sem reconstruir a aplicação; configuração de DNS e acompanhamento de propagação; preparação controlada de diretório remoto por SSH; integração GitHub/KingHost e validação de webhook; revisão de permissões e aplicação do menor privilégio; separação entre acesso administrativo manual e mecanismos gerenciados de deploy, mantendo FTP desativado por padrão; proteção das contas administrativas com credenciais individuais e autenticação multifator; separação entre tarefas de infraestrutura e a frente de governança jurídica e de dados. Conclusão A migração mostrou que mover um site estático envolve mais do que copiar arquivos: há DNS, estrutura de diretórios, integração de deploy, credenciais, permissões e serviços administrativos. A solução final permaneceu deliberadamente simples: código versionado no GitHub, hospedagem gerenciada, recursos administrativos expostos somente quando necessários e controles de segurança aplicados de forma compatível com a infraestrutura.",
+      "articleBody": "Migração do daniel.fleck.dev.br da Vercel para a KingHost: GitHub, DNS, SSH, FTP e deploy Infraestrutura KingHost GitHub SSH FTP DNS Webhook Segurança A migração foi tratada como uma mudança controlada de infraestrutura: preservar o GitHub como fonte do código, transferir a hospedagem, ajustar DNS e diretórios, validar o deploy e reduzir os acessos administrativos mantidos permanentemente ativos. Por que migrei a hospedagem A primeira publicação do daniel.fleck.dev.br utilizou a Vercel. Com a evolução do site de uma publicação inicial para uma presença profissional mantida continuamente, passei a avaliar uma infraestrutura em que eu pudesse administrar de forma mais direta a hospedagem, os diretórios de publicação, o DNS e os acessos administrativos, além de contar com suporte em português. A escolha da KingHost fez parte dessa evolução operacional. A avaliação contratual, de privacidade e de proteção de dados foi conduzida como uma frente própria de governança , documentada separadamente, para não confundir as tarefas de migração técnica com a construção da base jurídica e documental do site. 1. Proteção das contas administrativas Antes de concluir a publicação, mantive a conta da hospedagem protegida por credencial própria e autenticação multifator. O mesmo princípio é aplicado ao GitHub e ao e-mail principal utilizado na administração do projeto: senhas individuais por serviço e pelo menos dois fatores de autenticação quando o recurso é disponibilizado. 2. DNS no Registro.br Configurei no Registro.br os servidores DNS informados pela KingHost. Após o período normal de propagação, o domínio passou a resolver para a nova infraestrutura. O domínio continua administrado no Registro.br, enquanto a zona DNS e a hospedagem passaram a ser operadas na KingHost. Essa separação de responsabilidades foi importante para diagnosticar corretamente os efeitos de cada alteração durante a migração. 3. FTP apenas para uso administrativo temporário O FTP foi habilitado durante a preparação do ambiente, com credencial própria, e depois desativado. A regra operacional adotada passou a ser simples: FTP permanece desligado por padrão ; quando uma tarefa específica exigir seu uso, ele é ativado apenas pelo tempo necessário e desativado imediatamente após a conclusão. A decisão reduz a superfície de ataque sem eliminar a possibilidade de utilizar o recurso quando uma necessidade administrativa concreta justificar sua ativação. 4. Preparação inicial do diretório por SSH Eu não queria clonar o projeto diretamente no diretório principal da hospedagem. A organização desejada exigia manter o repositório dentro de uma pasta específica sob /www/ , e a configuração direta pela interface de integração com GitHub não atendia inicialmente a esse cenário. Na preparação inicial, utilizei acesso administrativo por SSH para organizar o diretório e realizar o primeiro clone do repositório. Em seguida, associei o diretório já preparado à ferramenta de publicação via Git da KingHost e validei o fluxo automatizado. Depois dessa etapa, o acesso administrativo manual deixou de fazer parte do processo normal de publicação. A integração gerenciada pela hospedagem utiliza os mecanismos técnicos necessários para sincronizar o repositório — a própria documentação da KingHost informa o uso de chaves SSH na Publicação via Git. Por isso, é mais preciso distinguir acesso administrativo interativo do canal técnico utilizado pelo deploy automatizado, sem expor publicamente detalhes operacionais desnecessários da configuração remota. 5. GitHub, webhook e redução de permissões Com a integração ativa, a KingHost configurou um webhook no repositório para atualizar a hospedagem após alterações no GitHub. Durante a configuração, revisei também as permissões concedidas à integração. A aplicação aparecia entre as autorizações OAuth do GitHub com permissões que considerei mais amplas do que o necessário para o meu cenário. Após a configuração, revoguei essa autorização e testei novamente o fluxo. O webhook e a publicação continuaram funcionando. Registrei a decisão como aplicação prática do princípio do menor privilégio : reduzir permissões e, depois, comprovar que a funcionalidade necessária permanece operacional. Diagnóstico de uma falha pontual na entrega do webhook Em um dos pushes posteriores, percebi que a versão publicada do site não havia sido atualizada. Como o push constava normalmente no repositório, passei a verificar a etapa seguinte do fluxo: a entrega do webhook responsável por acionar a atualização na hospedagem. No GitHub, acessei repositório → Settings → Webhooks → Edit → Recent deliveries. O histórico mostrava que a entrega correspondente ao último push havia falhado com a mensagem We couldn't deliver this payload: failed to connect to host. Usei então o menu de ações da entrega e selecionei Redeliver. O GitHub realizou uma nova tentativa, dessa vez concluída com sucesso, e a atualização voltou a ser processada. Como a repetição da mesma entrega funcionou, registrei o episódio como uma falha pontual de entrega/conectividade, sem atribuir uma causa definitiva ao GitHub, à hospedagem ou à rede apenas com base nessa mensagem. O episódio acrescentou uma etapa útil ao procedimento de diagnóstico: quando um push chega corretamente ao GitHub, mas a publicação não ocorre, antes de alterar código, credenciais ou configuração do servidor é possível verificar o histórico de Recent deliveries do webhook, confirmar o resultado daquela tentativa e, quando apropriado, testar uma nova entrega controlada. O caso também foi registrado de forma estruturada na Base de Conhecimento — Erros e Soluções, separando contexto, evidências, diagnóstico e procedimento de recuperação. 6. Recursos de segurança da hospedagem Os serviços web permanecem submetidos aos protocolos e controles de segurança disponibilizados pela provedora. No painel administrativo, mantenho ativados os recursos de segurança disponíveis ao meu nível de administração e compatíveis com o plano contratado, sem presumir a existência de recursos que dependam de contratação adicional. Os acessos administrativos diretamente utilizados pelo responsável são mantidos restritos ao necessário. O FTP permanece desativado por padrão; já o fluxo automatizado de publicação utiliza apenas os mecanismos técnicos exigidos pela integração gerenciada da hospedagem, sem que isso seja descrito como acesso administrativo interativo permanentemente disponível ao responsável. 7. Separação entre infraestrutura e governança jurídica A nova hospedagem também tornou visíveis elementos administrativos relacionados a registros técnicos e estatísticas. Em vez de transformar esse tema em mais uma etapa da migração, tratei privacidade, logs, Termos de Uso, LGPD, Marco Civil da Internet e governança de dados como um trabalho próprio , com análise, documentação e controles específicos. Essa frente está descrita no estudo “Privacidade e governança do daniel.fleck.dev.br: Termos de Uso, LGPD, Marco Civil e segurança da informação” . 8. Mapeamento de domínio alternativo Também configurei o gerenciamento de mapeamento para que o domínio daniel.fleck.nom.br redirecionasse para o site principal. Após os ajustes e a validação, o teste foi concluído com sucesso e o endereço alternativo passou a encaminhar o acesso para o domínio principal. Resultado da migração Ao final da mudança, o site voltou a ser servido na mesma URL, agora pela infraestrutura da KingHost, enquanto o GitHub permanece como fonte oficial do código . O fluxo de publicação foi validado, e a delegação DNS foi configurada no Registro.br para os servidores DNS da KingHost. O acesso FTP administrativo permanece desativado por padrão, enquanto a publicação do código utiliza o mecanismo gerenciado de integração com Git disponibilizado pela hospedagem. Competências demonstradas planejamento e execução de migração de hospedagem sem reconstruir a aplicação; configuração de DNS e acompanhamento de propagação; preparação controlada de diretório remoto por SSH; integração GitHub/KingHost e validação de webhook; revisão de permissões e aplicação do menor privilégio; separação entre acesso administrativo manual e mecanismos gerenciados de deploy, mantendo FTP desativado por padrão; proteção das contas administrativas com credenciais individuais e autenticação multifator; separação entre tarefas de infraestrutura e a frente de governança jurídica e de dados. Conclusão A migração mostrou que mover um site estático envolve mais do que copiar arquivos: há DNS, estrutura de diretórios, integração de deploy, credenciais, permissões e serviços administrativos. A solução final permaneceu deliberadamente simples: código versionado no GitHub, hospedagem gerenciada, recursos administrativos expostos somente quando necessários e controles de segurança aplicados de forma compatível com a infraestrutura.",
       "inLanguage": "pt-BR",
       "author": {
         "@id": "https://daniel.fleck.dev.br/#daniel-fleck"
@@ -1612,6 +1671,7 @@
                 <a class="nav-btn" href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a class="nav-btn" href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap GitHub</a>
                 <button class="nav-btn" id="btn-blog" onclick="openBlog()">Blog</button>
+                <button class="nav-btn" id="btn-erros" onclick="openKnownErrors()">Erros &amp; Soluções</button>
             </div>
         </div>
     </nav>
@@ -1780,38 +1840,39 @@
             </div>
 
             <div class="card" style="margin-top: 18px;">
-                <h3>Nuvem de tags do blog</h3>
-                <p>Selecione uma tecnologia, competência ou tema para consultar os posts relacionados.</p>
+                <h3>Nuvem de tags do conteúdo técnico</h3>
+                <p>Selecione uma tecnologia, competência ou tema para consultar artigos do blog e registros da Base de Conhecimento — Erros e Soluções.</p>
                 <!--
-                MANUTENÇÃO DA NUVEM DE TAGS DO BLOG
+                MANUTENÇÃO DA NUVEM DE TAGS DO CONTEÚDO TÉCNICO
 
-                FONTE DE VERDADE EM TEMPO DE EXECUÇÃO:
-                a propriedade tags de cada objeto do array JavaScript articles[].
+                FONTES DE VERDADE EM TEMPO DE EXECUÇÃO:
+                - articles[].tags para posts do Blog;
+                - knownErrors[].tags para registros da Base de Conhecimento — Erros e Soluções.
 
                 O fluxo é:
-                articles[].tags
+                articles[].tags + knownErrors[].tags
                 -> getBlogTagMap()
                 -> renderBlogTagCloud()
                 -> links da nuvem
                 -> showTaggedPosts(tag).
 
                 Portanto:
-                1. Para atribuir uma tag a um post, inserir a tag em articles[].tags.
-                2. Reutilizar exatamente a mesma grafia, acentuação e capitalização das
+                1. Para atribuir uma tag a um post do Blog, inserir em articles[].tags.
+                2. Para atribuir uma tag a um erro/solução, inserir em knownErrors[].tags.
+                3. Reutilizar exatamente a mesma grafia, acentuação e capitalização das
                    tags já existentes quando o conceito for o mesmo. "GitHub" e "Github",
                    por exemplo, seriam consideradas tags diferentes.
-                3. Não inserir uma tag somente no HTML visual do artigo esperando que ela
-                   apareça na nuvem. Os spans dentro de article.html são apenas visuais.
-                4. A nuvem abaixo é uma cópia estática/fallback. O JavaScript a substitui
-                   quando renderBlogTagCloud() é executada. Ao publicar um novo post,
-                   sincronizar também esta cópia estática para navegação sem JavaScript,
-                   usando as mesmas tags de articles[].
-                5. Não manter uma lista manual paralela de tags no JavaScript. A função
-                   getBlogTagMap() deve continuar derivando a nuvem diretamente dos posts.
-                6. Não alterar palette, sizeScale, rotations ou a lógica de frequência
-                   apenas para inserir um novo post; isso é apresentação da nuvem, não dado.
+                4. Não inserir uma tag somente no HTML visual esperando que ela apareça
+                   na nuvem. Os spans de tag dentro do HTML são apenas apresentação.
+                5. A nuvem abaixo é uma cópia estática/fallback. O JavaScript a substitui
+                   quando renderBlogTagCloud() é executada. Ao publicar novo conteúdo,
+                   sincronizar também esta cópia estática.
+                6. Não manter uma terceira lista manual de tags no JavaScript. A função
+                   getBlogTagMap() deve derivar a nuvem de articles[] e knownErrors[].
+                7. Não alterar palette, sizeScale, rotations ou a lógica de frequência
+                   apenas para inserir conteúdo; isso é apresentação da nuvem, não dado.
                 -->
-                <div class="word-cloud" id="blogTagCloud" aria-label="Nuvem de tags do blog"><a href="#tag-GitHub" class="word-cloud-item blue" data-tag="GitHub" style="font-size:3.19rem; transform:rotate(0deg);">GitHub</a><a href="#tag-IA Generativa" class="word-cloud-item teal" data-tag="IA Generativa" style="font-size:1.87rem; transform:rotate(-5deg);">IA Generativa</a><a href="#tag-Portfólio" class="word-cloud-item orange" data-tag="Portfólio" style="font-size:2.37rem; transform:rotate(4deg);">Portfólio</a><a href="#tag-PostgreSQL" class="word-cloud-item muted" data-tag="PostgreSQL" style="font-size:1.57rem; transform:rotate(0deg);">PostgreSQL</a><a href="#tag-Sustentação" class="word-cloud-item blue" data-tag="Sustentação" style="font-size:2.12rem; transform:rotate(-3deg);">Sustentação</a><a href="#tag-Backlog" class="word-cloud-item teal" data-tag="Backlog" style="font-size:1.12rem; transform:rotate(5deg);">Backlog</a><a href="#tag-Blog" class="word-cloud-item orange" data-tag="Blog" style="font-size:1.42rem; transform:rotate(0deg);">Blog</a><a href="#tag-Carreira" class="word-cloud-item muted" data-tag="Carreira" style="font-size:1.05rem; transform:rotate(2deg);">Carreira</a><a href="#tag-Confluence" class="word-cloud-item blue" data-tag="Confluence" style="font-size:2.55rem; transform:rotate(0deg);">Confluence</a><a href="#tag-Corregedoria" class="word-cloud-item teal" data-tag="Corregedoria" style="font-size:1.55rem; transform:rotate(-5deg);">Corregedoria</a><a href="#tag-Documentação" class="word-cloud-item orange" data-tag="Documentação" style="font-size:2.05rem; transform:rotate(4deg);">Documentação</a><a href="#tag-Evidências" class="word-cloud-item muted" data-tag="Evidências" style="font-size:1.25rem; transform:rotate(0deg);">Evidências</a><a href="#tag-Jira" class="word-cloud-item blue" data-tag="Jira" style="font-size:1.80rem; transform:rotate(-3deg);">Jira</a><a href="#tag-Kanban" class="word-cloud-item teal" data-tag="Kanban" style="font-size:1.12rem; transform:rotate(5deg);">Kanban</a><a href="#tag-Migrations" class="word-cloud-item orange" data-tag="Migrations" style="font-size:1.42rem; transform:rotate(0deg);">Migrations</a><a href="#tag-pgAdmin 4" class="word-cloud-item muted" data-tag="pgAdmin 4" style="font-size:1.05rem; transform:rotate(2deg);">pgAdmin 4</a><a href="#tag-Planejamento" class="word-cloud-item blue" data-tag="Planejamento" style="font-size:2.55rem; transform:rotate(0deg);">Planejamento</a><a href="#tag-Requisitos" class="word-cloud-item teal" data-tag="Requisitos" style="font-size:1.55rem; transform:rotate(-5deg);">Requisitos</a><a href="#tag-Roadmap" class="word-cloud-item orange" data-tag="Roadmap" style="font-size:2.05rem; transform:rotate(4deg);">Roadmap</a><a href="#tag-Sistema de Corregedoria" class="word-cloud-item muted" data-tag="Sistema de Corregedoria" style="font-size:1.25rem; transform:rotate(0deg);">Sistema de Corregedoria</a><a href="#tag-Sistema de Controle Operacional" class="word-cloud-item blue" data-tag="Sistema de Controle Operacional" style="font-size:1.80rem; transform:rotate(-3deg);">Sistema de Controle Operacional</a><a href="#tag-Sistemas Corporativos" class="word-cloud-item teal" data-tag="Sistemas Corporativos" style="font-size:1.12rem; transform:rotate(5deg);">Sistemas Corporativos</a><a href="#tag-Sistemas Críticos" class="word-cloud-item orange" data-tag="Sistemas Críticos" style="font-size:1.42rem; transform:rotate(0deg);">Sistemas Críticos</a><a href="#tag-SPA" class="word-cloud-item muted" data-tag="SPA" style="font-size:1.05rem; transform:rotate(2deg);">SPA</a><a href="#tag-SQL" class="word-cloud-item blue" data-tag="SQL" style="font-size:2.55rem; transform:rotate(0deg);">SQL</a><a href="#tag-Supabase" class="word-cloud-item teal" data-tag="Supabase" style="font-size:1.55rem; transform:rotate(-5deg);">Supabase</a><a href="#tag-Vercel" class="word-cloud-item orange" data-tag="Vercel" style="font-size:2.05rem; transform:rotate(4deg);">Vercel</a><a href="#tag-Versionamento" class="word-cloud-item muted" data-tag="Versionamento" style="font-size:1.25rem; transform:rotate(0deg);">Versionamento</a><a href="#tag-Wiki" class="word-cloud-item blue" data-tag="Wiki" style="font-size:1.80rem; transform:rotate(-3deg);">Wiki</a></div>
+                <div class="word-cloud" id="blogTagCloud" aria-label="Nuvem de tags do conteúdo técnico"><a href="#tag-GitHub" class="word-cloud-item blue" data-tag="GitHub" style="font-size:3.51rem; transform:rotate(0deg);">GitHub</a><a href="#tag-KingHost" class="word-cloud-item teal" data-tag="KingHost" style="font-size:2.19rem; transform:rotate(-5deg);">KingHost</a><a href="#tag-IA%20Generativa" class="word-cloud-item orange" data-tag="IA Generativa" style="font-size:2.37rem; transform:rotate(4deg);">IA Generativa</a><a href="#tag-Portf%C3%B3lio" class="word-cloud-item muted" data-tag="Portfólio" style="font-size:1.57rem; transform:rotate(0deg);">Portfólio</a><a href="#tag-PostgreSQL" class="word-cloud-item blue" data-tag="PostgreSQL" style="font-size:2.12rem; transform:rotate(-3deg);">PostgreSQL</a><a href="#tag-Sustenta%C3%A7%C3%A3o" class="word-cloud-item teal" data-tag="Sustentação" style="font-size:1.44rem; transform:rotate(5deg);">Sustentação</a><a href="#tag-Webhook" class="word-cloud-item orange" data-tag="Webhook" style="font-size:1.74rem; transform:rotate(0deg);">Webhook</a><a href="#tag-Backlog" class="word-cloud-item muted" data-tag="Backlog" style="font-size:1.05rem; transform:rotate(2deg);">Backlog</a><a href="#tag-Blog" class="word-cloud-item blue" data-tag="Blog" style="font-size:2.55rem; transform:rotate(0deg);">Blog</a><a href="#tag-Carreira" class="word-cloud-item teal" data-tag="Carreira" style="font-size:1.55rem; transform:rotate(-5deg);">Carreira</a><a href="#tag-Confluence" class="word-cloud-item orange" data-tag="Confluence" style="font-size:2.05rem; transform:rotate(4deg);">Confluence</a><a href="#tag-Corregedoria" class="word-cloud-item muted" data-tag="Corregedoria" style="font-size:1.25rem; transform:rotate(0deg);">Corregedoria</a><a href="#tag-Deploy" class="word-cloud-item blue" data-tag="Deploy" style="font-size:1.80rem; transform:rotate(-3deg);">Deploy</a><a href="#tag-DNS" class="word-cloud-item teal" data-tag="DNS" style="font-size:1.12rem; transform:rotate(5deg);">DNS</a><a href="#tag-Documenta%C3%A7%C3%A3o" class="word-cloud-item orange" data-tag="Documentação" style="font-size:1.42rem; transform:rotate(0deg);">Documentação</a><a href="#tag-Evid%C3%AAncias" class="word-cloud-item muted" data-tag="Evidências" style="font-size:1.05rem; transform:rotate(2deg);">Evidências</a><a href="#tag-Falha%20de%20conectividade" class="word-cloud-item blue" data-tag="Falha de conectividade" style="font-size:2.55rem; transform:rotate(0deg);">Falha de conectividade</a><a href="#tag-FTP" class="word-cloud-item teal" data-tag="FTP" style="font-size:1.55rem; transform:rotate(-5deg);">FTP</a><a href="#tag-Git" class="word-cloud-item orange" data-tag="Git" style="font-size:2.05rem; transform:rotate(4deg);">Git</a><a href="#tag-Governan%C3%A7a%20de%20Dados" class="word-cloud-item muted" data-tag="Governança de Dados" style="font-size:1.25rem; transform:rotate(0deg);">Governança de Dados</a><a href="#tag-Infraestrutura" class="word-cloud-item blue" data-tag="Infraestrutura" style="font-size:1.80rem; transform:rotate(-3deg);">Infraestrutura</a><a href="#tag-Integra%C3%A7%C3%A3o" class="word-cloud-item teal" data-tag="Integração" style="font-size:1.12rem; transform:rotate(5deg);">Integração</a><a href="#tag-Jira" class="word-cloud-item orange" data-tag="Jira" style="font-size:1.42rem; transform:rotate(0deg);">Jira</a><a href="#tag-Kanban" class="word-cloud-item muted" data-tag="Kanban" style="font-size:1.05rem; transform:rotate(2deg);">Kanban</a><a href="#tag-LGPD" class="word-cloud-item blue" data-tag="LGPD" style="font-size:2.55rem; transform:rotate(0deg);">LGPD</a><a href="#tag-Logs" class="word-cloud-item teal" data-tag="Logs" style="font-size:1.55rem; transform:rotate(-5deg);">Logs</a><a href="#tag-Marco%20Civil" class="word-cloud-item orange" data-tag="Marco Civil" style="font-size:2.05rem; transform:rotate(4deg);">Marco Civil</a><a href="#tag-Migrations" class="word-cloud-item muted" data-tag="Migrations" style="font-size:1.25rem; transform:rotate(0deg);">Migrations</a><a href="#tag-pgAdmin%204" class="word-cloud-item blue" data-tag="pgAdmin 4" style="font-size:1.80rem; transform:rotate(-3deg);">pgAdmin 4</a><a href="#tag-Planejamento" class="word-cloud-item teal" data-tag="Planejamento" style="font-size:1.12rem; transform:rotate(5deg);">Planejamento</a><a href="#tag-Privacidade" class="word-cloud-item orange" data-tag="Privacidade" style="font-size:1.42rem; transform:rotate(0deg);">Privacidade</a><a href="#tag-Registro.br" class="word-cloud-item muted" data-tag="Registro.br" style="font-size:1.05rem; transform:rotate(2deg);">Registro.br</a><a href="#tag-Requisitos" class="word-cloud-item blue" data-tag="Requisitos" style="font-size:2.55rem; transform:rotate(0deg);">Requisitos</a><a href="#tag-Roadmap" class="word-cloud-item teal" data-tag="Roadmap" style="font-size:1.55rem; transform:rotate(-5deg);">Roadmap</a><a href="#tag-Seguran%C3%A7a" class="word-cloud-item orange" data-tag="Segurança" style="font-size:2.05rem; transform:rotate(4deg);">Segurança</a><a href="#tag-Seguran%C3%A7a%20da%20Informa%C3%A7%C3%A3o" class="word-cloud-item muted" data-tag="Segurança da Informação" style="font-size:1.25rem; transform:rotate(0deg);">Segurança da Informação</a><a href="#tag-Sistema%20de%20Controle%20Operacional" class="word-cloud-item blue" data-tag="Sistema de Controle Operacional" style="font-size:1.80rem; transform:rotate(-3deg);">Sistema de Controle Operacional</a><a href="#tag-Sistema%20de%20Corregedoria" class="word-cloud-item teal" data-tag="Sistema de Corregedoria" style="font-size:1.12rem; transform:rotate(5deg);">Sistema de Corregedoria</a><a href="#tag-Sistemas%20Corporativos" class="word-cloud-item orange" data-tag="Sistemas Corporativos" style="font-size:1.42rem; transform:rotate(0deg);">Sistemas Corporativos</a><a href="#tag-Sistemas%20Cr%C3%ADticos" class="word-cloud-item muted" data-tag="Sistemas Críticos" style="font-size:1.05rem; transform:rotate(2deg);">Sistemas Críticos</a><a href="#tag-SPA" class="word-cloud-item blue" data-tag="SPA" style="font-size:2.55rem; transform:rotate(0deg);">SPA</a><a href="#tag-SQL" class="word-cloud-item teal" data-tag="SQL" style="font-size:1.55rem; transform:rotate(-5deg);">SQL</a><a href="#tag-SSH" class="word-cloud-item orange" data-tag="SSH" style="font-size:2.05rem; transform:rotate(4deg);">SSH</a><a href="#tag-Supabase" class="word-cloud-item muted" data-tag="Supabase" style="font-size:1.25rem; transform:rotate(0deg);">Supabase</a><a href="#tag-Termos%20de%20Uso" class="word-cloud-item blue" data-tag="Termos de Uso" style="font-size:1.80rem; transform:rotate(-3deg);">Termos de Uso</a><a href="#tag-Troubleshooting" class="word-cloud-item teal" data-tag="Troubleshooting" style="font-size:1.12rem; transform:rotate(5deg);">Troubleshooting</a><a href="#tag-Vercel" class="word-cloud-item orange" data-tag="Vercel" style="font-size:1.42rem; transform:rotate(0deg);">Vercel</a><a href="#tag-Versionamento" class="word-cloud-item muted" data-tag="Versionamento" style="font-size:1.05rem; transform:rotate(2deg);">Versionamento</a><a href="#tag-Wiki" class="word-cloud-item blue" data-tag="Wiki" style="font-size:2.55rem; transform:rotate(0deg);">Wiki</a></div>
             </div>
 
             <div class="grid-3" style="margin-top: 18px;">
@@ -2004,6 +2065,164 @@
         5. Não renumerar ou apagar versões históricas já publicadas.
         6. Registrar a mesma alteração no histórico interno mantido no Confluence/Git.
         -->
+
+        <!--
+        ==================================================================
+        BASE DE CONHECIMENTO — ERROS E SOLUÇÕES
+        INSTRUÇÕES OBRIGATÓRIAS PARA EDITORES HUMANOS E IA
+        ==================================================================
+
+        FINALIDADE
+        Esta seção registra problemas REAIS encontrados durante desenvolvimento,
+        configuração, integração, deploy, sustentação ou uso de ferramentas, bem como
+        a forma efetivamente utilizada para diagnosticar e solucionar cada caso.
+
+        TRIAGEM OBRIGATÓRIA PARA IA
+        Ao receber qualquer instrução para editar este index.html, examinar também o
+        contexto fornecido pelo usuário. Se o prompt/conversa relatar um problema que:
+        a) foi efetivamente identificado; e
+        b) teve solução, correção, contorno ou procedimento de recuperação comprovado;
+        verificar se o caso deve ser registrado nesta Base de Conhecimento.
+
+        - Se já existir registro equivalente em knownErrors[], EDITAR o existente.
+          Não criar duplicata apenas porque o mesmo erro ocorreu novamente.
+        - Se não existir e houver informação suficiente, criar um novo registro.
+        - Se faltarem dados essenciais para documentar o caso com fidelidade, NÃO
+          inventar. Antes de finalizar a edição, retornar pergunta(s) objetiva(s) ao
+          usuário/instrutor solicitando apenas o que for necessário, por exemplo:
+          contexto, sintoma observado, mensagem exata de erro, evidência, ação tomada,
+          resultado obtido ou se a solução realmente resolveu o problema.
+        - Não classificar como "Resolvido" um problema cuja solução não foi confirmada.
+        - Não inferir causa raiz apenas porque uma ação aparentemente resolveu o caso.
+          Distinguir claramente: fato observado, hipótese, diagnóstico e solução aplicada.
+        - Não publicar tokens, senhas, chaves, cookies de sessão, IDs administrativos
+          desnecessários, IPs internos ou outros detalhes que aumentem a superfície de
+          ataque. Evidências devem ser úteis, mas minimizadas.
+
+        ESTRUTURA PADRÃO DO REGISTRO
+        Cada entrada deve conter, sempre que aplicável:
+        1. título objetivo;
+        2. descrição/resumo sintético;
+        3. status;
+        4. contexto;
+        5. problema/sintoma;
+        6. evidências (incluindo mensagem exata de erro quando útil e segura);
+        7. diagnóstico, distinguindo causa comprovada de hipótese;
+        8. solução aplicada em passos reproduzíveis;
+        9. resultado;
+        10. procedimento/aprendizado para ocorrências futuras;
+        11. referências;
+        12. tags.
+
+        SINCRONIZAÇÃO OBRIGATÓRIA
+        Um registro só está completo quando forem mantidos coerentes:
+        - knownErrors[] no JavaScript;
+        - fallback HTML desta seção;
+        - fallback <noscript>;
+        - JSON-LD correspondente;
+        - tags compartilhadas na nuvem geral.
+
+        IDENTIFICADORES
+        knownErrors[].id: slug estável, sem espaços.
+        Hash público: #erro-ID
+        Botão: known-error-btn-ID
+        Fallback: static-known-error-ID
+        JSON-LD: https://daniel.fleck.dev.br/#erro-ID
+        ==================================================================
+        -->
+        <section class="section" id="section-erros">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Troubleshooting documentado</div>
+                    <h2 class="section-title" id="knownErrorsSectionTitle">Base de Conhecimento — Erros e Soluções</h2>
+                </div>
+                <p class="section-desc">
+                    Registro de problemas reais encontrados durante desenvolvimento, integração, deploy e sustentação, com contexto, evidências, diagnóstico e a solução efetivamente aplicada.
+                </p>
+            </div>
+
+            <div class="blog-layout">
+                <aside class="article-list" id="knownErrorList">
+                    <button class="article-btn active" id="known-error-btn-webhook-github-kinghost-failed-to-connect" onclick="loadKnownError('webhook-github-kinghost-failed-to-connect', true)">
+                        <div class="date">10 Ago 2026 • Deploy / Webhook</div>
+                        <div class="title">Webhook GitHub → KingHost: falha “failed to connect to host” após um push</div>
+                    </button>
+                </aside>
+                <article class="card article" id="knownErrorViewer">
+                    <h2>Webhook GitHub → KingHost: falha <code>failed to connect to host</code> após um push</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Erro conhecido</span>
+                        <span class="tag success">Resolvido</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Webhook</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">Deploy</span>
+                    </div>
+
+                    <blockquote><strong>Resumo:</strong> após um push confirmado no GitHub, a atualização do site não ocorreu. O histórico de entregas do webhook mostrou <code>We couldn't deliver this payload: failed to connect to host</code>. A reentrega manual da mesma execução com <strong>Redeliver</strong> foi concluída com sucesso.</blockquote>
+
+                    <h3>Contexto</h3>
+                    <p>O código do <strong>daniel.fleck.dev.br</strong> é versionado no GitHub e a publicação na hospedagem utiliza a integração via Git disponibilizada pela KingHost. Um webhook associado ao repositório participa do fluxo que aciona a atualização após novos pushes.</p>
+                    <p>O caso ocorreu depois que o fluxo de publicação já havia sido configurado e utilizado com sucesso anteriormente.</p>
+
+                    <h3>Problema observado</h3>
+                    <p>Após realizar um push do projeto, percebi que o código estava atualizado no repositório, mas a versão publicada do site permanecia inalterada. Isso indicava que o problema não estava necessariamente no envio do commit ao GitHub e que era preciso verificar as etapas posteriores do processo de deploy.</p>
+
+                    <h3>Evidências</h3>
+                    <ul class="checklist">
+                        <li>o commit/push aparecia normalmente no repositório;</li>
+                        <li>o site hospedado não refletia a nova versão;</li>
+                        <li>em <strong>Settings → Webhooks → webhook correspondente → Recent deliveries</strong>, a entrega associada ao evento apresentava falha;</li>
+                        <li>a mensagem registrada pelo GitHub era <code>We couldn't deliver this payload: failed to connect to host</code>;</li>
+                        <li>a reentrega da mesma execução foi posteriormente concluída com sucesso.</li>
+                    </ul>
+
+                    <h3>Diagnóstico</h3>
+                    <p>A evidência permitiu localizar a falha na <strong>etapa de entrega do webhook</strong>: naquela tentativa, o GitHub não conseguiu estabelecer a conexão necessária com o destino configurado.</p>
+                    <p>A mensagem isolada não permite determinar a causa raiz com segurança. Ela não comprova, por si só, falha permanente do GitHub, da KingHost, da rede ou da configuração. Como uma nova tentativa da mesma entrega funcionou sem alteração de código ou credenciais, o evento foi classificado como <strong>falha pontual de entrega/conectividade</strong>.</p>
+
+                    <h3>Solução aplicada</h3>
+                    <ol>
+                        <li>Confirmei primeiro que o push estava presente no repositório do GitHub.</li>
+                        <li>Acessei <strong>Settings</strong> no repositório.</li>
+                        <li>Entrei em <strong>Webhooks</strong> e abri o webhook utilizado pela integração.</li>
+                        <li>Acessei <strong>Recent deliveries</strong> e identifiquei a entrega com falha.</li>
+                        <li>Revisei a mensagem de erro antes de alterar qualquer configuração.</li>
+                        <li>No menu da entrega, utilizei a opção <strong>Redeliver</strong>.</li>
+                        <li>O GitHub realizou uma nova tentativa e a entrega foi concluída com sucesso.</li>
+                        <li>Confirmei posteriormente que a atualização voltou a ser processada.</li>
+                    </ol>
+
+                    <h3>Resultado</h3>
+                    <p>Não foi necessário modificar o código do site, recriar o webhook, alterar credenciais ou refazer a integração. A reentrega controlada foi suficiente para restabelecer o fluxo naquele evento.</p>
+
+                    <h3>Procedimento aprendido</h3>
+                    <p>Quando o código está atualizado no GitHub, mas a publicação não ocorre, o histórico do webhook deve ser verificado <strong>antes de alterar o servidor, credenciais ou código</strong>. Isso ajuda a separar problemas de versionamento, entrega do evento e execução do deploy.</p>
+                    <p>Fluxo de diagnóstico utilizado:</p>
+                    <p><code>push → confirmar commit no GitHub → verificar Recent deliveries → analisar erro → Redeliver quando apropriado → validar publicação</code></p>
+
+                    <h3>Referências</h3>
+                    <ul>
+                        <li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/viewing-webhook-deliveries" target="_blank" rel="noopener noreferrer">GitHub Docs — Viewing webhook deliveries</a></li>
+                        <li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/redelivering-webhooks" target="_blank" rel="noopener noreferrer">GitHub Docs — Redelivering webhooks</a></li>
+                        <li><a href="#post-migracao-vercel-kinghost-seguranca" onclick="openArticle('migracao-vercel-kinghost-seguranca'); return false;">Post relacionado — Migração da Vercel para a KingHost</a></li>
+                    </ul>
+
+                    <h3>Classificação</h3>
+                    <div class="tag-row">
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Webhook</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">Deploy</span>
+                        <span class="tag">Troubleshooting</span>
+                        <span class="tag">Integração</span>
+                        <span class="tag">Falha de conectividade</span>
+                    </div>
+
+                </article>
+            </div>
+        </section>
+
         <section class="section" id="section-privacidade" aria-labelledby="privacy-title">
             <div class="section-head">
                 <div>
@@ -2318,7 +2537,7 @@
             <div class="section-head">
                 <div>
                     <div class="section-kicker">Blog por tag</div>
-                    <h2 class="section-title" id="tagResultsTitle">Posts por tag.</h2>
+                    <h2 class="section-title" id="tagResultsTitle">Conteúdos por tag.</h2>
                 </div>
                 <p class="section-desc" id="tagResultsDesc">
                     Selecione uma tag na nuvem da página principal para ver apenas os posts correspondentes.
@@ -2478,6 +2697,13 @@
                     <h3>5. GitHub, webhook e redução de permissões</h3>
                     <p>Com a integração ativa, a KingHost configurou um webhook no repositório para atualizar a hospedagem após alterações no GitHub. Durante a configuração, revisei também as permissões concedidas à integração.</p>
                     <p>A aplicação aparecia entre as autorizações OAuth do GitHub com permissões que considerei mais amplas do que o necessário para o meu cenário. Após a configuração, revoguei essa autorização e testei novamente o fluxo. O webhook e a publicação continuaram funcionando. Registrei a decisão como aplicação prática do <strong>princípio do menor privilégio</strong>: reduzir permissões e, depois, comprovar que a funcionalidade necessária permanece operacional.</p>
+
+                    <h4>Diagnóstico de uma falha pontual na entrega do webhook</h4>
+                    <p>Em um dos pushes posteriores, percebi que a versão publicada do site não havia sido atualizada. Como o push constava normalmente no repositório, passei a verificar a etapa seguinte do fluxo: a entrega do webhook responsável por acionar a atualização na hospedagem.</p>
+                    <p>No GitHub, acessei <strong>repositório → Settings → Webhooks → Edit → Recent deliveries</strong>. O histórico mostrava que a entrega correspondente ao último push havia falhado com a mensagem <code>We couldn't deliver this payload: failed to connect to host</code>.</p>
+                    <p>Usei então o menu de ações da entrega e selecionei <strong>Redeliver</strong>. O GitHub realizou uma nova tentativa, dessa vez concluída com sucesso, e a atualização voltou a ser processada. Como a repetição da mesma entrega funcionou, registrei o episódio como uma <strong>falha pontual de entrega/conectividade</strong>, sem atribuir uma causa definitiva ao GitHub, à hospedagem ou à rede apenas com base nessa mensagem.</p>
+                    <p>O episódio acrescentou uma etapa útil ao procedimento de diagnóstico: quando um push chega corretamente ao GitHub, mas a publicação não ocorre, antes de alterar código, credenciais ou configuração do servidor é possível verificar o histórico de <em>Recent deliveries</em> do webhook, confirmar o resultado daquela tentativa e, quando apropriado, testar uma nova entrega controlada.</p>
+                    <p>O caso também foi registrado de forma estruturada na <a href="#erro-webhook-github-kinghost-failed-to-connect" onclick="openKnownError('webhook-github-kinghost-failed-to-connect'); return false;"><strong>Base de Conhecimento — Erros e Soluções</strong></a>, separando contexto, evidências, diagnóstico e procedimento de recuperação.</p>
 
                     <h3>6. Recursos de segurança da hospedagem</h3>
                     <p>Os serviços web permanecem submetidos aos protocolos e controles de segurança disponibilizados pela provedora. No painel administrativo, mantenho ativados os recursos de segurança disponíveis ao meu nível de administração e compatíveis com o plano contratado, sem presumir a existência de recursos que dependam de contratação adicional.</p>
@@ -2825,6 +3051,80 @@ where schema_name = 'transicao';</code></pre>
 </figure>
 <p>Essa organização reduziu a ansiedade de escopo causada pelo volume de conteúdos a estudar. Ao transformar a transição em épicos, tarefas, critérios de aceitação e sprints semanais, ganhei uma direção clara sobre prioridades, dependências e entregas. Para recrutadores, esse processo demonstra familiaridade prática com Jira e evidencia um perfil orientado a organização, documentação, execução progressiva e gestão técnico-operacional.</p><div class="article-links"><a class="project-link" href="#" onclick="showSection('roadmap'); return false;">Ver Plano 2026</a><a class="project-link" href="#" onclick="showSection('projetos'); return false;">Ver Portfólio</a></div></article><article id="static-post-estrutura-blog-portfolio" class="card article" style="margin-top:18px;"><h2>Como este blog será usado na transição de carreira</h2><div class="article-meta"><span class="tag brand">Método</span><span class="tag">06 Jul 2026</span></div><p>Este espaço será usado para registrar estudos, decisões técnicas, projetos concluídos e evidências públicas da transição para dados, SQL, indicadores, automação, requisitos e sistemas.</p><p>A seção Portfólio exibirá apenas entregas já construídas e publicadas. Cada item poderá apontar para uma página específica do projeto, para o código no GitHub e para um artigo explicando a construção.</p><blockquote>O objetivo é registrar evolução real, sem simular experiência ou publicar projetos ainda não executados.</blockquote><h3>Fluxo de publicação</h3><ul class="checklist"><li>Construir o projeto.</li><li>Publicar o código no GitHub.</li><li>Publicar o resultado em uma página própria quando fizer sentido.</li><li>Escrever um artigo curto explicando problema, solução, tecnologias e aprendizado.</li><li>Adicionar o item na seção Portfólio.</li></ul><div class="article-links"><a class="project-link" href="#" onclick="showSection('projetos'); return false;">Ver Portfólio</a><a class="project-link" href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a></div></article>
             </section>
+
+            <h2 style="margin-top:32px;">Base de Conhecimento — Erros e Soluções</h2>
+            <article id="static-known-error-webhook-github-kinghost-failed-to-connect" class="card article" style="margin-top:18px;">
+                    <h2>Webhook GitHub → KingHost: falha <code>failed to connect to host</code> após um push</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Erro conhecido</span>
+                        <span class="tag success">Resolvido</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Webhook</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">Deploy</span>
+                    </div>
+
+                    <blockquote><strong>Resumo:</strong> após um push confirmado no GitHub, a atualização do site não ocorreu. O histórico de entregas do webhook mostrou <code>We couldn't deliver this payload: failed to connect to host</code>. A reentrega manual da mesma execução com <strong>Redeliver</strong> foi concluída com sucesso.</blockquote>
+
+                    <h3>Contexto</h3>
+                    <p>O código do <strong>daniel.fleck.dev.br</strong> é versionado no GitHub e a publicação na hospedagem utiliza a integração via Git disponibilizada pela KingHost. Um webhook associado ao repositório participa do fluxo que aciona a atualização após novos pushes.</p>
+                    <p>O caso ocorreu depois que o fluxo de publicação já havia sido configurado e utilizado com sucesso anteriormente.</p>
+
+                    <h3>Problema observado</h3>
+                    <p>Após realizar um push do projeto, percebi que o código estava atualizado no repositório, mas a versão publicada do site permanecia inalterada. Isso indicava que o problema não estava necessariamente no envio do commit ao GitHub e que era preciso verificar as etapas posteriores do processo de deploy.</p>
+
+                    <h3>Evidências</h3>
+                    <ul class="checklist">
+                        <li>o commit/push aparecia normalmente no repositório;</li>
+                        <li>o site hospedado não refletia a nova versão;</li>
+                        <li>em <strong>Settings → Webhooks → webhook correspondente → Recent deliveries</strong>, a entrega associada ao evento apresentava falha;</li>
+                        <li>a mensagem registrada pelo GitHub era <code>We couldn't deliver this payload: failed to connect to host</code>;</li>
+                        <li>a reentrega da mesma execução foi posteriormente concluída com sucesso.</li>
+                    </ul>
+
+                    <h3>Diagnóstico</h3>
+                    <p>A evidência permitiu localizar a falha na <strong>etapa de entrega do webhook</strong>: naquela tentativa, o GitHub não conseguiu estabelecer a conexão necessária com o destino configurado.</p>
+                    <p>A mensagem isolada não permite determinar a causa raiz com segurança. Ela não comprova, por si só, falha permanente do GitHub, da KingHost, da rede ou da configuração. Como uma nova tentativa da mesma entrega funcionou sem alteração de código ou credenciais, o evento foi classificado como <strong>falha pontual de entrega/conectividade</strong>.</p>
+
+                    <h3>Solução aplicada</h3>
+                    <ol>
+                        <li>Confirmei primeiro que o push estava presente no repositório do GitHub.</li>
+                        <li>Acessei <strong>Settings</strong> no repositório.</li>
+                        <li>Entrei em <strong>Webhooks</strong> e abri o webhook utilizado pela integração.</li>
+                        <li>Acessei <strong>Recent deliveries</strong> e identifiquei a entrega com falha.</li>
+                        <li>Revisei a mensagem de erro antes de alterar qualquer configuração.</li>
+                        <li>No menu da entrega, utilizei a opção <strong>Redeliver</strong>.</li>
+                        <li>O GitHub realizou uma nova tentativa e a entrega foi concluída com sucesso.</li>
+                        <li>Confirmei posteriormente que a atualização voltou a ser processada.</li>
+                    </ol>
+
+                    <h3>Resultado</h3>
+                    <p>Não foi necessário modificar o código do site, recriar o webhook, alterar credenciais ou refazer a integração. A reentrega controlada foi suficiente para restabelecer o fluxo naquele evento.</p>
+
+                    <h3>Procedimento aprendido</h3>
+                    <p>Quando o código está atualizado no GitHub, mas a publicação não ocorre, o histórico do webhook deve ser verificado <strong>antes de alterar o servidor, credenciais ou código</strong>. Isso ajuda a separar problemas de versionamento, entrega do evento e execução do deploy.</p>
+                    <p>Fluxo de diagnóstico utilizado:</p>
+                    <p><code>push → confirmar commit no GitHub → verificar Recent deliveries → analisar erro → Redeliver quando apropriado → validar publicação</code></p>
+
+                    <h3>Referências</h3>
+                    <ul>
+                        <li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/viewing-webhook-deliveries" target="_blank" rel="noopener noreferrer">GitHub Docs — Viewing webhook deliveries</a></li>
+                        <li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/redelivering-webhooks" target="_blank" rel="noopener noreferrer">GitHub Docs — Redelivering webhooks</a></li>
+                        <li><a href="#post-migracao-vercel-kinghost-seguranca" onclick="openArticle('migracao-vercel-kinghost-seguranca'); return false;">Post relacionado — Migração da Vercel para a KingHost</a></li>
+                    </ul>
+
+                    <h3>Classificação</h3>
+                    <div class="tag-row">
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Webhook</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">Deploy</span>
+                        <span class="tag">Troubleshooting</span>
+                        <span class="tag">Integração</span>
+                        <span class="tag">Falha de conectividade</span>
+                    </div>
+
+            </article>
         </noscript>
     </main>
 
@@ -2841,6 +3141,7 @@ where schema_name = 'transicao';</code></pre>
                 <a href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap GitHub</a>
                 <a href="#" onclick="showSection('projetos'); return false;">Portfólio</a>
+                <a href="#erros" onclick="openKnownErrors(); return false;">Erros &amp; Soluções</a>
                 <a href="#privacidade" onclick="showSection('privacidade'); return false;">Privacidade</a>
                 <a href="#termos" onclick="showSection('termos'); return false;">Termos de Uso</a>
             </div>
@@ -2852,8 +3153,8 @@ where schema_name = 'transicao';</code></pre>
 
     <!--
     ======================================================================
-    PROCEDIMENTO DE MANUTENÇÃO DE POSTS E PORTFÓLIO
-    LEIA ANTES DE ALTERAR O BLOG OU O PORTFÓLIO
+    PROCEDIMENTO DE MANUTENÇÃO DE BLOG, PORTFÓLIO E BASE DE ERROS
+    LEIA ANTES DE ALTERAR O BLOG, O PORTFÓLIO OU A BASE DE CONHECIMENTO
     DESTINADO A EDITORES HUMANOS E A OUTRAS INTELIGÊNCIAS ARTIFICIAIS
     ======================================================================
 
@@ -2973,7 +3274,80 @@ where schema_name = 'transicao';</code></pre>
        articleBody deve representar o conteúdo real, não texto inventado apenas para SEO.
 
     ============================================================
-    B. COMO INSERIR UM NOVO ITEM NO PORTFÓLIO
+    B. COMO INSERIR OU EDITAR UM REGISTRO EM
+       "BASE DE CONHECIMENTO — ERROS E SOLUÇÕES"
+    ============================================================
+
+    TRIAGEM OBRIGATÓRIA EM TODA EDIÇÃO SOLICITADA A UMA IA:
+    Ao interpretar o prompt e o contexto da conversa, verificar se o usuário descreveu
+    problema técnico real que tenha sido identificado e solucionado/contornado.
+
+    Se SIM:
+    - procurar primeiro por registro equivalente em knownErrors[];
+    - editar o existente se o caso já estiver documentado;
+    - criar novo registro apenas se for um problema distinto;
+    - manter fatos e evidências separados de hipóteses.
+
+    Se os dados forem insuficientes:
+    - NÃO inventar mensagem de erro, causa, data, passo ou resultado;
+    - retornar ao usuário/instrutor uma pergunta objetiva antes de concluir a edição
+      quando a resposta for necessária para produzir um registro fiel;
+    - exemplos do que pode precisar ser perguntado:
+      "Qual foi a mensagem exata apresentada?",
+      "Em que etapa o problema ocorreu?",
+      "Qual ação resolveu?",
+      "A solução foi validada depois?",
+      "Há evidência segura que possa ser publicada?".
+
+    CRITÉRIO DE PUBLICAÇÃO:
+    A base é destinada prioritariamente a problemas com solução ou contorno confirmado.
+    Não marcar como "Resolvido" aquilo que permanece em investigação.
+
+    ESTRUTURA DO OBJETO knownErrors[]:
+    {
+        id: 'slug-do-erro',
+        contentType: 'known-error',
+        title: 'Título',
+        summary: 'Descrição sintética',
+        date: '10 Ago 2026',
+        category: 'Deploy / Webhook',
+        status: 'Resolvido',
+        tags: ['GitHub', 'Webhook'],
+        html: `conteúdo completo`,
+        links: []
+    }
+
+    ESTRUTURA EDITORIAL RECOMENDADA:
+    Título;
+    resumo;
+    status;
+    contexto;
+    problema;
+    evidências;
+    diagnóstico;
+    solução;
+    resultado;
+    procedimento/aprendizado;
+    referências;
+    classificação/tags.
+
+    SINCRONIZAR:
+    knownErrors[];
+    #knownErrorList;
+    #knownErrorViewer inicial;
+    static-known-error-ID no <noscript>;
+    JSON-LD;
+    nuvem de tags compartilhada.
+
+    HASH:
+    #erro-ID.
+
+    Não transformar automaticamente todo problema mencionado em publicação.
+    O caso deve ter valor técnico/documental e informação suficiente para ser útil
+    e reproduzível sem expor detalhes sensíveis.
+
+    ============================================================
+    C. COMO INSERIR UM NOVO ITEM NO PORTFÓLIO
     ============================================================
 
     1. CRITÉRIO
@@ -3028,13 +3402,15 @@ where schema_name = 'transicao';</code></pre>
        Se houver artigo correspondente, url pode apontar para #post-ID-DO-ARTIGO.
 
     ============================================================
-    C. O QUE NÃO PRECISA SER ALTERADO A CADA NOVO POST
+    D. O QUE NÃO PRECISA SER ALTERADO A CADA NOVO CONTEÚDO
     ============================================================
 
     Não alterar normalmente:
     renderProjects();
     renderArticles();
     loadArticle();
+    renderKnownErrors();
+    loadKnownError();
     getBlogTagMap();
     showTaggedPosts();
     renderBlogTagCloud();
@@ -3046,7 +3422,7 @@ where schema_name = 'transicao';</code></pre>
     Modificá-las para publicar conteúdo novo aumenta risco de regressão sem necessidade.
 
     ============================================================
-    D. CHECKLIST OBRIGATÓRIO ANTES DE ENTREGAR O index.html
+    E. CHECKLIST OBRIGATÓRIO ANTES DE ENTREGAR O index.html
     ============================================================
 
     1. IDs únicos e coerentes.
@@ -3070,16 +3446,23 @@ where schema_name = 'transicao';</code></pre>
     19. Executar validação de sintaxe JavaScript.
     20. Validar JSON-LD.
     21. Conferir fechamento das tags HTML.
-    22. Se a alteração tocar Política de Privacidade ou Termos de Uso,
+    22. Se houver problema técnico resolvido descrito no prompt/contexto, verificar
+        se deve ser criado ou atualizado registro em knownErrors[].
+    23. Para registro de erro: confirmar status, evidência, solução e resultado sem
+        inventar causa raiz; perguntar ao usuário se faltar dado essencial.
+    24. knownErrors[].tags foi incorporado à nuvem e o fallback foi sincronizado.
+    25. hash #erro-ID, botão, viewer, noscript e JSON-LD estão coerentes.
+    26. Se a alteração tocar Política de Privacidade ou Termos de Uso,
         seguir obrigatoriamente o controle de versão específico existente
         junto às respectivas seções. Um post meramente editorial não altera
         por si só a versão dos documentos legais.
 
     REGRA FINAL:
-    O array JavaScript é a fonte funcional da SPA.
+    Os arrays JavaScript (articles[], knownErrors[] e portfolioItems[]) são as
+    fontes funcionais da SPA para seus respectivos conteúdos.
     O HTML estático é o espelho/fallback.
     O JSON-LD é o espelho semântico para mecanismos de busca.
-    Os três devem descrever a mesma publicação.
+    Todas as representações devem descrever o mesmo conteúdo.
     ======================================================================
     -->
 
@@ -3272,6 +3655,91 @@ where schema_name = 'transicao';</code></pre>
          *     ]
          * }
          */
+        const knownErrors = [
+            {
+                id: 'webhook-github-kinghost-failed-to-connect',
+                contentType: 'known-error',
+                title: "Webhook GitHub → KingHost: falha “failed to connect to host” após um push",
+                summary: 'Push confirmado no GitHub, mas publicação não atualizada; a entrega do webhook falhou com failed to connect to host e foi recuperada por Redeliver.',
+                date: '10 Ago 2026',
+                category: 'Deploy / Webhook',
+                status: 'Resolvido',
+                tags: ["GitHub", "Webhook", "KingHost", "Deploy", "Troubleshooting", "Integração", "Falha de conectividade"],
+                html: `
+                    <h2>Webhook GitHub → KingHost: falha <code>failed to connect to host</code> após um push</h2>
+                    <div class="article-meta">
+                        <span class="tag brand">Erro conhecido</span>
+                        <span class="tag success">Resolvido</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Webhook</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">Deploy</span>
+                    </div>
+
+                    <blockquote><strong>Resumo:</strong> após um push confirmado no GitHub, a atualização do site não ocorreu. O histórico de entregas do webhook mostrou <code>We couldn't deliver this payload: failed to connect to host</code>. A reentrega manual da mesma execução com <strong>Redeliver</strong> foi concluída com sucesso.</blockquote>
+
+                    <h3>Contexto</h3>
+                    <p>O código do <strong>daniel.fleck.dev.br</strong> é versionado no GitHub e a publicação na hospedagem utiliza a integração via Git disponibilizada pela KingHost. Um webhook associado ao repositório participa do fluxo que aciona a atualização após novos pushes.</p>
+                    <p>O caso ocorreu depois que o fluxo de publicação já havia sido configurado e utilizado com sucesso anteriormente.</p>
+
+                    <h3>Problema observado</h3>
+                    <p>Após realizar um push do projeto, percebi que o código estava atualizado no repositório, mas a versão publicada do site permanecia inalterada. Isso indicava que o problema não estava necessariamente no envio do commit ao GitHub e que era preciso verificar as etapas posteriores do processo de deploy.</p>
+
+                    <h3>Evidências</h3>
+                    <ul class="checklist">
+                        <li>o commit/push aparecia normalmente no repositório;</li>
+                        <li>o site hospedado não refletia a nova versão;</li>
+                        <li>em <strong>Settings → Webhooks → webhook correspondente → Recent deliveries</strong>, a entrega associada ao evento apresentava falha;</li>
+                        <li>a mensagem registrada pelo GitHub era <code>We couldn't deliver this payload: failed to connect to host</code>;</li>
+                        <li>a reentrega da mesma execução foi posteriormente concluída com sucesso.</li>
+                    </ul>
+
+                    <h3>Diagnóstico</h3>
+                    <p>A evidência permitiu localizar a falha na <strong>etapa de entrega do webhook</strong>: naquela tentativa, o GitHub não conseguiu estabelecer a conexão necessária com o destino configurado.</p>
+                    <p>A mensagem isolada não permite determinar a causa raiz com segurança. Ela não comprova, por si só, falha permanente do GitHub, da KingHost, da rede ou da configuração. Como uma nova tentativa da mesma entrega funcionou sem alteração de código ou credenciais, o evento foi classificado como <strong>falha pontual de entrega/conectividade</strong>.</p>
+
+                    <h3>Solução aplicada</h3>
+                    <ol>
+                        <li>Confirmei primeiro que o push estava presente no repositório do GitHub.</li>
+                        <li>Acessei <strong>Settings</strong> no repositório.</li>
+                        <li>Entrei em <strong>Webhooks</strong> e abri o webhook utilizado pela integração.</li>
+                        <li>Acessei <strong>Recent deliveries</strong> e identifiquei a entrega com falha.</li>
+                        <li>Revisei a mensagem de erro antes de alterar qualquer configuração.</li>
+                        <li>No menu da entrega, utilizei a opção <strong>Redeliver</strong>.</li>
+                        <li>O GitHub realizou uma nova tentativa e a entrega foi concluída com sucesso.</li>
+                        <li>Confirmei posteriormente que a atualização voltou a ser processada.</li>
+                    </ol>
+
+                    <h3>Resultado</h3>
+                    <p>Não foi necessário modificar o código do site, recriar o webhook, alterar credenciais ou refazer a integração. A reentrega controlada foi suficiente para restabelecer o fluxo naquele evento.</p>
+
+                    <h3>Procedimento aprendido</h3>
+                    <p>Quando o código está atualizado no GitHub, mas a publicação não ocorre, o histórico do webhook deve ser verificado <strong>antes de alterar o servidor, credenciais ou código</strong>. Isso ajuda a separar problemas de versionamento, entrega do evento e execução do deploy.</p>
+                    <p>Fluxo de diagnóstico utilizado:</p>
+                    <p><code>push → confirmar commit no GitHub → verificar Recent deliveries → analisar erro → Redeliver quando apropriado → validar publicação</code></p>
+
+                    <h3>Referências</h3>
+                    <ul>
+                        <li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/viewing-webhook-deliveries" target="_blank" rel="noopener noreferrer">GitHub Docs — Viewing webhook deliveries</a></li>
+                        <li><a href="https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/redelivering-webhooks" target="_blank" rel="noopener noreferrer">GitHub Docs — Redelivering webhooks</a></li>
+                        <li><a href="#post-migracao-vercel-kinghost-seguranca" onclick="openArticle('migracao-vercel-kinghost-seguranca'); return false;">Post relacionado — Migração da Vercel para a KingHost</a></li>
+                    </ul>
+
+                    <h3>Classificação</h3>
+                    <div class="tag-row">
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Webhook</span>
+                        <span class="tag">KingHost</span>
+                        <span class="tag">Deploy</span>
+                        <span class="tag">Troubleshooting</span>
+                        <span class="tag">Integração</span>
+                        <span class="tag">Falha de conectividade</span>
+                    </div>
+`,
+                links: []
+            }
+        ];
+
         const articles = [
             {
                 id: 'governanca-privacidade-lgpd-marco-civil',
@@ -3408,6 +3876,13 @@ where schema_name = 'transicao';</code></pre>
                     <h3>5. GitHub, webhook e redução de permissões</h3>
                     <p>Com a integração ativa, a KingHost configurou um webhook no repositório para atualizar a hospedagem após alterações no GitHub. Durante a configuração, revisei também as permissões concedidas à integração.</p>
                     <p>A aplicação aparecia entre as autorizações OAuth do GitHub com permissões que considerei mais amplas do que o necessário para o meu cenário. Após a configuração, revoguei essa autorização e testei novamente o fluxo. O webhook e a publicação continuaram funcionando. Registrei a decisão como aplicação prática do <strong>princípio do menor privilégio</strong>: reduzir permissões e, depois, comprovar que a funcionalidade necessária permanece operacional.</p>
+
+                    <h4>Diagnóstico de uma falha pontual na entrega do webhook</h4>
+                    <p>Em um dos pushes posteriores, percebi que a versão publicada do site não havia sido atualizada. Como o push constava normalmente no repositório, passei a verificar a etapa seguinte do fluxo: a entrega do webhook responsável por acionar a atualização na hospedagem.</p>
+                    <p>No GitHub, acessei <strong>repositório → Settings → Webhooks → Edit → Recent deliveries</strong>. O histórico mostrava que a entrega correspondente ao último push havia falhado com a mensagem <code>We couldn't deliver this payload: failed to connect to host</code>.</p>
+                    <p>Usei então o menu de ações da entrega e selecionei <strong>Redeliver</strong>. O GitHub realizou uma nova tentativa, dessa vez concluída com sucesso, e a atualização voltou a ser processada. Como a repetição da mesma entrega funcionou, registrei o episódio como uma <strong>falha pontual de entrega/conectividade</strong>, sem atribuir uma causa definitiva ao GitHub, à hospedagem ou à rede apenas com base nessa mensagem.</p>
+                    <p>O episódio acrescentou uma etapa útil ao procedimento de diagnóstico: quando um push chega corretamente ao GitHub, mas a publicação não ocorre, antes de alterar código, credenciais ou configuração do servidor é possível verificar o histórico de <em>Recent deliveries</em> do webhook, confirmar o resultado daquela tentativa e, quando apropriado, testar uma nova entrega controlada.</p>
+                    <p>O caso também foi registrado de forma estruturada na <a href="#erro-webhook-github-kinghost-failed-to-connect" onclick="openKnownError('webhook-github-kinghost-failed-to-connect'); return false;"><strong>Base de Conhecimento — Erros e Soluções</strong></a>, separando contexto, evidências, diagnóstico e procedimento de recuperação.</p>
 
                     <h3>6. Recursos de segurança da hospedagem</h3>
                     <p>Os serviços web permanecem submetidos aos protocolos e controles de segurança disponibilizados pela provedora. No painel administrativo, mantenho ativados os recursos de segurança disponíveis ao meu nível de administração e compatíveis com o plano contratado, sem presumir a existência de recursos que dependam de contratação adicional.</p>
@@ -3902,6 +4377,20 @@ where schema_name = 'transicao';</code></pre>
             loadArticle(articleId, true);
         }
 
+        function openKnownErrors() {
+            showSection('erros', false);
+            if (knownErrors.length) loadKnownError(knownErrors[0].id);
+
+            window.requestAnimationFrame(() => {
+                smoothScrollToElement(document.getElementById('knownErrorsSectionTitle'));
+            });
+        }
+
+        function openKnownError(errorId) {
+            showSection('erros', false);
+            loadKnownError(errorId, true);
+        }
+
         function renderRoadmap() {
             const list = document.getElementById('roadmapList');
             list.innerHTML = roadmap.map(item => '<div class="phase"><div class="phase-date">' + item.period + '</div><div><h3>' + item.title + '</h3><p>' + item.text + '</p></div><div class="phase-status">' + item.status + '</div></div>').join('');
@@ -3968,11 +4457,15 @@ where schema_name = 'transicao';</code></pre>
 
         function getBlogTagMap() {
             const tagMap = {};
+            const contentItems = [
+                ...articles.map(article => ({ ...article, contentType: article.contentType || 'blog' })),
+                ...knownErrors
+            ];
 
-            articles.forEach(article => {
-                (article.tags || []).forEach(tag => {
+            contentItems.forEach(item => {
+                (item.tags || []).forEach(tag => {
                     if (!tagMap[tag]) tagMap[tag] = [];
-                    tagMap[tag].push(article);
+                    tagMap[tag].push(item);
                 });
             });
 
@@ -3983,6 +4476,10 @@ where schema_name = 'transicao';</code></pre>
             openArticle(articleId);
         }
 
+        function openKnownErrorFromTag(errorId) {
+            openKnownError(errorId);
+        }
+
         function showTaggedPosts(tag) {
             const tagMap = getBlogTagMap();
             const posts = tagMap[tag] || [];
@@ -3990,15 +4487,21 @@ where schema_name = 'transicao';</code></pre>
             const desc = document.getElementById('tagResultsDesc');
             const list = document.getElementById('tagResultsList');
 
-            if (title) title.textContent = 'Posts com a tag: ' + tag;
-            if (desc) desc.textContent = posts.length + ' post(s) encontrado(s) com esta tag.';
+            if (title) title.textContent = 'Conteúdos com a tag: ' + tag;
+            if (desc) desc.textContent = posts.length + ' conteúdo(s) encontrado(s) com esta tag.';
             if (list) {
-                list.innerHTML = posts.map(article => {
-                    const tags = (article.tags || []).map(item => '<span class="tag">' + escapeHtml(item) + '</span>').join('');
+                list.innerHTML = posts.map(item => {
+                    const tags = (item.tags || []).map(tagItem => '<span class="tag">' + escapeHtml(tagItem) + '</span>').join('');
+                    const isKnownError = item.contentType === 'known-error';
+                    const hashPrefix = isKnownError ? '#erro-' : '#post-';
+                    const opener = isKnownError
+                        ? "openKnownErrorFromTag('" + item.id + "')"
+                        : "openArticleFromTag('" + item.id + "')";
+                    const typeLabel = isKnownError ? 'Erro conhecido • ' + item.status : item.category;
 
                     return '<article class="card">' +
-                        '<div class="article-meta"><span class="tag brand">' + escapeHtml(article.category) + '</span><span class="tag">' + escapeHtml(article.date) + '</span></div>' +
-                        '<h3><a href="#post-' + encodeURIComponent(article.id) + '" onclick="openArticleFromTag(\'' + article.id + '\'); return false;">' + escapeHtml(article.title) + '</a></h3>' +
+                        '<div class="article-meta"><span class="tag brand">' + escapeHtml(typeLabel) + '</span><span class="tag">' + escapeHtml(item.date) + '</span></div>' +
+                        '<h3><a href="' + hashPrefix + encodeURIComponent(item.id) + '" onclick="' + opener + '; return false;">' + escapeHtml(item.title) + '</a></h3>' +
                         '<div class="tag-row">' + tags + '</div>' +
                         '</article>';
                 }).join('');
@@ -4036,6 +4539,55 @@ where schema_name = 'transicao';</code></pre>
                     showTaggedPosts(link.dataset.tag);
                 });
             });
+        }
+
+        function renderKnownErrors() {
+            const list = document.getElementById('knownErrorList');
+            if (!list) return;
+
+            list.innerHTML = knownErrors.map((item, index) =>
+                '<button class="article-btn ' + (index === 0 ? 'active' : '') +
+                '" id="known-error-btn-' + item.id +
+                '" onclick="loadKnownError(\'' + item.id + '\', true)">' +
+                '<div class="date">' + item.date + ' • ' + item.category + '</div>' +
+                '<div class="title">' + item.title + '</div></button>'
+            ).join('');
+
+            if (knownErrors.length) loadKnownError(knownErrors[0].id);
+        }
+
+        function loadKnownError(id, scrollToEntry = false) {
+            const item = knownErrors.find(error => error.id === id);
+            if (!item) return;
+
+            document.querySelectorAll('#knownErrorList .article-btn')
+                .forEach(btn => btn.classList.remove('active'));
+
+            const activeButton = document.getElementById('known-error-btn-' + id);
+            if (activeButton) activeButton.classList.add('active');
+
+            const links = (item.links || []).map(link => {
+                if (link.section) {
+                    return '<a class="project-link" href="#" onclick="showSection(\'' + link.section + '\'); return false;">' + link.label + '</a>';
+                }
+                if (link.articleId) {
+                    return '<a class="project-link" href="#post-' + encodeURIComponent(link.articleId) +
+                        '" onclick="openArticle(\'' + link.articleId + '\'); return false;">' + link.label + '</a>';
+                }
+                return '<a class="project-link" href="' + link.url +
+                    '" target="_blank" rel="noopener noreferrer">' + link.label + '</a>';
+            }).join('');
+
+            const viewer = document.getElementById('knownErrorViewer');
+            if (!viewer) return;
+            viewer.innerHTML = item.html + (links ? '<div class="article-links">' + links + '</div>' : '');
+
+            if (scrollToEntry) {
+                window.requestAnimationFrame(() => {
+                    const title = viewer.querySelector('h1, h2, h3');
+                    smoothScrollToElement(title || viewer);
+                });
+            }
         }
 
         function renderArticles() {
@@ -4189,6 +4741,7 @@ where schema_name = 'transicao';</code></pre>
             renderProjects();
             renderTools();
             renderArticles();
+            renderKnownErrors();
             renderBlogTagCloud();
             initCountdown();
             window.requestAnimationFrame(drawRadar);
@@ -4196,9 +4749,14 @@ where schema_name = 'transicao';</code></pre>
             const initialHash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
             if (initialHash === 'privacidade' || initialHash === 'termos') {
                 showSection(initialHash, false);
+            } else if (initialHash === 'erros') {
+                openKnownErrors();
             } else if (initialHash.startsWith('post-')) {
                 const articleId = initialHash.substring(5);
                 if (articles.some(article => article.id === articleId)) openArticle(articleId);
+            } else if (initialHash.startsWith('erro-')) {
+                const errorId = initialHash.substring(5);
+                if (knownErrors.some(item => item.id === errorId)) openKnownError(errorId);
             }
         });
 
