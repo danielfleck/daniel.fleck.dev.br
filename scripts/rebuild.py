@@ -17,7 +17,9 @@ pois serão sobrescritas na próxima execução deste script.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import re
 import shutil
 from collections import Counter, defaultdict
 from html import escape
@@ -42,6 +44,43 @@ STATIC_WITH_PARTIALS = [
     ROOT / "termos/index.html",
     ROOT / "404.html",
 ]
+
+
+# Assets públicos cujo conteúdo deve invalidar automaticamente caches antigos.
+# O hash é calculado durante o rebuild; não existe número de versão manual.
+VERSIONED_ASSETS = (
+    "/css/base.css",
+    "/css/layout.css",
+    "/css/components.css",
+    "/css/pages.css",
+    "/js/main.js",
+)
+
+
+def asset_url(public_path: str) -> str:
+    """Retorna URL do asset com versão derivada do próprio conteúdo.
+
+    Exemplo:
+        /css/components.css?v=ab12cd34ef56
+
+    Se o arquivo mudar, o hash muda. Navegadores e proxies passam a enxergar
+    uma URL diferente, evitando que uma versão antiga do CSS/JS continue ativa.
+    """
+
+    filesystem_path = ROOT / public_path.lstrip("/")
+    digest = hashlib.sha256(filesystem_path.read_bytes()).hexdigest()[:12]
+    return f"{public_path}?v={digest}"
+
+
+def apply_asset_versions(text: str) -> str:
+    """Atualiza referências a CSS/JS estáticos para seus hashes atuais."""
+
+    for public_path in VERSIONED_ASSETS:
+        versioned = asset_url(public_path)
+        # Aceita tanto a referência sem query quanto uma versão gerada antes.
+        pattern = re.escape(public_path) + r"(?:\?v=[0-9a-f]{12})?"
+        text = re.sub(pattern, versioned, text)
+    return text
 
 
 class Writer:
@@ -267,11 +306,11 @@ def tag_page(tag: str, members) -> str:
         f'<meta name="description" content="Conteúdos relacionados à tag '
         f'{escape(tag, quote=True)}.">'
         f'<link rel="canonical" href="{url}">'
-        '<link rel="stylesheet" href="/css/base.css">'
-        '<link rel="stylesheet" href="/css/layout.css">'
-        '<link rel="stylesheet" href="/css/components.css">'
-        '<link rel="stylesheet" href="/css/pages.css">'
-        '<script src="/js/main.js" defer></script></head><body>'
+        f'<link rel="stylesheet" href="{asset_url("/css/base.css")}">'
+        f'<link rel="stylesheet" href="{asset_url("/css/layout.css")}">'
+        f'<link rel="stylesheet" href="{asset_url("/css/components.css")}">'
+        f'<link rel="stylesheet" href="{asset_url("/css/pages.css")}">'
+        f'<script src="{asset_url("/js/main.js")}" defer></script></head><body>'
         '<!-- GENERATED-TAG-PAGE: não editar manualmente. Fonte: CONTENT-META das páginas. -->'
         f'{nav}<main class="container"><section class="section">'
         '<header class="page-header"><div class="section-kicker">Tag</div>'
@@ -304,11 +343,11 @@ def tag_index(items) -> str:
         "<title>Tags | Daniel Fleck</title>"
         '<meta name="description" content="Índice de tags do conteúdo técnico.">'
         f'<link rel="canonical" href="{BASE_URL}/tags/">'
-        '<link rel="stylesheet" href="/css/base.css">'
-        '<link rel="stylesheet" href="/css/layout.css">'
-        '<link rel="stylesheet" href="/css/components.css">'
-        '<link rel="stylesheet" href="/css/pages.css">'
-        '<script src="/js/main.js" defer></script></head><body>'
+        f'<link rel="stylesheet" href="{asset_url("/css/base.css")}">'
+        f'<link rel="stylesheet" href="{asset_url("/css/layout.css")}">'
+        f'<link rel="stylesheet" href="{asset_url("/css/components.css")}">'
+        f'<link rel="stylesheet" href="{asset_url("/css/pages.css")}">'
+        f'<script src="{asset_url("/js/main.js")}" defer></script></head><body>'
         '<!-- GENERATED-TAG-PAGE: não editar manualmente. -->'
         f'{nav}<main class="container"><section class="section">'
         '<header class="page-header"><div class="section-kicker">'
@@ -342,12 +381,15 @@ def build(write: bool = True) -> list[Path]:
         text = replace_region(text, "SEO", seo_block(item))
         text = replace_region(text, "ARTICLE-HEADER", header_block(item))
         text = replace_region(text, "CONTENT-LINKS", links_block(item))
+        text = apply_asset_versions(text)
         writer.put(item.path, text)
 
     # 2. Mantém partials compartilhados sincronizados nas páginas estáticas.
     for path in STATIC_WITH_PARTIALS:
         if path.exists():
-            writer.put(path, apply_partials(path.read_text(encoding="utf-8")))
+            text = apply_partials(path.read_text(encoding="utf-8"))
+            text = apply_asset_versions(text)
+            writer.put(path, text)
 
     # 3. Reconstrói os índices principais por tipo de conteúdo.
     sorted_items = sorted(
@@ -369,7 +411,9 @@ def build(write: bool = True) -> list[Path]:
     for path, region, values in index_specs:
         text = path.read_text(encoding="utf-8")
         inner = '<div class="listing-grid">' + "".join(card(item) for item in values) + "</div>"
-        writer.put(path, replace_region(text, region, inner))
+        text = replace_region(text, region, inner)
+        text = apply_asset_versions(text)
+        writer.put(path, text)
 
     # 4. Atualiza os blocos resumidos da página inicial.
     home = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -396,6 +440,7 @@ def build(write: bool = True) -> list[Path]:
         + "</div>",
     )
     home = replace_region(home, "TAG-CLOUD", tag_cloud(items))
+    home = apply_asset_versions(home)
     writer.put(ROOT / "index.html", home)
 
     # 5. Agrupa conteúdos por tag e remove páginas geradas que ficaram órfãs.

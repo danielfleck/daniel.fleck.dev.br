@@ -7,6 +7,7 @@ recursos externos automáticos e se o rebuild está atualizado.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -25,6 +26,24 @@ JSON_LD_RE = re.compile(
 
 # Carregamentos automáticos externos são proibidos pela arquitetura do site.
 # Links comuns <a href="https://..."> continuam permitidos.
+
+VERSIONED_PUBLIC_ASSETS = (
+    "/css/base.css",
+    "/css/layout.css",
+    "/css/components.css",
+    "/css/pages.css",
+    "/js/main.js",
+)
+
+
+def expected_asset_url(public_path: str) -> str:
+    """Calcula a URL versionada que deve aparecer nos HTMLs públicos."""
+
+    path = ROOT / public_path.lstrip("/")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()[:12]
+    return f"{public_path}?v={digest}"
+
+
 AUTO_EXTERNAL_RE = [
     re.compile(r'<script[^>]+src=["\']https?://', re.I),
     re.compile(r'<img[^>]+src=["\']https?://', re.I),
@@ -170,6 +189,18 @@ def validate_html_pages(errors: list[str]) -> dict[str, Path]:
                 json.loads(raw_json_ld)
             except Exception as exc:
                 errors.append(f"JSON-LD inválido em {relative}: {exc}")
+
+        # CSS/JS próprios precisam carregar uma versão baseada em hash.
+        # Isso impede regressões em que o HTML continue apontando para um
+        # stylesheet antigo armazenado em cache no navegador ou em proxy.
+        for public_asset in VERSIONED_PUBLIC_ASSETS:
+            if public_asset in text:
+                expected = expected_asset_url(public_asset)
+                if expected not in text:
+                    errors.append(
+                        f"Asset sem versão atual em {relative}: "
+                        f"{public_asset} (esperado {expected})"
+                    )
 
         for reference in HTML_ATTR_RE.findall(text):
             target = resolve_local_target(path, reference, ROOT)

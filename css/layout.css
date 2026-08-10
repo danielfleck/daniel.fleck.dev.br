@@ -198,6 +198,24 @@
     box-shadow: 0 16px 38px rgba(255, 255, 255, 0.12);
 }
 
+
+/* -------------------------------------------------------------------------- */
+/* Agrupamento de links e tags                                                 */
+/* -------------------------------------------------------------------------- */
+
+/*
+ * A aparência visual de .project-link pertence a components.css.
+ * Aqui ficam apenas regras de agrupamento/posicionamento.
+ */
+.project-links,
+.portfolio-links,
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 16px;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Card de marco profissional no hero                                         */
 /* -------------------------------------------------------------------------- */
@@ -601,6 +619,12 @@ main {
 
     .hero-cta .btn {
         width: 100%;
+    }
+
+    .project-links .project-link,
+    .portfolio-links .project-link {
+        width: auto;
+        max-width: 100%;
     }
 
     .countdown {
