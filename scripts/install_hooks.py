@@ -1,32 +1,34 @@
 """Configura o repositório Git para usar os hooks versionados em ``.githooks``.
 
-O Git não compartilha a configuração ``core.hooksPath`` pelo próprio clone.
-Por isso, este script deve ser executado uma vez em cada nova cópia local do
-repositório.
+Este script atua na raiz do projeto, não dentro de ``site/``. O hook permanece
+privado no repositório e executa os scripts de rebuild e validação antes do
+commit.
 """
 
 from __future__ import annotations
 
 import subprocess
-from pathlib import Path
+
+from site_utils import PROJECT_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[1]
-HOOK = ROOT / ".githooks/pre-commit"
+HOOK = PROJECT_ROOT / ".githooks/pre-commit"
 
 
 def main() -> int:
     """Torna o hook executável e configura ``core.hooksPath``."""
 
     if not HOOK.exists():
-        raise SystemExit(f"Hook não encontrado: {HOOK.relative_to(ROOT)}")
+        raise SystemExit(
+            f"Hook não encontrado: {HOOK.relative_to(PROJECT_ROOT)}"
+        )
 
     # Preserva as permissões existentes e acrescenta os bits de execução.
     HOOK.chmod(HOOK.stat().st_mode | 0o111)
 
     subprocess.run(
         ["git", "config", "core.hooksPath", ".githooks"],
-        cwd=ROOT,
+        cwd=PROJECT_ROOT,
         check=True,
     )
 

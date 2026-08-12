@@ -1,26 +1,40 @@
-"""Inicia um servidor HTTP local para pré-visualização do site estático."""
+"""Inicia um servidor HTTP local para pré-visualização de ``site/``.
+
+O comando deve ser executado a partir da raiz do repositório:
+
+    python scripts/serve.py
+
+Embora o script esteja fora da pasta pública, o servidor expõe somente
+``site/`` como document root. Isso reproduz a nova organização planejada para
+a hospedagem e evita disponibilizar scripts, templates, testes ou arquivos da
+raiz do projeto durante a pré-visualização local.
+"""
 
 from __future__ import annotations
 
-import os
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-from pathlib import Path
+
+from site_utils import SITE_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[1]
 HOST = "127.0.0.1"
 PORT = 8000
 
 
 def main() -> int:
-    """Serve a raiz do projeto em ``http://127.0.0.1:8000/``."""
+    """Serve ``SITE_ROOT`` em ``http://127.0.0.1:8000/``."""
 
-    # SimpleHTTPRequestHandler usa o diretório de trabalho como raiz quando
-    # nenhum diretório é informado explicitamente.
-    os.chdir(ROOT)
+    if not SITE_ROOT.is_dir():
+        raise SystemExit(f"Pasta pública não encontrada: {SITE_ROOT}")
 
+    # O parâmetro directory evita alterar o cwd global do processo e garante
+    # explicitamente que apenas site/ seja exposto pelo servidor local.
+    def handler(*args, **kwargs):
+        return SimpleHTTPRequestHandler(*args, directory=str(SITE_ROOT), **kwargs)
+
+    print(f"Raiz pública: {SITE_ROOT}")
     print(f"Servidor local: http://{HOST}:{PORT}/  (Ctrl+C para encerrar)")
-    server = ThreadingHTTPServer((HOST, PORT), SimpleHTTPRequestHandler)
+    server = ThreadingHTTPServer((HOST, PORT), handler)
 
     try:
         server.serve_forever()

@@ -1,4 +1,4 @@
-"""Executa validações estruturais, de SEO e de integridade do site.
+"""Executa validações estruturais, de SEO e de integridade de ``site/``.
 
 O validador foi pensado para rodar antes de commits e também manualmente. Ele
 verifica metadados dos conteúdos, links locais, JSON-LD, canonical, sitemap,
@@ -15,7 +15,13 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from site_utils import ROOT, resolve_local_target, scan_content, tag_slug
+from site_utils import (
+    PROJECT_ROOT,
+    SITE_ROOT,
+    resolve_local_target,
+    scan_content,
+    tag_slug,
+)
 
 
 HTML_ATTR_RE = re.compile(r'(?:href|src)=["\']([^"\']+)["\']', re.I)
@@ -39,7 +45,7 @@ VERSIONED_PUBLIC_ASSETS = (
 def expected_asset_url(public_path: str) -> str:
     """Calcula a URL versionada que deve aparecer nos HTMLs públicos."""
 
-    path = ROOT / public_path.lstrip("/")
+    path = SITE_ROOT / public_path.lstrip("/")
     digest = hashlib.sha256(path.read_bytes()).hexdigest()[:12]
     return f"{public_path}?v={digest}"
 
@@ -57,21 +63,16 @@ AUTO_EXTERNAL_RE = [
 
 
 def public_html_files():
-    """Itera pelas páginas HTML publicáveis, excluindo fontes auxiliares."""
+    """Itera somente pelos HTMLs dentro da raiz pública ``site/``."""
 
-    excluded_parts = {".venv", "dist", ".git", "templates"}
-
-    for path in ROOT.rglob("*.html"):
-        if any(part in excluded_parts for part in path.parts):
-            continue
-        yield path
+    yield from SITE_ROOT.rglob("*.html")
 
 
 def validate_content_metadata(errors: list[str], warnings: list[str]):
     """Valida CONTENT-META e retorna conteúdos e mapa de slugs de tags."""
 
     try:
-        items = scan_content(ROOT)
+        items = scan_content(SITE_ROOT)
     except Exception as exc:  # noqa conceitual: erro precisa virar relatório.
         errors.append(str(exc))
         items = []
@@ -91,7 +92,7 @@ def validate_content_metadata(errors: list[str], warnings: list[str]):
 
         if len(item.summary) > 220:
             warnings.append(
-                f"{item.path.relative_to(ROOT)}: resumo longo "
+                f"{item.path.relative_to(SITE_ROOT)}: resumo longo "
                 f"({len(item.summary)} caracteres)"
             )
 
@@ -116,7 +117,7 @@ def validate_content_metadata(errors: list[str], warnings: list[str]):
         for marker in required_markers:
             if marker not in page:
                 errors.append(
-                    f"{item.path.relative_to(ROOT)}: "
+                    f"{item.path.relative_to(SITE_ROOT)}: "
                     f"marcador/instrução ausente: {marker}"
                 )
 
@@ -128,14 +129,14 @@ def validate_html_pages(errors: list[str]) -> dict[str, Path]:
 
     canonicals: dict[str, Path] = {}
     generated_indexes = {
-        ROOT / "blog/index.html",
-        ROOT / "portfolio/index.html",
-        ROOT / "erros/index.html",
+        SITE_ROOT / "blog/index.html",
+        SITE_ROOT / "portfolio/index.html",
+        SITE_ROOT / "erros/index.html",
     }
 
     for path in public_html_files():
         text = path.read_text(encoding="utf-8")
-        relative = path.relative_to(ROOT)
+        relative = path.relative_to(SITE_ROOT)
 
         if path in generated_indexes and "GENERATED:" not in text:
             errors.append(f"Marcadores de geração ausentes em {relative}")
@@ -203,8 +204,23 @@ def validate_html_pages(errors: list[str]) -> dict[str, Path]:
                     )
 
         for reference in HTML_ATTR_RE.findall(text):
-            target = resolve_local_target(path, reference, ROOT)
-            if target is not None and not target.exists():
+            target = resolve_local_target(path, reference, SITE_ROOT)
+            if target is None:
+                continue
+
+            # Depois da separação entre raiz do projeto e raiz pública, um
+            # link relativo não pode escapar de site/. Caso contrário, ele
+            # poderia existir no disco local (por exemplo README.md), mas não
+            # estaria disponível quando somente site/ fosse publicado.
+            try:
+                target.resolve().relative_to(SITE_ROOT.resolve())
+            except ValueError:
+                errors.append(
+                    f"Link/recurso sai da raiz pública: {relative} -> {reference}"
+                )
+                continue
+
+            if not target.exists():
                 errors.append(
                     f"Link/recurso local inexistente: {relative} -> {reference}"
                 )
@@ -222,7 +238,7 @@ def validate_sitemap(errors: list[str], canonicals: dict[str, Path]) -> None:
     """Compara as URLs do sitemap com o conjunto de URLs canônicas."""
 
     try:
-        tree = ET.parse(ROOT / "sitemap.xml")
+        tree = ET.parse(SITE_ROOT / "sitemap.xml")
         namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         locations = [
             element.text
@@ -257,8 +273,8 @@ def validate_rebuild_state(errors: list[str]) -> None:
     """Confirma que uma nova execução do rebuild não produziria alterações."""
 
     process = subprocess.run(
-        [sys.executable, str(ROOT / "scripts/rebuild.py"), "--check"],
-        cwd=ROOT,
+        [sys.executable, str(PROJECT_ROOT / "scripts/rebuild.py"), "--check"],
+        cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
     )

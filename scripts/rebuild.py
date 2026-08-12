@@ -1,6 +1,7 @@
-"""Reconstrói todos os artefatos derivados do site estático.
+"""Reconstrói os artefatos derivados dentro de ``site/``.
 
-As páginas individuais de blog, portfólio e erros são fontes de conteúdo.
+As páginas individuais em ``site/blog``, ``site/portfolio`` e ``site/erros``
+são fontes de conteúdo.
 Este script lê seus blocos ``CONTENT-META`` e atualiza automaticamente:
 
 - navegação e rodapé compartilhados;
@@ -26,23 +27,31 @@ from html import escape
 from pathlib import Path
 
 from site_config import AUTHOR, BASE_URL
-from site_utils import ROOT, html_tags, replace_region, scan_content, tag_slug
+from site_utils import (
+    PROJECT_ROOT,
+    SITE_ROOT,
+    TEMPLATES_ROOT,
+    html_tags,
+    replace_region,
+    scan_content,
+    tag_slug,
+)
 
 
-NAV = (ROOT / "templates/partials/nav.html").read_text(encoding="utf-8").strip()
-FOOTER = (ROOT / "templates/partials/footer.html").read_text(encoding="utf-8").strip()
+NAV = (TEMPLATES_ROOT / "partials/nav.html").read_text(encoding="utf-8").strip()
+FOOTER = (TEMPLATES_ROOT / "partials/footer.html").read_text(encoding="utf-8").strip()
 
 # Páginas estáticas que compartilham os mesmos partials de navegação/rodapé.
 STATIC_WITH_PARTIALS = [
-    ROOT / "index.html",
-    ROOT / "blog/index.html",
-    ROOT / "portfolio/index.html",
-    ROOT / "erros/index.html",
-    ROOT / "roadmap/index.html",
-    ROOT / "ferramentas/index.html",
-    ROOT / "privacidade/index.html",
-    ROOT / "termos/index.html",
-    ROOT / "404.html",
+    SITE_ROOT / "index.html",
+    SITE_ROOT / "blog/index.html",
+    SITE_ROOT / "portfolio/index.html",
+    SITE_ROOT / "erros/index.html",
+    SITE_ROOT / "roadmap/index.html",
+    SITE_ROOT / "ferramentas/index.html",
+    SITE_ROOT / "privacidade/index.html",
+    SITE_ROOT / "termos/index.html",
+    SITE_ROOT / "404.html",
 ]
 
 
@@ -67,7 +76,7 @@ def asset_url(public_path: str) -> str:
     uma URL diferente, evitando que uma versão antiga do CSS/JS continue ativa.
     """
 
-    filesystem_path = ROOT / public_path.lstrip("/")
+    filesystem_path = SITE_ROOT / public_path.lstrip("/")
     digest = hashlib.sha256(filesystem_path.read_bytes()).hexdigest()[:12]
     return f"{public_path}?v={digest}"
 
@@ -252,7 +261,11 @@ def tag_cloud(items) -> str:
             f'style="font-size:{size:.1f}px">{escape(tag)}</a>'
         )
 
-    return '<div class="word-cloud" aria-label="Nuvem de tags">' + "".join(parts) + "</div>"
+    return (
+        '<div class="word-cloud" aria-label="Nuvem de tags">'
+        + "".join(parts)
+        + "</div>"
+    )
 
 
 def tag_page(tag: str, members) -> str:
@@ -284,9 +297,9 @@ def tag_page(tag: str, members) -> str:
             )
 
     url = f"{BASE_URL}/tags/{tag_slug(tag)}/"
-    nav = (ROOT / "templates/partials/nav.html").read_text(encoding="utf-8").strip()
+    nav = (TEMPLATES_ROOT / "partials/nav.html").read_text(encoding="utf-8").strip()
     footer = (
-        (ROOT / "templates/partials/footer.html")
+        (TEMPLATES_ROOT / "partials/footer.html")
         .read_text(encoding="utf-8")
         .strip()
     )
@@ -311,7 +324,8 @@ def tag_page(tag: str, members) -> str:
         f'<link rel="stylesheet" href="{asset_url("/css/components.css")}">'
         f'<link rel="stylesheet" href="{asset_url("/css/pages.css")}">'
         f'<script src="{asset_url("/js/main.js")}" defer></script></head><body>'
-        '<!-- GENERATED-TAG-PAGE: não editar manualmente. Fonte: CONTENT-META das páginas. -->'
+        '<!-- GENERATED-TAG-PAGE: não editar manualmente. ' 
+        'Fonte: CONTENT-META das páginas. -->'
         f'{nav}<main class="container"><section class="section">'
         '<header class="page-header"><div class="section-kicker">Tag</div>'
         f"<h1>{escape(tag)}</h1>"
@@ -323,9 +337,9 @@ def tag_page(tag: str, members) -> str:
 def tag_index(items) -> str:
     """Monta a página raiz ``/tags/`` com a nuvem de todas as tags."""
 
-    nav = (ROOT / "templates/partials/nav.html").read_text(encoding="utf-8").strip()
+    nav = (TEMPLATES_ROOT / "partials/nav.html").read_text(encoding="utf-8").strip()
     footer = (
-        (ROOT / "templates/partials/footer.html")
+        (TEMPLATES_ROOT / "partials/footer.html")
         .read_text(encoding="utf-8")
         .strip()
     )
@@ -372,7 +386,7 @@ def build(write: bool = True) -> list[Path]:
     """Executa todo o processo de rebuild e retorna os caminhos alterados."""
 
     writer = Writer(write)
-    items = scan_content(ROOT)
+    items = scan_content(SITE_ROOT)
 
     # 1. Atualiza cada página editorial a partir de seus próprios metadados.
     for item in items:
@@ -403,20 +417,24 @@ def build(write: bool = True) -> list[Path]:
     }
 
     index_specs = [
-        (ROOT / "blog/index.html", "BLOG-LIST", by_type["blog"]),
-        (ROOT / "portfolio/index.html", "PORTFOLIO-LIST", by_type["portfolio"]),
-        (ROOT / "erros/index.html", "ERROS-LIST", by_type["error"]),
+        (SITE_ROOT / "blog/index.html", "BLOG-LIST", by_type["blog"]),
+        (SITE_ROOT / "portfolio/index.html", "PORTFOLIO-LIST", by_type["portfolio"]),
+        (SITE_ROOT / "erros/index.html", "ERROS-LIST", by_type["error"]),
     ]
 
     for path, region, values in index_specs:
         text = path.read_text(encoding="utf-8")
-        inner = '<div class="listing-grid">' + "".join(card(item) for item in values) + "</div>"
+        inner = (
+            '<div class="listing-grid">'
+            + "".join(card(item) for item in values)
+            + "</div>"
+        )
         text = replace_region(text, region, inner)
         text = apply_asset_versions(text)
         writer.put(path, text)
 
     # 4. Atualiza os blocos resumidos da página inicial.
-    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    home = (SITE_ROOT / "index.html").read_text(encoding="utf-8")
     featured = [item for item in by_type["portfolio"] if item.featured][:4]
     home = replace_region(
         home,
@@ -441,7 +459,7 @@ def build(write: bool = True) -> list[Path]:
     )
     home = replace_region(home, "TAG-CLOUD", tag_cloud(items))
     home = apply_asset_versions(home)
-    writer.put(ROOT / "index.html", home)
+    writer.put(SITE_ROOT / "index.html", home)
 
     # 5. Agrupa conteúdos por tag e remove páginas geradas que ficaram órfãs.
     tags = defaultdict(list)
@@ -450,7 +468,7 @@ def build(write: bool = True) -> list[Path]:
             tags[tag].append(item)
 
     desired = {tag_slug(tag): tag for tag in tags}
-    tags_root = ROOT / "tags"
+    tags_root = SITE_ROOT / "tags"
     tags_root.mkdir(exist_ok=True)
 
     for child in tags_root.iterdir():
@@ -489,10 +507,10 @@ def build(write: bool = True) -> list[Path]:
         + "".join(f"  <url><loc>{escape(url)}</loc></url>\n" for url in urls)
         + "</urlset>\n"
     )
-    writer.put(ROOT / "sitemap.xml", sitemap)
+    writer.put(SITE_ROOT / "sitemap.xml", sitemap)
 
     robots = f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n"
-    writer.put(ROOT / "robots.txt", robots)
+    writer.put(SITE_ROOT / "robots.txt", robots)
 
     return writer.changed
 
@@ -511,7 +529,10 @@ def main() -> int:
     parser.add_argument(
         "--hook",
         action="store_true",
-        help="Modo usado pelo hook Git; retorna código 3 se o rebuild alterar arquivos.",
+        help=(
+            "Modo usado pelo hook Git; retorna código 3 se o rebuild "
+            "alterar arquivos."
+        ),
     )
     args = parser.parse_args()
 
@@ -520,7 +541,7 @@ def main() -> int:
     if changed:
         print("Arquivos que exigem rebuild/atualização:")
         for path in changed:
-            print(" -", path.relative_to(ROOT) if path.exists() or path.is_absolute() else path)
+            print(" -", path.relative_to(PROJECT_ROOT))
 
         if args.check:
             return 2

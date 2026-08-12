@@ -13,7 +13,7 @@ import subprocess
 import sys
 from datetime import date
 
-from site_utils import ROOT, slugify
+from site_utils import PROJECT_ROOT, SITE_ROOT, TEMPLATES_ROOT, slugify
 
 
 TYPE_MAP = {
@@ -66,8 +66,8 @@ def run_rebuild() -> None:
     """Reconstrói os artefatos derivados após criar a nova página."""
 
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts/rebuild.py")],
-        cwd=ROOT,
+        [sys.executable, str(PROJECT_ROOT / "scripts/rebuild.py")],
+        cwd=PROJECT_ROOT,
         check=True,
     )
 
@@ -117,11 +117,11 @@ def main() -> int:
 
     validate_inline_metadata([title, summary, category, status, *tag_values])
 
-    target = ROOT / section / slug / "index.html"
+    target = SITE_ROOT / section / slug / "index.html"
     if target.exists():
-        raise SystemExit(f"Slug já existe: {target.relative_to(ROOT)}")
+        raise SystemExit(f"Slug já existe: {target.relative_to(PROJECT_ROOT)}")
 
-    template = (ROOT / "templates" / template_name).read_text(encoding="utf-8")
+    template = (TEMPLATES_ROOT / template_name).read_text(encoding="utf-8")
 
     featured = "false"
     if args.tipo == "portfolio":
@@ -145,7 +145,7 @@ def main() -> int:
 
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(template, encoding="utf-8")
-    print("Criado:", target.relative_to(ROOT))
+    print("Criado:", target.relative_to(PROJECT_ROOT))
 
     run_rebuild()
     print(

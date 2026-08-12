@@ -1,7 +1,8 @@
 """Funções compartilhadas pelos scripts de manutenção do site.
 
-O site usa arquivos HTML como fonte de conteúdo. Cada página de blog,
-portfólio ou erro conhecido contém um bloco ``CONTENT-META`` que fornece os
+O site público fica em ``site/`` e usa arquivos HTML como fonte de
+conteúdo. Cada página de blog, portfólio ou erro conhecido contém um bloco
+``CONTENT-META`` que fornece os
 metadados necessários para índices, tags, sitemap e SEO.
 """
 
@@ -15,7 +16,10 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 
-ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SITE_ROOT = PROJECT_ROOT / "site"
+TEMPLATES_ROOT = PROJECT_ROOT / "templates"
+SCRIPTS_ROOT = PROJECT_ROOT / "scripts"
 
 # Captura somente o bloco de metadados inserido nos arquivos de conteúdo.
 # O modo DOTALL (re.S) permite que o bloco ocupe várias linhas.
@@ -110,7 +114,7 @@ def parse_meta_text(text: str, path: Path) -> ContentMeta:
     )
 
 
-def scan_content(root: Path = ROOT) -> list[ContentMeta]:
+def scan_content(root: Path = SITE_ROOT) -> list[ContentMeta]:
     """Varre blog, portfólio e erros conhecidos em busca de conteúdo.
 
     Apenas páginas no padrão ``<seção>/<slug>/index.html`` são consideradas
@@ -165,7 +169,11 @@ def html_tags(tags: tuple[str, ...] | list[str]) -> str:
     )
 
 
-def resolve_local_target(page: Path, href: str, root: Path = ROOT) -> Path | None:
+def resolve_local_target(
+    page: Path,
+    href: str,
+    root: Path = SITE_ROOT,
+) -> Path | None:
     """Resolve um ``href``/``src`` local para um caminho no sistema de arquivos.
 
     Referências externas, âncoras e esquemas como ``mailto:`` não apontam para

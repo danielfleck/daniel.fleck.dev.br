@@ -1,8 +1,10 @@
 """Configurações centrais utilizadas pelos scripts de build do site.
 
-Estas constantes representam dados estáveis do projeto. Manter informações
-compartilhadas aqui evita repetir URLs e identificadores em diversos scripts.
-Não coloque segredos neste arquivo: tudo aqui pode ser versionado no Git.
+Estas constantes representam dados estáveis do projeto. Os caminhos físicos
+do repositório ficam em ``site_utils.py``; este módulo contém apenas dados
+lógicos/públicos, como URL, autor e links institucionais.
+
+Não coloque segredos aqui: tudo neste arquivo pode ser versionado no Git.
 """
 
 BASE_URL = "https://daniel.fleck.dev.br"
