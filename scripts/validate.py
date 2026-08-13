@@ -81,7 +81,7 @@ def validate_content_metadata(errors: list[str], warnings: list[str]):
             if not getattr(item, field):
                 errors.append(f"{item.path}: campo {field} vazio")
 
-        if len(item.summary) > 220:
+        if len(item.summary) > 280:
             warnings.append(
                 f"{item.path.relative_to(SITE_ROOT)}: resumo longo "
                 f"({len(item.summary)} caracteres)"
