@@ -1,30 +1,36 @@
 # CSP e recursos externos
 
-A Content Security Policy do site principal busca permitir apenas os recursos necessários à aplicação estática.
+## Estado atual
 
-## Diretivas em `meta`
+O site principal mantém CSP restritiva em `<meta>` para as diretivas compatíveis e recebe `frame-ancestors 'none'` por cabeçalho HTTP.
 
-Diretivas compatíveis com entrega via `<meta http-equiv="Content-Security-Policy">` continuam úteis para restringir scripts, estilos, imagens, fontes, conexões, objetos e formulários conforme a política definida.
+`/docs/` recebe uma CSP própria por `site/docs/.htaccess`, incluindo:
 
-`frame-ancestors`, contudo, precisa ser entregue em **header HTTP** e não deve ser mantido no `meta` como se estivesse ativo.
+```text
+connect-src 'self'
+frame-ancestors 'none'
+```
 
-## Proteção anti-framing
+O Material for MkDocs usa JavaScript inline, motivo pelo qual a política de `/docs/` permite `'unsafe-inline'` em `script-src` enquanto essa implementação for necessária.
 
-A tarefa de segurança deve testar no ambiente KingHost uma solução por header HTTP. O estado só deve ser documentado como “implementado” depois de verificar a resposta real do servidor.
+## Recursos externos
 
-## MkDocs
+A configuração atual não utiliza `repo_url`, fontes Google, analytics nem CDN externa automática. O GitHub aparece apenas como link normal.
 
-O Material for MkDocs usa JavaScript inline. Por isso, a política do site principal não deve ser copiada mecanicamente para `/docs/`. Uma política muito restritiva pode quebrar busca, navegação e outros recursos.
+Links `<a>` externos não equivalem a carregar scripts, fontes, imagens ou iframes de terceiros.
+
+## Barreira dinâmica
+
+`scripts/audit_network.py` complementa a inspeção do HTML e falha se o navegador tentar comunicação para host externo não autorizado.
 
 ## Novos terceiros
 
-Antes de adicionar recurso externo automático:
+Antes de adicionar integração externa automática:
 
-1. identificar fornecedor e finalidade;
+1. identificar finalidade e fornecedor;
 2. confirmar necessidade;
-3. avaliar impacto de privacidade e segurança;
-4. atualizar CSP;
-5. verificar se a Política de Privacidade precisa mudar;
-6. testar comportamento sem relaxar diretivas além do necessário.
-
-Links `<a>` comuns para sites externos não são equivalentes a carregar automaticamente scripts, imagens ou iframes desses sites.
+3. avaliar privacidade e segurança;
+4. ajustar CSP pelo mínimo necessário;
+5. revisar Política/Termos quando houver efeito material;
+6. testar estaticamente e em navegador headless;
+7. validar produção após o deploy.

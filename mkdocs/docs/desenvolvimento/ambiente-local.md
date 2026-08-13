@@ -2,7 +2,7 @@
 
 ## Requisitos
 
-O projeto requer Python `>=3.10`. As dependências declaradas no `pyproject.toml` incluem MkDocs e Material for MkDocs.
+O projeto requer Python `>=3.10`. MkDocs e Material for MkDocs são dependências normais; Playwright pertence ao grupo opcional `audit`.
 
 Linux/macOS:
 
@@ -10,7 +10,9 @@ Linux/macOS:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e .
+python -m pip install -e ".[audit]"
+python -m playwright install chromium
+python scripts/install_hooks.py
 ```
 
 Windows:
@@ -19,25 +21,22 @@ Windows:
 py -m venv .venv
 .venv\Scripts\activate
 python -m pip install --upgrade pip
-python -m pip install -e .
-```
-
-Depois de cada clone:
-
-```bash
+python -m pip install -e ".[audit]"
+python -m playwright install chromium
 python scripts/install_hooks.py
 ```
 
-O hook é configuração local do Git; portanto, clonar o repositório não ativa automaticamente `core.hooksPath`.
+`core.hooksPath` é configuração local, portanto `install_hooks.py` deve ser executado depois de cada clone.
 
-## Comandos de verificação inicial
+## Verificação inicial
 
 ```bash
+python -m unittest discover -s tests -v
 python scripts/rebuild.py --check
 python scripts/build_docs.py --check
 python scripts/validate.py
 python scripts/validate_docs.py
-python -m unittest discover -s tests -v
+python scripts/audit_network.py --all
 ```
 
 ## Preview
@@ -46,9 +45,9 @@ python -m unittest discover -s tests -v
 python scripts/serve.py
 ```
 
-Acesse `http://127.0.0.1:8000/`. Prefira servidor HTTP local a abrir páginas por `file://`, pois caminhos absolutos e comportamento de navegação são testados de maneira mais próxima da publicação real.
+Acesse `http://127.0.0.1:8000/`.
 
-## O que não deve ser versionado
+## Não versionar
 
 - `.venv/`;
 - `__pycache__/`;
@@ -56,4 +55,4 @@ Acesse `http://127.0.0.1:8000/`. Prefira servidor HTTP local a abrir páginas po
 - `*.egg-info/`;
 - `dist/`;
 - `mkdocs/site/`;
-- segredos e arquivos locais não previstos no projeto.
+- credenciais, tokens e evidências restritas.

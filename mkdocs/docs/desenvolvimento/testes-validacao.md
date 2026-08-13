@@ -1,52 +1,56 @@
 # Testes e validação
 
-A validação é uma barreira contra regressões introduzidas por edição manual, scripts ou ferramentas de IA.
+As validações são complementares.
 
-## Testes automatizados
+## Testes unitários
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-São especialmente importantes após mudanças em parsing de metadados, geração de URLs, tags, build ou validação.
-
-## Validação do site
+## Site principal e coerência do projeto
 
 ```bash
 python scripts/validate.py
 ```
 
-Deve verificar, conforme a implementação vigente:
+Verifica, entre outros:
+- conteúdo e metadados;
+- links, SEO e sitemap;
+- documentos jurídicos e versões esperadas;
+- links de Privacidade e Termos na página inicial;
+- ausência de `frame-ancestors` em CSP por `<meta>`;
+- configuração do MkDocs;
+- modelo documental sem `*-resumo.md` no MkDocs;
+- `.htaccess`;
+- hooks;
+- estado do rebuild e do build da documentação.
 
-- metadados obrigatórios;
-- duplicidade de conteúdos;
-- colisão de slugs;
-- `<title>`, `<h1>`, canonical e description;
-- JSON-LD válido;
-- links e recursos locais;
-- sitemap;
-- placeholders não resolvidos;
-- recursos externos automáticos proibidos;
-- estado atualizado do rebuild.
-
-## Validação da documentação
+## Material for MkDocs
 
 ```bash
 python scripts/validate_docs.py
 ```
 
-O MkDocs é validado separadamente porque o Material gera HTML próprio e utiliza JavaScript inline. A validação não deve aplicar cegamente as mesmas regras de template do site principal.
+Valida a saída específica de `site/docs/`, inclusive CSS, referências locais e carregamentos externos.
 
-Para uma verificação opcional de headers no ambiente publicado:
-
-```bash
-python scripts/validate_docs.py --production-url https://daniel.fleck.dev.br/docs/
-```
-
-## Inspeção visual
+## Rede em runtime
 
 ```bash
-python scripts/serve.py
+python scripts/audit_network.py --all
 ```
 
-Revise no mínimo home, páginas alteradas, navegação mobile quando relevante, `/docs/`, Política e Termos se componentes compartilhados tiverem mudado.
+Este é o teste que detecta `fetch()`, XHR, WebSocket e outras requisições criadas dinamicamente por JavaScript.
+
+## Produção
+
+```bash
+python scripts/validate.py \
+  --production-url https://daniel.fleck.dev.br \
+  --network
+
+python scripts/validate_docs.py \
+  --production-url https://daniel.fleck.dev.br/docs/
+```
+
+A publicação somente deve ser considerada tecnicamente confirmada depois da validação da resposta HTTP final.

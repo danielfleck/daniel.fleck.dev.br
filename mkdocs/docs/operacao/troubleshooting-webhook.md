@@ -1,31 +1,59 @@
 # Troubleshooting: webhook GitHub → KingHost
 
-## Sintoma documentado
+Este documento registra sintomas observados sem converter hipótese em causa raiz.
 
-Após um push confirmado no GitHub, o site não refletiu a alteração. Na entrega do webhook apareceu a mensagem:
+## Caso 1 — `failed to connect to host`
+
+Em caso anterior, após push confirmado no GitHub, uma entrega apresentou:
 
 ```text
 failed to connect to host
 ```
 
-## Diagnóstico responsável
+A mesma entrega funcionou após `Redeliver`. A classificação segura permanece: falha pontual de entrega/conectividade, sem atribuição conclusiva de causa.
 
-A mensagem comprova que **aquela tentativa de entrega** não conseguiu conectar ao host configurado. Ela não identifica isoladamente se a causa estava no GitHub, KingHost, rede, disponibilidade momentânea ou configuração.
+## Caso 2 — `unsupported reference string`
 
-## Procedimento
+Em 13/08/2026, após novo push, a integração retornou:
 
-1. confirmar que o commit/push esperado existe no GitHub;
-2. abrir `Settings → Webhooks` no repositório;
-3. selecionar o webhook relevante;
-4. consultar `Recent deliveries`;
-5. abrir a entrega associada ao push;
-6. registrar a mensagem observada sem publicar IDs administrativos desnecessários;
-7. quando adequado, executar `Redeliver`;
-8. validar se a publicação ocorreu;
-9. se a nova entrega falhar, coletar evidências adicionais antes de modificar credenciais ou configuração.
+```json
+{"status":"fail","message":"unsupported reference string","transaction_id":null,"queue_id":null}
+```
 
-## Resultado do caso conhecido
+Esse retorno prova a rejeição daquela tentativa, mas não informa sozinho qual formato de referência foi recusado.
 
-No caso registrado, a mesma entrega funcionou após `Redeliver`, sem que uma alteração de código ou credencial fosse necessária. Por isso, a classificação segura é **falha pontual de entrega/conectividade**, não uma causa raiz atribuída a um fornecedor específico.
+O fato de `transaction_id` e `queue_id` estarem nulos é compatível com rejeição antes de uma operação normal de deploy entrar em fila, mas isso deve ser tratado como **inferência**, não como confirmação da arquitetura interna da KingHost.
 
-O relato editorial completo permanece em `/erros/`; este runbook guarda apenas o procedimento técnico reutilizável.
+## Verificações para `unsupported reference string`
+
+Antes de alterar código do site:
+
+```bash
+git status
+git branch --show-current
+git log -1 --oneline
+git remote -v
+git ls-remote --heads origin
+git rev-parse HEAD
+git rev-parse origin/main
+```
+
+Confirmar no painel da hospedagem que a referência de publicação é a branch simples esperada, normalmente:
+
+```text
+main
+```
+
+e não uma URL, `origin/main` ou outra representação de ref, salvo instrução explícita do provedor.
+
+## Procedimento geral
+
+1. confirmar que o commit esperado existe no GitHub;
+2. confirmar a branch efetivamente enviada;
+3. confirmar a branch configurada no painel KingHost;
+4. abrir a entrega do webhook e preservar a mensagem exata;
+5. não alterar `.htaccess`, CSP ou MkDocs apenas por erro de parsing da referência;
+6. se a integração continuar falhando em `main`, abrir chamado com a KingHost anexando a resposta exata do webhook;
+7. somente após deploy bem-sucedido executar as validações pós-publicação.
+
+IDs administrativos, URLs secretas de webhook e credenciais não devem ser publicados nesta documentação.

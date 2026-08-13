@@ -1,6 +1,6 @@
 # Guia dos scripts de manutenção do site
 
-Este arquivo permanece na **raiz do repositório** e é o manual operacional canônico dos scripts Python. A página correspondente no MkDocs é gerada automaticamente por `scripts/build_docs.py`; não mantenha duas cópias manuais.
+Este arquivo permanece na **raiz do repositório** e é o manual operacional canônico dos scripts Python. A página equivalente no MkDocs é gerada automaticamente por `scripts/build_docs.py`.
 
 ## 1. Preparação do ambiente
 
@@ -15,16 +15,56 @@ python -m playwright install chromium
 python scripts/install_hooks.py
 ```
 
-O grupo opcional `audit` instala Playwright, utilizado somente para a auditoria dinâmica de rede.
+No Windows:
 
-## 2. Rotina para criar um novo post
+```powershell
+py -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[audit]"
+python -m playwright install chromium
+python scripts/install_hooks.py
+```
+
+Depois de atualizar a versão do Playwright, execute novamente `python -m playwright install chromium` se o navegador gerenciado deixar de ser encontrado.
+
+## 2. Sequência completa antes de um commit importante
+
+Para mudanças em scripts, MkDocs, segurança, Política de Privacidade, Termos ou estrutura:
 
 ```bash
 source .venv/bin/activate
+
+python -m unittest discover -s tests -v
+python scripts/rebuild.py
+python scripts/build_docs.py
+python scripts/validate.py
+python scripts/validate_docs.py
+python scripts/audit_network.py --all
+python scripts/serve.py
+```
+
+Depois da revisão visual:
+
+```bash
+git status
+git diff
+git add -A
+git status
+git diff --cached
+git commit -m "Descrição da alteração"
+git push
+```
+
+O `serve.py` é opcional para alterações sem efeito visual, mas é recomendado antes de publicação relevante.
+
+## 3. Criar um novo post
+
+```bash
 python scripts/create_content.py blog
 ```
 
-O script cria `site/blog/<slug>/index.html` e executa `rebuild.py` automaticamente. Depois edite somente o trecho entre:
+O script cria `site/blog/<slug>/index.html` e executa `rebuild.py` automaticamente. Edite somente:
 
 ```html
 <!-- CONTENT-BODY:START -->
@@ -32,37 +72,22 @@ O script cria `site/blog/<slug>/index.html` e executa `rebuild.py` automaticamen
 <!-- CONTENT-BODY:END -->
 ```
 
-Em seguida:
+Depois:
 
 ```bash
 python scripts/rebuild.py
+python scripts/build_docs.py --check
 python scripts/validate.py
-python scripts/audit_network.py --all
-python scripts/serve.py
-
-git status
-git diff
-git add -A
-git commit -m "Adiciona post ..."
-git push
-```
-
-`serve.py` é opcional, mas recomendado para revisão visual.
-
-## 3. Alterar um post existente
-
-Edite `site/blog/<slug>/index.html` e execute:
-
-```bash
-python scripts/rebuild.py
-python scripts/validate.py
+python scripts/validate_docs.py
 python scripts/audit_network.py --all
 python scripts/serve.py
 ```
 
-Depois revise o `git diff`, faça commit e push.
+## 4. Alterar um post existente
 
-## 4. Criar item de Portfólio
+Edite `site/blog/<slug>/index.html` e execute a mesma sequência de validação do item anterior.
+
+## 5. Criar item de Portfólio
 
 ```bash
 python scripts/create_content.py portfolio
@@ -73,67 +98,65 @@ Depois de editar o corpo:
 ```bash
 python scripts/rebuild.py
 python scripts/validate.py
+python scripts/validate_docs.py
 python scripts/audit_network.py --all
 python scripts/serve.py
 ```
 
-## 5. Criar registro em Erros e Soluções
+## 6. Criar registro em Erros e Soluções
 
 ```bash
 python scripts/create_content.py erro
 ```
 
+Não marque hipótese como causa confirmada e não marque como resolvido sem validação.
+
 Depois:
 
 ```bash
 python scripts/rebuild.py
 python scripts/validate.py
+python scripts/validate_docs.py
 python scripts/audit_network.py --all
 python scripts/serve.py
 ```
 
-## 6. Alterar documentação MkDocs
+## 7. Alterar documentação MkDocs
 
-Edite somente arquivos em:
+Edite os arquivos-fonte em `mkdocs/docs/`.
 
-```text
-mkdocs/docs/
-```
-
-Para a página de scripts, edite **somente `SCRIPTS.md` na raiz**.
+**Exceção:** para a documentação dos scripts, edite somente `SCRIPTS.md` na raiz.
 
 Depois:
 
 ```bash
 python scripts/build_docs.py
 python scripts/validate.py
+python scripts/validate_docs.py
 python scripts/audit_network.py --all
 python scripts/serve.py
 ```
 
-`build_docs.py` também:
+`build_docs.py`:
 - sincroniza `SCRIPTS.md` para `mkdocs/docs/desenvolvimento/scripts-python.md`;
 - executa `mkdocs build --clean --strict`;
 - copia `mkdocs/.htaccess` para `site/docs/.htaccess`;
 - normaliza `sitemap.xml.gz`.
 
-## 7. Atualizar Política de Privacidade ou Termos
+## 8. Atualizar Política de Privacidade ou Termos
 
-Alterações textuais nos documentos jurídicos exigem nova versão sequencial.
+Alteração textual exige nova versão sequencial apenas do documento alterado.
 
-Rotina:
+Depois da edição:
 
 ```bash
-# editar site/privacidade/index.html e/ou site/termos/index.html
-
 python scripts/rebuild.py
 python scripts/build_docs.py
 python scripts/validate.py
+python scripts/validate_docs.py
 python scripts/audit_network.py --all
 python scripts/serve.py
 ```
-
-Antes de publicar, confira se a data/hora indicada no documento corresponde ao momento real de publicação.
 
 Após o deploy:
 
@@ -141,13 +164,14 @@ Após o deploy:
 python scripts/validate.py \
   --production-url https://daniel.fleck.dev.br \
   --network
+
+python scripts/validate_docs.py \
+  --production-url https://daniel.fleck.dev.br/docs/
 ```
 
-Guarde a evidência dos headers e da auditoria no arquivo restrito de validação pós-deploy.
+Registre as evidências pós-deploy em armazenamento restrito.
 
-## 8. `scripts/create_content.py`
-
-Cria conteúdo novo a partir de templates:
+## 9. `scripts/create_content.py`
 
 ```bash
 python scripts/create_content.py blog
@@ -155,11 +179,9 @@ python scripts/create_content.py portfolio
 python scripts/create_content.py erro
 ```
 
-O corpo editorial é editado depois no bloco `CONTENT-BODY`.
+Cria conteúdo a partir dos templates e executa o rebuild inicial.
 
-## 9. `scripts/rebuild.py`
-
-Reconstrói índices, tags, sitemap, SEO, JSON-LD, navegação e rodapé.
+## 10. `scripts/rebuild.py`
 
 ```bash
 python scripts/rebuild.py
@@ -167,9 +189,9 @@ python scripts/rebuild.py --check
 python scripts/rebuild.py --hook
 ```
 
-Depois de aplicar a migração de segurança, o script não deve voltar a gerar `frame-ancestors` dentro de CSP entregue por `<meta>`.
+Reconstrói navegação, rodapé, SEO, JSON-LD, índices, tags, sitemap e demais artefatos derivados do site principal.
 
-## 10. `scripts/build_docs.py`
+## 11. `scripts/build_docs.py`
 
 ```bash
 python scripts/build_docs.py
@@ -177,38 +199,18 @@ python scripts/build_docs.py --check
 python scripts/build_docs.py --hook
 ```
 
-Fontes:
-- `mkdocs/docs/`
-- `SCRIPTS.md`
-- `mkdocs/.htaccess`
+Fonte: `mkdocs/docs/`, `SCRIPTS.md` e `mkdocs/.htaccess`.  
+Saída: `site/docs/`.
 
-Saída:
-- `site/docs/`
-
-## 11. `scripts/validate.py`
-
-Validação estática:
+## 12. `scripts/validate.py`
 
 ```bash
 python scripts/validate.py
 ```
 
-Também confere:
-- documentos legais V5/V4;
-- ausência de `frame-ancestors` em CSP por `<meta>`;
-- ausência de `repo_url` e analytics no MkDocs;
-- sincronização de `SCRIPTS.md`;
-- `.htaccess` da raiz e da documentação;
-- build MkDocs atualizado;
-- links, SEO, JSON-LD, sitemap e recursos locais.
+Valida o site principal, documentos legais, coerência documental, configuração do MkDocs, hooks, `.htaccess`, sitemap, links, SEO e estado dos builds.
 
-Com auditoria dinâmica:
-
-```bash
-python scripts/validate.py --network
-```
-
-Produção:
+Para conferir headers da produção e executar a auditoria dinâmica:
 
 ```bash
 python scripts/validate.py \
@@ -216,9 +218,22 @@ python scripts/validate.py \
   --network
 ```
 
-## 12. `scripts/audit_network.py`
+## 13. `scripts/validate_docs.py`
 
-Abre o site em Chromium headless e observa requisições reais de rede.
+```bash
+python scripts/validate_docs.py
+```
+
+Faz a validação específica da saída Material for MkDocs, incluindo referências locais, CSS, carregamentos externos e presença da política de segurança da documentação.
+
+Produção:
+
+```bash
+python scripts/validate_docs.py \
+  --production-url https://daniel.fleck.dev.br/docs/
+```
+
+## 14. `scripts/audit_network.py`
 
 Auditoria rápida:
 
@@ -226,7 +241,7 @@ Auditoria rápida:
 python scripts/audit_network.py
 ```
 
-Todas as páginas:
+Todas as páginas locais:
 
 ```bash
 python scripts/audit_network.py --all
@@ -241,87 +256,70 @@ python scripts/audit_network.py \
   --report dist/network-audit-production.json
 ```
 
-Por padrão, hosts externos não autorizados causam falha. A tentativa é registrada e abortada antes de ser concluída.
+O script abre Chromium headless, observa HTTP/HTTPS/WS/WSS e aborta uma tentativa para host não autorizado antes de concluí-la.
 
-## 13. `scripts/apply_security_migration.py`
-
-Executar **uma vez** durante esta migração:
-
-```bash
-python scripts/apply_security_migration.py
-```
-
-Ele remove `frame-ancestors 'none'` de CSPs entregues por `<meta>` em HTML/templates e ajusta `rebuild.py` para não reintroduzir a diretiva. A proteção passa a ser entregue por cabeçalho HTTP nos arquivos `.htaccess`.
-
-## 14. `scripts/serve.py`
+## 15. `scripts/serve.py`
 
 ```bash
 python scripts/serve.py
 ```
 
-Serve apenas `site/` em `http://127.0.0.1:8000/`.
+Serve somente `site/` em `http://127.0.0.1:8000/`.
 
-## 15. `scripts/install_hooks.py`
+## 16. `scripts/install_hooks.py`
 
 ```bash
 python scripts/install_hooks.py
 ```
 
-Ativa `.githooks/pre-commit` e `.githooks/pre-push`.
+Ativa os hooks versionados em `.githooks/`. Execute depois de cada clone.
 
-## 16. Pre-commit
+## 17. `.githooks/pre-commit`
 
-No `git commit`:
+O `git commit` executa:
 
 ```text
 rebuild.py --hook
-  ↓
+   ↓
 build_docs.py --hook
-  ↓
+   ↓
 validate.py
+   ↓
+validate_docs.py
 ```
 
 Se um gerador alterar arquivos, o commit é interrompido para revisão e novo `git add -A`.
 
-## 17. Pre-push
+## 18. `.githooks/pre-push`
 
-No `git push`:
+O `git push` executa:
 
 ```text
 audit_network.py --all
 ```
 
-O push é bloqueado se o navegador tentar acessar host externo não autorizado.
+O push é bloqueado quando a auditoria falha ou identifica host externo não autorizado.
 
-## 18. Testes automatizados
+## 19. Migrações de uso único
+
+`scripts/apply_security_migration.py` e `scripts/apply_documentation_migration.py` são scripts de migração histórica. **Não fazem parte da rotina diária** e não devem ser reexecutados sem revisar previamente seu objetivo e o estado atual do repositório.
+
+## 20. Testes automatizados
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-Recomendado depois de alterações nos scripts Python.
+Especialmente recomendados depois de mudanças nos scripts Python.
 
-## 19. Rotina após alteração de script
-
-```bash
-python -m unittest discover -s tests -v
-python scripts/rebuild.py
-python scripts/build_docs.py
-python scripts/validate.py
-python scripts/audit_network.py --all
-python scripts/serve.py
-```
-
-## 20. Validação pós-deploy dos headers da KingHost
-
-Use:
+## 21. Headers após deploy
 
 ```bash
 curl -sS -D - -o /dev/null https://daniel.fleck.dev.br/
 curl -sS -D - -o /dev/null https://daniel.fleck.dev.br/docs/
 ```
 
-Na raiz, confirme no mínimo:
+Na raiz, confirme:
 - `Content-Security-Policy` com `frame-ancestors 'none'`;
 - `X-Frame-Options: DENY`;
 - `Referrer-Policy: no-referrer`;
@@ -331,12 +329,12 @@ Em `/docs/`, confirme também:
 - `connect-src 'self'`;
 - `script-src 'self' 'unsafe-inline'`.
 
-Se a KingHost estiver usando cache intermediário, limpe o cache antes do teste.
-
-## 21. Ordem resumida de publicação
+## 22. Ordem resumida
 
 ```text
 editar
+  ↓
+testes
   ↓
 rebuild
   ↓
@@ -344,17 +342,25 @@ build_docs
   ↓
 validate
   ↓
+validate_docs
+  ↓
 audit_network
   ↓
 serve/revisão
   ↓
+git diff
+  ↓
 commit
+  ↓
+pre-commit
   ↓
 push
   ↓
+pre-push
+  ↓
 deploy
   ↓
-validate --production-url ... --network
+validação de produção
   ↓
-guardar evidências restritas
+evidência restrita
 ```

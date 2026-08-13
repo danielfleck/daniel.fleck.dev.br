@@ -1,43 +1,50 @@
 # Privacidade e Termos após a inclusão do MkDocs
 
-**Decisão registrada em:** 13/08/2026 às 18:11 (BRT, UTC-3)
+**Decisão registrada em:** 13/08/2026 às 18:11 (BRT, UTC-3)  
+**Estado:** implementação versionada no Git; fechamento operacional depende de deploy e validação de produção.
 
 ## Mudanças materiais
 
-A inclusão de `/docs/` trouxe três pontos que precisavam ser incorporados à governança:
-
-1. Material for MkDocs contém suporte a `localStorage`/`sessionStorage`;
-2. `repo_url` pode provocar consulta automática a dados públicos do GitHub;
-3. a CSP do site principal não podia simplesmente ser copiada para `/docs/`, pois o Material usa JavaScript inline de inicialização.
+A inclusão de `/docs/` introduziu:
+1. suporte do Material for MkDocs a `localStorage`/`sessionStorage`;
+2. risco de consulta automática ao GitHub quando `repo_url` é usado;
+3. JavaScript inline que exige política CSP própria para a documentação.
 
 ## Decisões
 
-- Política de Privacidade passa de V4 para **V5**.
-- Termos de Uso passam de V3 para **V4**.
-- `repo_url`/`repo_name` são removidos do MkDocs.
-- GitHub permanece como link comum.
-- `/docs/` recebe CSP própria com `connect-src 'self'`.
-- `frame-ancestors 'none'` passa a ser entregue por cabeçalho HTTP.
-- a raiz e `/docs/` recebem `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY` e `X-Content-Type-Options: nosniff`.
-- auditoria headless passa a complementar a validação estática.
-- `SCRIPTS.md` permanece canônico na raiz e é espelhado automaticamente no MkDocs.
-- evidência integral do atendimento KingHost permanece em armazenamento restrito; o MkDocs publica apenas a conclusão técnica necessária.
+- Política de Privacidade: **V5**.
+- Termos de Uso: **V4**.
+- `repo_url`/`repo_name`: removidos.
+- GitHub: link comum.
+- fontes remotas: desabilitadas por `font: false`.
+- `/docs/`: CSP própria com `connect-src 'self'`.
+- anti-framing: `frame-ancestors 'none'` por header HTTP.
+- raiz e `/docs/`: `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY` e `X-Content-Type-Options: nosniff`.
+- auditoria headless: complemento obrigatório da validação estática.
+- `SCRIPTS.md`: canônico na raiz e espelhado automaticamente.
+- atendimento integral KingHost: evidência restrita; MkDocs publica apenas as conclusões necessárias.
+- resumos de governança: pertencem ao Confluence, não ao MkDocs.
 
-## Critério de fechamento
-
-A mudança só deve ser considerada concluída quando:
+## Critério de fechamento local
 
 ```bash
+python -m unittest discover -s tests -v
 python scripts/rebuild.py
 python scripts/build_docs.py
 python scripts/validate.py
+python scripts/validate_docs.py
 python scripts/audit_network.py --all
 ```
 
-passarem, e após o deploy:
+## Critério de fechamento em produção
 
 ```bash
-python scripts/validate.py   --production-url https://daniel.fleck.dev.br   --network
+python scripts/validate.py \
+  --production-url https://daniel.fleck.dev.br \
+  --network
+
+python scripts/validate_docs.py \
+  --production-url https://daniel.fleck.dev.br/docs/
 ```
 
-também passar.
+A existência de um commit no GitHub não substitui a comprovação de que o webhook/deploy publicou esse commit.

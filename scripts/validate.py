@@ -29,6 +29,11 @@ DOCS_HTACCESS_OUTPUT = DOCS_ROOT / ".htaccess"
 SCRIPTS_SOURCE = PROJECT_ROOT / "SCRIPTS.md"
 SCRIPTS_DOC = PROJECT_ROOT / "mkdocs" / "docs" / "desenvolvimento" / "scripts-python.md"
 
+HOME = SITE_ROOT / "index.html"
+PRE_COMMIT = PROJECT_ROOT / ".githooks" / "pre-commit"
+PRE_PUSH = PROJECT_ROOT / ".githooks" / "pre-push"
+GOVERNANCE_ROOT = PROJECT_ROOT / "mkdocs" / "docs" / "governanca"
+
 HTML_ATTR_RE = re.compile(r'(?:href|src)=["\']([^"\']+)["\']', re.I)
 JSON_LD_RE = re.compile(
     r'<script\s+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
@@ -265,6 +270,113 @@ def validate_htaccess(errors: list[str]) -> None:
     elif DOCS_HTACCESS_OUTPUT.read_text(encoding="utf-8") != docs_source:
         errors.append("site/docs/.htaccess difere de mkdocs/.htaccess")
 
+def validate_home_legal_links(errors: list[str]) -> None:
+    """Garante transparência jurídica mínima já na página inicial."""
+
+    if not HOME.is_file():
+        errors.append("site/index.html ausente")
+        return
+
+    text = HOME.read_text(encoding="utf-8")
+    for href in ('href="/privacidade/"', 'href="/termos/"', 'href="/docs/"'):
+        if href not in text:
+            errors.append(f"Página inicial sem link obrigatório: {href}")
+
+    if "Privacidade:" not in text:
+        errors.append("Página inicial sem aviso resumido de privacidade no rodapé")
+
+def validate_document_model(errors: list[str]) -> None:
+    """Impede resumos de Confluence de voltarem para o MkDocs."""
+
+    if not GOVERNANCE_ROOT.is_dir():
+        errors.append("Pasta de governança MkDocs ausente")
+        return
+
+    summaries = sorted(GOVERNANCE_ROOT.rglob("*-resumo.md"))
+    for path in summaries:
+        errors.append(
+            "Resumo indevido dentro do MkDocs; resumos pertencem ao Confluence: "
+            f"{path.relative_to(PROJECT_ROOT)}"
+        )
+
+    required_current = {
+        GOVERNANCE_ROOT / "index.md": (
+            "Política de Privacidade: **Versão 5",
+            "Termos de Uso: **Versão 4",
+        ),
+        GOVERNANCE_ROOT / "controle-versoes-documentos-legais.md": (
+            "Política de Privacidade: Versão 5",
+            "Termos de Uso: Versão 4",
+        ),
+        GOVERNANCE_ROOT / "registro-operacoes-tratamento.md": (
+            "Web Storage funcional",
+            "Política de Privacidade pública **V5**",
+            "Termos de Uso públicos **V4**",
+        ),
+        GOVERNANCE_ROOT / "due-diligence-kinghost.md": (
+            "Header always set",
+            "13/08/2026",
+        ),
+    }
+
+    for path, fragments in required_current.items():
+        if not path.is_file():
+            errors.append(f"Documento de governança ausente: {path.relative_to(PROJECT_ROOT)}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for fragment in fragments:
+            if fragment not in text:
+                errors.append(
+                    f"{path.relative_to(PROJECT_ROOT)} sem referência atual esperada: {fragment}"
+                )
+
+def validate_hooks(errors: list[str]) -> None:
+    """Confere que os hooks implementam o fluxo documentado."""
+
+    if not PRE_COMMIT.is_file():
+        errors.append(".githooks/pre-commit ausente")
+    else:
+        text = PRE_COMMIT.read_text(encoding="utf-8")
+        for required in (
+            "scripts/rebuild.py --hook",
+            "scripts/build_docs.py --hook",
+            "scripts/validate.py",
+            "scripts/validate_docs.py",
+        ):
+            if required not in text:
+                errors.append(f"pre-commit sem etapa esperada: {required}")
+
+    if not PRE_PUSH.is_file():
+        errors.append(".githooks/pre-push ausente")
+    else:
+        text = PRE_PUSH.read_text(encoding="utf-8")
+        if "scripts/audit_network.py --all" not in text:
+            errors.append("pre-push não executa audit_network.py --all")
+
+def validate_mkdocs_navigation(errors: list[str]) -> None:
+    """Confere itens críticos que precisam permanecer navegáveis."""
+
+    if not MKDOCS_CONFIG.is_file():
+        return
+
+    text = MKDOCS_CONFIG.read_text(encoding="utf-8")
+    required = (
+        "governanca/index.md",
+        "governanca/registro-operacoes-tratamento.md",
+        "governanca/due-diligence-kinghost.md",
+        "governanca/controle-versoes-documentos-legais.md",
+        "seguranca/web-storage-mkdocs.md",
+        "seguranca/csp-cabecalhos-http.md",
+        "operacao/auditoria-rede-headless.md",
+        "desenvolvimento/scripts-python.md",
+        'Política de Privacidade: "https://daniel.fleck.dev.br/privacidade/"',
+        'Termos de Uso: "https://daniel.fleck.dev.br/termos/"',
+    )
+    for item in required:
+        if item not in text:
+            errors.append(f"mkdocs.yml sem item crítico de navegação: {item}")
+
+
 def validate_docs_output(errors: list[str]) -> None:
     for required in (DOCS_ROOT / "index.html", DOCS_ROOT / "sitemap.xml"):
         if not required.is_file():
@@ -394,7 +506,11 @@ def main() -> int:
     canonicals = validate_html_pages(errors)
     validate_legal_documents(errors)
     validate_mkdocs_config(errors)
+    validate_mkdocs_navigation(errors)
     validate_scripts_mirror(errors)
+    validate_home_legal_links(errors)
+    validate_document_model(errors)
+    validate_hooks(errors)
     validate_htaccess(errors)
     validate_docs_output(errors)
     validate_sitemap(errors, canonicals)

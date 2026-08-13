@@ -1,31 +1,38 @@
 # Versionamento dos documentos legais
 
-Política de Privacidade e Termos de Uso possuem ciclos de versão independentes.
+Política de Privacidade e Termos de Uso possuem ciclos independentes.
 
-## Estado de referência desta migração
+## Estado de referência atual
 
-- Política de Privacidade: **Versão 4**, publicada em 10/08/2026 às 00:58 (BRT, UTC-3).
-- Termos de Uso: **Versão 3**, publicada no mesmo marco da revisão correspondente.
+- Política de Privacidade: **Versão 5 — 13/08/2026 às 18:11 (BRT, UTC-3)**.
+- Termos de Uso: **Versão 4 — 13/08/2026 às 18:11 (BRT, UTC-3)**.
+
+A data/hora pública deve corresponder à publicação efetiva. Se um deploy falhar e a versão ainda não tiver chegado à produção, a evidência operacional deve registrar essa diferença.
 
 ## Alteração textual
 
-Qualquer alteração de redação do documento jurídico deve:
+Qualquer alteração de redação jurídica deve:
 
-1. incrementar a versão do documento efetivamente alterado;
-2. registrar data/hora real de publicação em `America/Sao_Paulo` e offset UTC;
-3. atualizar comentário de manutenção;
-4. acrescentar histórico público sem apagar entradas anteriores;
-5. registrar a mudança na governança interna;
-6. gerar commit identificável.
-
-Termos e Privacidade são independentes: alterar um não incrementa automaticamente o outro.
+1. incrementar somente o documento efetivamente alterado;
+2. registrar data/hora real e offset;
+3. atualizar o comentário de manutenção;
+4. acrescentar histórico público;
+5. preservar entradas anteriores;
+6. atualizar a governança correspondente;
+7. gerar commit identificável.
 
 ## Alteração estrutural
 
-Mudanças que não alteram a redação jurídica — por exemplo, correção de `href`, reorganização de diretório, canonical ou navegação — não incrementam por si mesmas a versão textual.
+Correção de `href`, canonical, navegação, layout ou diretório que não altera a redação jurídica não incrementa, por si só, a versão textual.
 
-A correção do antigo link SPA de Privacidade dentro dos Termos é classificada nesta categoria, desde que apenas o atributo de navegação seja modificado.
+## Validação antes e depois
 
-## Fonte da justificativa
+```bash
+python scripts/rebuild.py
+python scripts/build_docs.py
+python scripts/validate.py
+python scripts/validate_docs.py
+python scripts/audit_network.py --all
+```
 
-Este documento descreve **como publicar tecnicamente** uma alteração jurídica. O motivo, análise, evidências e avaliação de impacto pertencem ao registro interno de governança.
+Após o deploy, validar headers e rede de produção.

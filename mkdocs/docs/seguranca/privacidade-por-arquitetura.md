@@ -2,22 +2,31 @@
 
 A redução de dados tratados começa na arquitetura.
 
-A aplicação não oferece:
+## Site principal
 
-- cadastro ou conta de visitante;
-- autenticação pública;
-- comentários;
-- upload de arquivos;
-- formulários próprios de captação;
-- publicidade programática;
-- pixel próprio de marketing;
-- ferramenta própria de analytics comportamental;
-- banco próprio de histórico individual de visitantes.
+Não oferece cadastro, autenticação pública, comentários, upload, formulário próprio de captação, publicidade programática, pixel de marketing, analytics comportamental próprio ou banco próprio de histórico individual de visitantes.
 
-Scripts, imagens, fontes e folhas de estilo do site principal são servidos pelo próprio domínio. Links externos são acionados pelo visitante e não representam, por si só, carregamento automático do recurso de terceiro.
+Scripts, imagens, fontes e folhas de estilo do site principal são servidos pelo próprio domínio.
 
-A política `no-referrer` reduz o envio da URL de origem ao navegar para outro site. O código também não combina deliberadamente IPs com dados de outras fontes para identificar visitantes.
+## Documentação `/docs/`
 
-## Limite desta documentação
+A documentação é gerada com Material for MkDocs.
 
-Essas são características técnicas. A qualificação de controlador/operador, bases legais, direitos dos titulares e retenções legais não são inferidas automaticamente a partir da arquitetura e permanecem na documentação de governança apropriada.
+O tema contém suporte a Web Storage (`localStorage` e `sessionStorage`) para estados e preferências funcionais conforme os componentes habilitados. Esses valores são locais ao navegador e não são utilizados pelo responsável para publicidade, analytics ou perfilização.
+
+Na configuração vigente:
+
+- `repo_url` não é utilizado;
+- o GitHub é link comum;
+- fontes remotas não são configuradas (`font: false`);
+- a busca usa índice local;
+- `connect-src 'self'` restringe conexões programáticas;
+- auditoria headless verifica tentativas de comunicação externa.
+
+## Hospedagem
+
+A ausência de coleta própria não significa ausência de tratamento técnico pela infraestrutura. A KingHost/LWSA pode manter logs e estatísticas conforme o serviço e seus documentos aplicáveis.
+
+## Referência
+
+As qualificações jurídicas, bases legais, direitos, retenções e papéis dos agentes permanecem nos documentos completos de governança e na Política de Privacidade.

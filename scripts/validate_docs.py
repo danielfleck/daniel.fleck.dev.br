@@ -1,16 +1,9 @@
-"""Validação específica da saída pública do MkDocs em ``site/docs``.
-
-O validador principal do site possui regras próprias para o HTML escrito pelo
-projeto. O Material for MkDocs produz outra estrutura HTML e usa JavaScript
-inline; por isso esta validação é separada e verifica apenas requisitos que
-fazem sentido para a documentação publicada.
-"""
+"""Validação específica da saída pública Material for MkDocs."""
 
 from __future__ import annotations
 
 import argparse
 import re
-import sys
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -20,25 +13,21 @@ from urllib.parse import urlsplit
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SITE_ROOT = PROJECT_ROOT / "site"
 DOCS_ROOT = SITE_ROOT / "docs"
+DOCS_HTACCESS_SOURCE = PROJECT_ROOT / "mkdocs" / ".htaccess"
+DOCS_HTACCESS_OUTPUT = DOCS_ROOT / ".htaccess"
 
 AUTO_EXTERNAL_RE = [
     re.compile(r'<script[^>]+src=["\']https?://', re.I),
     re.compile(r'<img[^>]+src=["\']https?://', re.I),
     re.compile(r'<iframe[^>]+src=["\']https?://', re.I),
-    re.compile(
-        r'<link[^>]+rel=["\']stylesheet["\'][^>]+href=["\']https?://',
-        re.I,
-    ),
+    re.compile(r'<link[^>]+rel=["\']stylesheet["\'][^>]+href=["\']https?://', re.I),
     re.compile(r'<link[^>]+href=["\']https://fonts\.', re.I),
 ]
-
 HTML_LINK_RE = re.compile(r'(?:href|src)=["\']([^"\']+)["\']', re.I)
 CSS_EXTERNAL_RE = re.compile(r'url\(\s*["\']?https?://', re.I)
 
-
 def resolve_local(page: Path, raw: str) -> Path | None:
-    """Resolve uma referência local do HTML gerado sem fazer requisição web."""
-    if not raw or raw.startswith(("#", "mailto:", "tel:", "javascript:")):
+    if not raw or raw.startswith(("#", "mailto:", "tel:", "javascript:", "data:", "blob:")):
         return None
     parsed = urlsplit(raw)
     if parsed.scheme in {"http", "https"} or parsed.netloc:
@@ -46,25 +35,27 @@ def resolve_local(page: Path, raw: str) -> Path | None:
     path = parsed.path
     if not path:
         return None
-    if path.startswith("/"):
-        target = SITE_ROOT / path.lstrip("/")
-    else:
-        target = page.parent / path
+    target = SITE_ROOT / path.lstrip("/") if path.startswith("/") else page.parent / path
     if path.endswith("/"):
         target = target / "index.html"
     elif target.is_dir():
         target = target / "index.html"
     return target
 
-
 def validate_output() -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
 
-    required = [DOCS_ROOT / "index.html", DOCS_ROOT / "sitemap.xml"]
-    for path in required:
+    for path in (DOCS_ROOT / "index.html", DOCS_ROOT / "sitemap.xml"):
         if not path.is_file():
             errors.append(f"Arquivo obrigatório ausente: {path.relative_to(PROJECT_ROOT)}")
+
+    if not DOCS_HTACCESS_SOURCE.is_file():
+        errors.append("mkdocs/.htaccess ausente")
+    elif not DOCS_HTACCESS_OUTPUT.is_file():
+        errors.append("site/docs/.htaccess ausente; execute python scripts/build_docs.py")
+    elif DOCS_HTACCESS_SOURCE.read_text(encoding="utf-8") != DOCS_HTACCESS_OUTPUT.read_text(encoding="utf-8"):
+        errors.append("site/docs/.htaccess difere de mkdocs/.htaccess")
 
     if not DOCS_ROOT.exists():
         return errors, warnings
@@ -72,7 +63,9 @@ def validate_output() -> tuple[list[str], list[str]]:
     for path in DOCS_ROOT.rglob("*"):
         if not path.is_file():
             continue
+
         relative = path.relative_to(PROJECT_ROOT)
+
         if path.name == "mkdocs.yml" or path.suffix.lower() in {".md", ".py"}:
             errors.append(f"Fonte indevida na saída pública MkDocs: {relative}")
 
@@ -87,8 +80,6 @@ def validate_output() -> tuple[list[str], list[str]]:
         text = path.read_text(encoding="utf-8", errors="ignore")
         if any(regex.search(text) for regex in AUTO_EXTERNAL_RE):
             errors.append(f"Recurso externo automático no MkDocs: {relative}")
-        if "data:image" in text.lower():
-            warnings.append(f"Imagem data URI encontrada no MkDocs: {relative}")
 
         for reference in HTML_LINK_RE.findall(text):
             target = resolve_local(path, reference)
@@ -116,48 +107,57 @@ def validate_output() -> tuple[list[str], list[str]]:
         except Exception as exc:
             errors.append(f"site/docs/sitemap.xml inválido: {exc}")
 
-    # Material for MkDocs usa scripts inline. Isso é esperado e deve ser levado
-    # em conta antes de definir uma CSP HTTP para /docs/. Não tratamos inline
-    # script como erro aqui porque bloqueá-lo cegamente quebraria a interface.
-    if any("<script>" in p.read_text(encoding="utf-8", errors="ignore") for p in DOCS_ROOT.rglob("*.html")):
+    if any(
+        "<script>" in p.read_text(encoding="utf-8", errors="ignore")
+        for p in DOCS_ROOT.rglob("*.html")
+    ):
         warnings.append(
-            "MkDocs contém JavaScript inline; qualquer CSP HTTP de /docs/ deve ser testada "
-            "separadamente antes de restringir script-src."
+            "MkDocs contém JavaScript inline; a exceção de script-src em /docs/ "
+            "deve permanecer limitada à documentação e ser reavaliada se o tema mudar."
         )
 
     return errors, warnings
 
-
 def check_production_headers(url: str) -> tuple[list[str], list[str]]:
-    """Confere opcionalmente os headers HTTP do site publicado."""
     errors: list[str] = []
     warnings: list[str] = []
-    request = urllib.request.Request(url, method="GET", headers={"User-Agent": "site-validator/1.0"})
+    request = urllib.request.Request(
+        url,
+        method="GET",
+        headers={"User-Agent": "site-validator/2.0"},
+    )
     try:
         with urllib.request.urlopen(request, timeout=15) as response:
             headers = response.headers
     except (urllib.error.URLError, TimeoutError) as exc:
         return [f"Não foi possível consultar {url}: {exc}"], warnings
 
-    csp = headers.get("Content-Security-Policy", "")
-    xfo = headers.get("X-Frame-Options", "")
-    if not csp:
-        warnings.append(f"{url}: Content-Security-Policy não foi observado como header HTTP.")
-    elif "frame-ancestors" not in csp.lower():
-        warnings.append(f"{url}: CSP HTTP não contém frame-ancestors.")
+    required = {
+        "Content-Security-Policy": (
+            "connect-src 'self'",
+            "frame-ancestors 'none'",
+            "script-src 'self' 'unsafe-inline'",
+        ),
+        "X-Frame-Options": ("DENY",),
+        "Referrer-Policy": ("no-referrer",),
+        "X-Content-Type-Options": ("nosniff",),
+    }
 
-    if not xfo and "frame-ancestors" not in csp.lower():
-        warnings.append(
-            f"{url}: não foi observada proteção anti-framing por X-Frame-Options nem frame-ancestors no header CSP."
-        )
+    for name, fragments in required.items():
+        value = headers.get(name, "")
+        for fragment in fragments:
+            if fragment.lower() not in value.lower():
+                errors.append(
+                    f"{url}: header {name!r} não contém {fragment!r}; recebido={value!r}"
+                )
+
     return errors, warnings
 
-
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Valida a documentação MkDocs publicada.")
+    parser = argparse.ArgumentParser(description="Valida a documentação MkDocs.")
     parser.add_argument(
         "--production-url",
-        help="Opcional: consulta headers HTTP da URL publicada, por exemplo https://daniel.fleck.dev.br/.",
+        help="URL de /docs/ publicada, por exemplo https://daniel.fleck.dev.br/docs/",
     )
     args = parser.parse_args()
 
@@ -179,7 +179,6 @@ def main() -> int:
     for item in warnings:
         print("WARN:", item)
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

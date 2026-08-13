@@ -47,26 +47,81 @@ extra_css:
 
 nav:
   - Início: index.md
+
   - Arquitetura:
-      - Visão geral: arquitetura/index.md
+      - Visão geral da seção: arquitetura/index.md
+      - Visão geral da arquitetura: arquitetura/visao-geral.md
+      - Estrutura de diretórios: arquitetura/estrutura-diretorios.md
+      - Fontes de verdade: arquitetura/fontes-de-verdade.md
+      - Conteúdo estático e SEO: arquitetura/conteudo-estatico-seo.md
+      - Tags, índices e sitemap: arquitetura/tags-indices-sitemap.md
+
   - Desenvolvimento:
       - Visão geral: desenvolvimento/index.md
+      - Ambiente local: desenvolvimento/ambiente-local.md
+      - CONTENT-META: desenvolvimento/content-meta.md
+      - Criar conteúdo: desenvolvimento/criar-conteudo.md
+      - Templates e partials: desenvolvimento/templates-partials.md
+      - Manutenção por IA: desenvolvimento/manutencao-por-ia.md
+      - Pre-commit e pre-push: desenvolvimento/pre-commit.md
+      - Testes e validação: desenvolvimento/testes-validacao.md
       - Scripts Python: desenvolvimento/scripts-python.md
+
   - Infraestrutura:
       - Visão geral: infraestrutura/index.md
+      - Hospedagem KingHost: infraestrutura/hospedagem-kinghost.md
+      - GitHub e deploy: infraestrutura/github-deploy.md
+      - DNS e domínios: infraestrutura/dns-dominios.md
+      - Acessos administrativos: infraestrutura/acessos-administrativos.md
+      - HTTPS e CSP: infraestrutura/https-csp.md
       - KingHost e cabeçalhos HTTP: infraestrutura/kinghost-cabecalhos-http.md
+
   - Operação:
       - Visão geral: operacao/index.md
-      - Auditoria de rede e pós-deploy: operacao/auditoria-rede-headless.md
+      - Build do site: operacao/build-site.md
+      - Build do MkDocs: operacao/build-mkdocs.md
+      - Publicação: operacao/publicacao.md
+      - Verificação pós-deploy: operacao/verificacao-pos-deploy.md
+      - Auditoria de rede headless: operacao/auditoria-rede-headless.md
+      - Troubleshooting do webhook: operacao/troubleshooting-webhook.md
+      - Rollback e restauração: operacao/rollback-restauracao.md
+      - Versionamento dos documentos legais: operacao/versionamento-documentos-legais.md
+
   - Segurança:
       - Visão geral: seguranca/index.md
+      - Privacidade por arquitetura: seguranca/privacidade-por-arquitetura.md
+      - CSP e recursos externos: seguranca/csp-recursos-externos.md
       - CSP e cabeçalhos HTTP: seguranca/csp-cabecalhos-http.md
       - Web Storage no MkDocs: seguranca/web-storage-mkdocs.md
+      - Credenciais e acessos: seguranca/credenciais-acessos.md
+      - Logs e estatísticas: seguranca/logs-estatisticas.md
+      - Superfície de exposição: seguranca/superficie-exposicao.md
+      - Runbook técnico de incidentes: seguranca/incidentes-runbook-tecnico.md
+
   - Governança:
+      - Visão geral: governanca/index.md
+      - Registro de operações de tratamento: governanca/registro-operacoes-tratamento.md
+      - Due diligence da KingHost: governanca/due-diligence-kinghost.md
+      - Procedimento de titulares e requisições: governanca/procedimento-titulares-requisicoes.md
+      - Política de segurança e incidentes: governanca/politica-seguranca-incidentes.md
+      - Controle de versões legais: governanca/controle-versoes-documentos-legais.md
+      - Matriz de documentos KingHost: governanca/matriz-documentos-kinghost.md
+      - Enquadramento de pequeno porte: governanca/enquadramento-agente-pequeno-porte.md
+      - Teste de legítimo interesse: governanca/teste-legitimo-interesse.md
+      - Matriz LGPD, Marco Civil e ANPD: governanca/matriz-lgpd-marco-civil-anpd.md
+      - Fronteira Jira × Confluence × MkDocs: governanca/decisao-fronteira-documental.md
       - Privacidade e Termos após MkDocs: governanca/privacidade-termos-mkdocs-2026-08-13.md
+      - Retrospectiva Vercel → KingHost: governanca/retrospectiva-migracao-vercel-kinghost.md
+      - Retrospectiva PostgreSQL/Supabase: governanca/retrospectiva-laboratorio-supabase.md
+      - Retrospectiva Roadmap GitHub: governanca/retrospectiva-roadmap-github.md
+      - Template de História de Usuário: governanca/template-historia-usuario.md
+
   - Site principal: "https://daniel.fleck.dev.br/"
+  - Política de Privacidade: "https://daniel.fleck.dev.br/privacidade/"
+  - Termos de Uso: "https://daniel.fleck.dev.br/termos/"
   - Repositório no GitHub: "https://github.com/danielfleck/daniel.fleck.dev.br"
 
 copyright: "Daniel Rodrigo Fleck"
+
 extra:
   generator: false

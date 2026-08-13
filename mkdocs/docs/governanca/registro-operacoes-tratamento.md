@@ -1,71 +1,81 @@
 # Registro Simplificado de Operações de Tratamento — daniel.fleck.dev.br
 
 **Responsável:** Daniel Rodrigo Fleck  
-**Versão interna:** 3  
-**Revisão:** 13/08/2026  
-**Escopo:** operações de tratamento relacionadas ao site pessoal `daniel.fleck.dev.br`.
+**Versão interna:** 4  
+**Revisão:** 13/08/2026
 
 ## 1. Objetivo
 
-Manter inventário simplificado das categorias de tratamento relacionadas ao site, sem criar uma base de visitantes. O documento descreve operações, finalidades e responsabilidades em nível de governança.
+Manter inventário simplificado das operações relacionadas ao site sem criar uma base de visitantes.
 
-Não inserir IPs específicos, nomes de visitantes, conteúdo de logs, mensagens individuais ou documentos de identidade, salvo em registro restrito de caso concreto quando necessário e proporcional.
+Não inserir IPs específicos, nomes de visitantes, linhas individualizadas de log ou documentos de identidade neste documento.
 
 ## 2. Operações identificadas
 
 | Operação | Titulares | Dados/categorias | Origem | Finalidade | Papel do responsável | Outros agentes | Retenção/critério |
 |---|---|---|---|---|---|---|---|
-| Entrega do site e geração de registros técnicos | visitantes | IP, data/hora, requisição, status, bytes, Referer quando recebido, User-Agent e outros dados técnicos | infraestrutura HTTP/HTTPS KingHost | entrega, segurança, operação e diagnóstico | o código não implementa coleta própria; o responsável controla apenas usos que determinar | KingHost/LWSA conforme operação | suporte informou 90 dias para logs brutos HTTP; não extrapolar a outros registros sem confirmação |
-| Consulta administrativa a `/stats` ou ferramenta equivalente | visitantes | estatísticas e registros técnicos disponibilizados | painel/serviço de hospedagem | diagnóstico, segurança, suporte e investigação de abuso | controlador da consulta/uso que determinar | KingHost/LWSA | sem exportação rotineira; cópia excepcional somente pelo tempo necessário |
-| Comunicação voluntária por e-mail | remetentes | e-mail, nome informado, conteúdo, anexos e metadados | mensagem enviada pelo próprio remetente | responder e dar andamento à comunicação | controlador | provedor de e-mail | conforme finalidade, obrigação aplicável e exercício de direitos |
-| Preservação/fornecimento decorrente de requisição válida | titulares relacionados ao escopo solicitado | registros específicos existentes | KingHost e/ou evidência excepcionalmente preservada | cumprimento de obrigação, preservação e exercício regular de direitos | controlador das providências que determinar | KingHost/LWSA e autoridade competente | conforme ordem/requisição e legislação aplicável |
-| Registro de incidente de segurança envolvendo dados pessoais | titulares potencialmente afetados | circunstâncias, categorias de dados, volume estimado, risco e providências | investigação do incidente | prestação de contas, segurança e cumprimento regulatório | controlador | provedor/outros agentes quando envolvidos | no mínimo 5 anos para o registro de incidentes, conforme RCIS, salvo prazo superior aplicável |
+| Entrega do site e registros técnicos | visitantes | IP, data/hora, requisição, status, bytes, Referer quando recebido, User-Agent e outros dados técnicos | infraestrutura KingHost | entrega, segurança, operação e diagnóstico | controla somente os usos que determinar; o código não implementa coleta própria | KingHost/LWSA conforme a operação | suporte informou 90 dias para logs brutos HTTP; não extrapolar para outros registros |
+| Consulta administrativa a `/stats` | visitantes | estatísticas e registros disponibilizados | painel de hospedagem | diagnóstico, segurança, suporte e investigação de abuso | controlador da consulta/uso que determinar | KingHost/LWSA | sem exportação rotineira; cópia excepcional pelo tempo necessário |
+| Web Storage funcional em `/docs/` | visitantes da documentação | pares chave/valor funcionais do tema no navegador, conforme recursos/interações habilitados | navegador do visitante / Material for MkDocs | estado e preferências da interface e caches temporários quando aplicável | responsável pela configuração publicada; não utiliza para publicidade, analytics ou perfilização | nenhum terceiro é destinatário deliberado desses valores na configuração atual | `localStorage`: conforme navegador/limpeza/substituição; `sessionStorage`: sessão correspondente |
+| Comunicação voluntária por e-mail | remetentes | e-mail, nome informado, conteúdo, anexos e metadados | mensagem do remetente | responder e tratar a comunicação | controlador | provedor de e-mail | conforme finalidade, obrigação e exercício de direitos |
+| Preservação/fornecimento por requisição válida | titulares relacionados | registros específicos existentes | KingHost e/ou evidência excepcional | obrigação, preservação e exercício de direitos | controlador das providências que determinar | KingHost/LWSA e autoridade competente | conforme ordem/requisição e legislação |
+| Registro de incidente com dados pessoais | titulares potencialmente afetados | circunstâncias, categorias, volume, risco e providências | investigação | prestação de contas e cumprimento regulatório | controlador | provedor/outros agentes quando envolvidos | mínimo de 5 anos para o registro do incidente, salvo prazo superior aplicável |
 
-## 3. O que o código do site não faz atualmente
+## 3. O que o site não faz
 
 - não cria conta de usuário;
 - não oferece formulário próprio de captação;
 - não utiliza analytics próprio ou pixel de marketing;
 - não cria cookie próprio de rastreamento/perfilização;
 - não mantém banco próprio de visitantes;
-- não carrega automaticamente scripts, fontes, imagens ou iframes de terceiros na aplicação principal;
-- não realiza perfilização comercial de visitantes.
+- não utiliza os valores de Web Storage para publicidade ou perfilização;
+- não configura carregamento automático de recursos de terceiros;
+- não realiza perfilização comercial.
 
-## 4. Finalidades próprias do provedor
+## 4. Material for MkDocs
 
-O Contrato de Hospedagem da KingHost contém previsão contratual de usos próprios de dados/registros pelo provedor para melhoria de sistemas e criação/aprimoramento de serviços. Essas finalidades não são determinadas pelo responsável do site e não devem ser registradas como finalidade própria de Daniel.
+A presença de código do tema capaz de usar `localStorage`/`sessionStorage` não significa que todos os recursos possíveis gravem dados em toda visita. O uso depende da configuração e da interação.
 
-A qualificação da KingHost/LWSA deve ser feita por operação: pode haver atuação em nome do cliente e também tratamentos em que o provedor determina finalidade própria.
+A configuração atual mantém:
+- paleta fixa;
+- `font: false`;
+- sem analytics;
+- sem `repo_url`;
+- GitHub como link comum;
+- busca local;
+- `connect-src 'self'`.
 
-## 5. Bases legais a avaliar por operação
+## 5. Finalidades próprias do provedor
 
-Não utilizar consentimento como fundamento genérico da navegação. As hipóteses devem ser escolhidas por finalidade concreta. Conforme o caso podem ser avaliados:
+Finalidades definidas pela KingHost/LWSA não devem ser registradas como finalidades próprias do responsável. O papel jurídico deve ser analisado por operação.
 
-- legítimo interesse, mediante teste de finalidade, necessidade e balanceamento/salvaguardas;
-- cumprimento de obrigação legal ou regulatória;
-- exercício regular de direitos;
-- procedimentos preliminares relacionados a contrato quando a comunicação do titular tiver essa finalidade.
+## 6. Bases legais
 
-Legítimo interesse não deve ser aplicado a dados pessoais sensíveis.
+Não utilizar consentimento como fundamento genérico da navegação. Avaliar a base conforme a finalidade concreta. Legítimo interesse não se aplica a dados pessoais sensíveis.
 
-## 6. Gatilhos de revisão
+## 7. Gatilhos de revisão
 
-Revisar antes de ativar formulário, login, comentários, analytics, publicidade, pixel, cookie não essencial, banco de usuários, upload, CDN/biblioteca externa automática ou integração que altere substancialmente os dados tratados.
+Revisar antes de ativar:
+- formulário, login, comentários ou upload;
+- analytics, publicidade, pixel ou cookie não essencial;
+- novo uso persistente de Web Storage;
+- `repo_url`, CDN ou recurso externo automático;
+- plugin/tema MkDocs com nova comunicação;
+- banco de usuários.
 
-Revisar também quando houver alteração material do contrato/política do provedor ou mudança de classificação de risco.
+## 8. Evidências e referências
 
-## 7. Evidências e referências
-
-- Política de Privacidade pública V4.
-- Termos de Uso públicos V3.
+- Política de Privacidade pública **V5**.
+- Termos de Uso públicos **V4**.
 - Git/GitHub.
-- due diligence do provedor.
-- documentos contratuais e política de privacidade KingHost/LWSA.
+- Due diligence da KingHost.
+- documentos contratuais/política do provedor.
 - teste de legítimo interesse.
-- matriz normativa LGPD/MCI/ANPD.
+- matriz LGPD/MCI/ANPD.
 
-## 8. Histórico
+## 9. Histórico
 
 - V1 — 08/08/2026: criação.
-- V2 — 09/08/2026: inclusão de finalidades próprias do provedor e refinamento de papéis por operação.
-- V3 — 13/08/2026: sincronização com Privacidade V4/Termos V3, atualização do escopo para site pessoal e referência aos novos documentos de enquadramento e legítimo interesse.
+- V2 — 09/08/2026: finalidades próprias do provedor e papéis por operação.
+- V3 — 13/08/2026: sincronização com a arquitetura multipágina e atualização normativa.
+- V4 — 13/08/2026: inclusão de `/docs/`, Web Storage funcional, controles de conexão do MkDocs e referências públicas V5/V4.
