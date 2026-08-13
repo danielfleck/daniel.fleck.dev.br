@@ -509,7 +509,12 @@ def build(write: bool = True) -> list[Path]:
     )
     writer.put(SITE_ROOT / "sitemap.xml", sitemap)
 
-    robots = f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n"
+    robots = (
+        f"User-agent: *\n"
+        f"Allow: /\n"
+        f"Sitemap: {BASE_URL}/sitemap.xml\n"
+        f"Sitemap: {BASE_URL}/docs/sitemap.xml\n"
+    )
     writer.put(SITE_ROOT / "robots.txt", robots)
 
     return writer.changed

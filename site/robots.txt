@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://daniel.fleck.dev.br/sitemap.xml
+Sitemap: https://daniel.fleck.dev.br/docs/sitemap.xml

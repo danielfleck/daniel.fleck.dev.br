@@ -1,0 +1,142 @@
+/*
+ * Personalização do Material for MkDocs para aproximar a documentação
+ * da identidade visual do site daniel.fleck.dev.br.
+ *
+ * Os fontes continuam em mkdocs/docs/. Este arquivo é copiado pelo MkDocs
+ * para site/docs/ durante o build.
+ */
+
+:root > * {
+    --md-primary-fg-color: #2563eb;
+    --md-primary-fg-color--light: #60a5fa;
+    --md-primary-fg-color--dark: #1d4ed8;
+    --md-accent-fg-color: #0f766e;
+
+    --md-default-bg-color: #f8fafc;
+    --md-default-fg-color: #0f172a;
+    --md-default-fg-color--light: #475569;
+    --md-default-fg-color--lighter: #64748b;
+
+    --md-code-bg-color: #0f172a;
+    --md-code-fg-color: #e2e8f0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*
+ * O cabeçalho acompanha o fluxo normal da página, como no site principal.
+ * Não tornar sticky/fixed sem uma decisão explícita de UX.
+ */
+.md-header {
+    position: static;
+    background: rgba(255, 255, 255, 0.97);
+    color: #0f172a;
+    border-bottom: 1px solid #dbe3ef;
+    box-shadow: none;
+}
+
+.md-header__title,
+.md-header__button {
+    color: #0f172a;
+}
+
+.md-header__button.md-logo {
+    color: #1d4ed8;
+}
+
+.md-tabs {
+    position: static;
+    background: #ffffff;
+    color: #334155;
+    border-bottom: 1px solid #dbe3ef;
+}
+
+.md-tabs__link {
+    font-weight: 700;
+}
+
+.md-search__form {
+    background: #f1f5f9;
+    border: 1px solid #dbe3ef;
+    border-radius: 999px;
+}
+
+.md-search__input {
+    color: #0f172a;
+}
+
+.md-main__inner {
+    margin-top: 1.4rem;
+}
+
+.md-grid {
+    max-width: 1180px;
+}
+
+.md-content {
+    color: #334155;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+    color: #0f172a;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.md-typeset h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.md-typeset a {
+    color: #1d4ed8;
+}
+
+.md-typeset code:not(pre code) {
+    background: #eef2ff;
+    color: #1e3a8a;
+    border: 1px solid #e0e7ff;
+    border-radius: 6px;
+}
+
+.md-typeset pre > code {
+    border-radius: 14px;
+}
+
+.md-typeset table:not([class]) {
+    border: 1px solid #dbe3ef;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.md-typeset blockquote {
+    color: #1e3a8a;
+    border-left-color: #2563eb;
+    background: #eff6ff;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+
+.md-nav__link--active {
+    color: #1d4ed8;
+    font-weight: 800;
+}
+
+.md-footer {
+    background: #0f172a;
+}
+
+@media (max-width: 76.234375em) {
+    .md-header {
+        position: static;
+    }
+}

@@ -67,5 +67,31 @@ class BuildTests(unittest.TestCase):
         self.assertFalse((PROJECT_ROOT / "index.html").exists())
 
 
+    def test_mkdocs_source_is_outside_public_root(self) -> None:
+        """Fontes MkDocs devem ficar fora de ``site/`` e build em site/docs."""
+
+        source = PROJECT_ROOT / "mkdocs" / "docs"
+        config = PROJECT_ROOT / "mkdocs" / "mkdocs.yml"
+        output = SITE_ROOT / "docs"
+
+        self.assertTrue(source.is_dir())
+        self.assertTrue(config.is_file())
+        self.assertTrue(output.is_dir())
+        self.assertTrue((output / "index.html").is_file())
+
+    def test_mkdocs_build_is_current(self) -> None:
+        """O build MkDocs versionado deve corresponder aos fontes atuais."""
+
+        process = subprocess.run(
+            [
+                sys.executable,
+                str(PROJECT_ROOT / "scripts/build_docs.py"),
+                "--check",
+            ],
+            cwd=PROJECT_ROOT,
+        )
+        self.assertEqual(process.returncode, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

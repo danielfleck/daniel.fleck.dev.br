@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+daniel_fleck_site.egg-info/PKG-INFO
+daniel_fleck_site.egg-info/SOURCES.txt
+daniel_fleck_site.egg-info/dependency_links.txt
+daniel_fleck_site.egg-info/requires.txt
+daniel_fleck_site.egg-info/top_level.txt
+tests/test_build.py
+tests/test_metadata.py

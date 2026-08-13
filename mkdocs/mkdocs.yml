@@ -1,0 +1,67 @@
+site_name: "Documentação Técnica — daniel.fleck.dev.br"
+site_description: "Arquitetura, desenvolvimento, infraestrutura, operação e segurança do site daniel.fleck.dev.br."
+site_url: "https://daniel.fleck.dev.br/docs/"
+repo_url: "https://github.com/danielfleck/daniel.fleck.dev.br"
+repo_name: "danielfleck/daniel.fleck.dev.br"
+edit_uri: ""
+
+docs_dir: "docs"
+site_dir: "../site/docs"
+use_directory_urls: true
+strict: true
+
+theme:
+  name: material
+  language: pt-BR
+  font: false
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  icon:
+    logo: material/code-braces
+    repo: fontawesome/brands/github
+  features:
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: pt
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Início: index.md
+  - Arquitetura:
+      - Visão geral: arquitetura/index.md
+  - Desenvolvimento:
+      - Visão geral: desenvolvimento/index.md
+  - Infraestrutura:
+      - Visão geral: infraestrutura/index.md
+  - Operação:
+      - Visão geral: operacao/index.md
+  - Segurança:
+      - Visão geral: seguranca/index.md
+  - Site principal: "https://daniel.fleck.dev.br/"
+
+copyright: "Daniel Rodrigo Fleck"
+extra:
+  generator: false

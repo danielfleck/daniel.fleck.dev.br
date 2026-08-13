@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/arquitetura/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/desenvolvimento/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/infraestrutura/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/operacao/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/seguranca/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+</urlset>

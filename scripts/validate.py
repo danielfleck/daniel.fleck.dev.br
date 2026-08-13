@@ -63,9 +63,19 @@ AUTO_EXTERNAL_RE = [
 
 
 def public_html_files():
-    """Itera somente pelos HTMLs dentro da raiz pública ``site/``."""
+    """Itera pelos HTMLs próprios do site, excluindo o build do MkDocs.
 
-    yield from SITE_ROOT.rglob("*.html")
+    ``site/docs/`` possui convenções de HTML do Material for MkDocs e não deve
+    ser submetido às regras internas de canonical/AI-MAINTENANCE do site.
+    """
+
+    docs_root = (SITE_ROOT / "docs").resolve()
+
+    for path in SITE_ROOT.rglob("*.html"):
+        try:
+            path.resolve().relative_to(docs_root)
+        except ValueError:
+            yield path
 
 
 def validate_content_metadata(errors: list[str], warnings: list[str]):
@@ -269,6 +279,47 @@ def validate_sitemap(errors: list[str], canonicals: dict[str, Path]) -> None:
         errors.append(f"sitemap.xml inválido: {exc}")
 
 
+
+def validate_mkdocs_output(errors: list[str]) -> None:
+    """Valida a existência, isolamento e atualização do build MkDocs."""
+
+    docs_root = SITE_ROOT / "docs"
+    required = (
+        docs_root / "index.html",
+        docs_root / "sitemap.xml",
+    )
+
+    for path in required:
+        if not path.is_file():
+            errors.append(
+                f"Build MkDocs ausente/incompleto: {path.relative_to(PROJECT_ROOT)}"
+            )
+
+    if docs_root.exists():
+        forbidden_suffixes = {".md", ".py"}
+        for path in docs_root.rglob("*"):
+            if not path.is_file():
+                continue
+            if path.name == "mkdocs.yml" or path.suffix.lower() in forbidden_suffixes:
+                errors.append(
+                    "Arquivo-fonte indevido dentro da saída pública MkDocs: "
+                    f"{path.relative_to(PROJECT_ROOT)}"
+                )
+
+    process = subprocess.run(
+        [sys.executable, str(PROJECT_ROOT / "scripts/build_docs.py"), "--check"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if process.returncode != 0:
+        details = (process.stdout + process.stderr).strip()
+        errors.append(
+            "Documentação MkDocs desatualizada ou inválida. "
+            "Execute python scripts/build_docs.py."
+            + (f" Detalhes: {details}" if details else "")
+        )
+
 def validate_rebuild_state(errors: list[str]) -> None:
     """Confirma que uma nova execução do rebuild não produziria alterações."""
 
@@ -293,6 +344,7 @@ def main() -> int:
     items, tag_slugs = validate_content_metadata(errors, warnings)
     canonicals = validate_html_pages(errors)
     validate_sitemap(errors, canonicals)
+    validate_mkdocs_output(errors)
     validate_rebuild_state(errors)
 
     if errors:
