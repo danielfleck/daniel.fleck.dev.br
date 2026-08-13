@@ -1,13 +1,11 @@
 # Infraestrutura
 
-Esta seção documenta a infraestrutura utilizada pelo site.
+Esta seção descreve o estado técnico da hospedagem, domínio, deploy e acessos administrativos. Motivos estratégicos da escolha de fornecedor pertencem ao Confluence.
 
-## Tópicos previstos
+## Conteúdo
 
-- KingHost;
-- domínio e DNS;
-- estrutura pública em `site/`;
-- integração Git/GitHub;
-- publicação;
-- HTTPS;
-- diretórios e permissões relevantes.
+- [Hospedagem KingHost](hospedagem-kinghost.md)
+- [DNS e domínios](dns-dominios.md)
+- [GitHub e deploy](github-deploy.md)
+- [Acessos administrativos](acessos-administrativos.md)
+- [HTTPS e CSP](https-csp.md)

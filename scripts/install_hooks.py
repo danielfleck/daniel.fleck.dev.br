@@ -1,43 +1,30 @@
-"""Configura o repositório Git para usar os hooks versionados em ``.githooks``.
-
-Este script atua na raiz do projeto, não dentro de ``site/``. O hook permanece
-privado no repositório e executa os scripts de rebuild e validação antes do
-commit.
-"""
+"""Ativa todos os hooks versionados em .githooks/."""
 
 from __future__ import annotations
 
 import subprocess
-
 from site_utils import PROJECT_ROOT
 
-
-HOOK = PROJECT_ROOT / ".githooks/pre-commit"
-
+HOOKS_DIR = PROJECT_ROOT / ".githooks"
 
 def main() -> int:
-    """Torna o hook executável e configura ``core.hooksPath``."""
+    if not HOOKS_DIR.is_dir():
+        raise SystemExit("Pasta .githooks não encontrada.")
 
-    if not HOOK.exists():
-        raise SystemExit(
-            f"Hook não encontrado: {HOOK.relative_to(PROJECT_ROOT)}"
-        )
+    hooks = [p for p in sorted(HOOKS_DIR.iterdir()) if p.is_file() and not p.name.startswith(".")]
+    if not hooks:
+        raise SystemExit("Nenhum hook encontrado.")
 
-    # Preserva as permissões existentes e acrescenta os bits de execução.
-    HOOK.chmod(HOOK.stat().st_mode | 0o111)
+    for hook in hooks:
+        hook.chmod(hook.stat().st_mode | 0o111)
 
     subprocess.run(
         ["git", "config", "core.hooksPath", ".githooks"],
         cwd=PROJECT_ROOT,
         check=True,
     )
-
-    print(
-        "Git configurado para usar .githooks/. "
-        "O pre-commit executará rebuild e validação."
-    )
+    print("Hooks ativos:", ", ".join(p.name for p in hooks))
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -1,13 +1,13 @@
 # Arquitetura
 
-Esta seção documenta a arquitetura técnica vigente do site.
+Esta seção documenta como o `daniel.fleck.dev.br` funciona **no estado técnico vigente**. Justificativas estratégicas e avaliações de alternativas pertencem ao Confluence; atividades ainda não executadas pertencem ao Jira.
 
-## Tópicos previstos
+## Conteúdo
 
-- estrutura de diretórios;
-- separação entre fonte e conteúdo publicável;
-- geração estática;
-- blog, portfólio, tags e Base de Conhecimento;
-- decisões de arquitetura implementadas.
+- [Visão geral](visao-geral.md)
+- [Estrutura de diretórios](estrutura-diretorios.md)
+- [Fontes de verdade](fontes-de-verdade.md)
+- [Conteúdo estático e SEO](conteudo-estatico-seo.md)
+- [Tags, índices e sitemap](tags-indices-sitemap.md)
 
-> Registre aqui **como o produto funciona hoje**. A justificativa estratégica que levou a uma decisão pertence ao Confluence.
+A arquitetura prioriza conteúdo HTML indexável, poucas dependências, geração determinística de artefatos derivados e separação entre fontes de desenvolvimento e raiz pública.

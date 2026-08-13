@@ -11,6 +11,11 @@ dependencies = [
     "mkdocs-material>=9,<10",
 ]
 
+[project.optional-dependencies]
+audit = [
+    "playwright>=1.40,<2",
+]
+
 [tool.setuptools]
 packages = []
 

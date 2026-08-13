@@ -1,8 +1,6 @@
 site_name: "Documentação Técnica — daniel.fleck.dev.br"
-site_description: "Arquitetura, desenvolvimento, infraestrutura, operação e segurança do site daniel.fleck.dev.br."
+site_description: "Arquitetura, desenvolvimento, infraestrutura, operação, segurança e governança do site daniel.fleck.dev.br."
 site_url: "https://daniel.fleck.dev.br/docs/"
-repo_url: "https://github.com/danielfleck/daniel.fleck.dev.br"
-repo_name: "danielfleck/daniel.fleck.dev.br"
 edit_uri: ""
 
 docs_dir: "docs"
@@ -20,7 +18,6 @@ theme:
     accent: custom
   icon:
     logo: material/code-braces
-    repo: fontawesome/brands/github
   features:
     - navigation.sections
     - navigation.top
@@ -54,13 +51,21 @@ nav:
       - Visão geral: arquitetura/index.md
   - Desenvolvimento:
       - Visão geral: desenvolvimento/index.md
+      - Scripts Python: desenvolvimento/scripts-python.md
   - Infraestrutura:
       - Visão geral: infraestrutura/index.md
+      - KingHost e cabeçalhos HTTP: infraestrutura/kinghost-cabecalhos-http.md
   - Operação:
       - Visão geral: operacao/index.md
+      - Auditoria de rede e pós-deploy: operacao/auditoria-rede-headless.md
   - Segurança:
       - Visão geral: seguranca/index.md
+      - CSP e cabeçalhos HTTP: seguranca/csp-cabecalhos-http.md
+      - Web Storage no MkDocs: seguranca/web-storage-mkdocs.md
+  - Governança:
+      - Privacidade e Termos após MkDocs: governanca/privacidade-termos-mkdocs-2026-08-13.md
   - Site principal: "https://daniel.fleck.dev.br/"
+  - Repositório no GitHub: "https://github.com/danielfleck/daniel.fleck.dev.br"
 
 copyright: "Daniel Rodrigo Fleck"
 extra:

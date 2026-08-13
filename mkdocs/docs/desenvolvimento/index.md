@@ -1,13 +1,16 @@
 # Desenvolvimento
 
-Esta seção descreve o ambiente e os procedimentos de desenvolvimento.
+Esta seção descreve o ambiente local e os procedimentos usados para alterar o site sem transformar a hospedagem em ambiente de execução Python.
 
-## Tópicos previstos
+## Conteúdo
 
-- criação e ativação da `.venv`;
-- dependências Python;
-- criação de posts e itens de portfólio;
-- `rebuild.py`;
-- validações e testes;
-- preview local;
-- manutenção dos templates.
+- [Ambiente local](ambiente-local.md)
+- [Criar conteúdo](criar-conteudo.md)
+- [CONTENT-META](content-meta.md)
+- [Templates e partials](templates-partials.md)
+- [Scripts Python](scripts-python.md)
+- [Testes e validação](testes-validacao.md)
+- [Pre-commit](pre-commit.md)
+- [Manutenção por IA](manutencao-por-ia.md)
+
+A regra central é: **fonte editável → build/rebuild → validação → revisão visual/diff → commit**.

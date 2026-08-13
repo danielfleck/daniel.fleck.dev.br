@@ -1,12 +1,16 @@
-"""Gera a documentação MkDocs em ``site/docs/``.
+"""Gera e confere a documentação MkDocs em ``site/docs/``.
 
-O Markdown-fonte permanece fora da raiz pública, em ``mkdocs/docs/``.
-Somente o HTML/CSS/JS gerado pelo MkDocs é gravado em ``site/docs/``.
+Fontes:
+- Markdown: ``mkdocs/docs/``
+- manual operacional canônico: ``SCRIPTS.md``
+- cabeçalhos da documentação: ``mkdocs/.htaccess``
 
-Modos:
-- padrão: executa o build e grava a saída;
-- --check: gera em diretório temporário e compara com ``site/docs``;
-- --hook: grava normalmente e retorna 3 se o build alterou a saída versionada.
+Saída pública:
+- ``site/docs/``
+
+O build sincroniza automaticamente ``SCRIPTS.md`` para a página
+``mkdocs/docs/desenvolvimento/scripts-python.md`` e copia o .htaccess
+específico da documentação após o ``mkdocs build --clean``.
 """
 
 from __future__ import annotations
@@ -23,14 +27,34 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CONFIG = PROJECT_ROOT / "mkdocs" / "mkdocs.yml"
 OUTPUT = PROJECT_ROOT / "site" / "docs"
+SCRIPTS_SOURCE = PROJECT_ROOT / "SCRIPTS.md"
+SCRIPTS_DOC = PROJECT_ROOT / "mkdocs" / "docs" / "desenvolvimento" / "scripts-python.md"
+DOCS_HTACCESS_SOURCE = PROJECT_ROOT / "mkdocs" / ".htaccess"
 
+GENERATED_NOTICE = """<!--
+GENERATED FROM /SCRIPTS.md
+NÃO EDITAR MANUALMENTE ESTA CÓPIA.
+Execute: python scripts/build_docs.py
+-->
+
+"""
+
+def scripts_doc_content() -> str:
+    return GENERATED_NOTICE + SCRIPTS_SOURCE.read_text(encoding="utf-8")
+
+def sync_scripts_doc(write: bool) -> bool:
+    expected = scripts_doc_content()
+    current = SCRIPTS_DOC.read_text(encoding="utf-8") if SCRIPTS_DOC.exists() else None
+    if current == expected:
+        return False
+    if write:
+        SCRIPTS_DOC.parent.mkdir(parents=True, exist_ok=True)
+        SCRIPTS_DOC.write_text(expected, encoding="utf-8")
+    return True
 
 def snapshot(root: Path) -> dict[str, str]:
-    """Retorna hashes estáveis de todos os arquivos existentes em ``root``."""
-
     if not root.exists():
         return {}
-
     result: dict[str, str] = {}
     for path in sorted(root.rglob("*")):
         if path.is_file():
@@ -38,21 +62,18 @@ def snapshot(root: Path) -> dict[str, str]:
             result[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
     return result
 
-
 def normalize_sitemap_gzip(root: Path) -> None:
-    """Regrava sitemap.xml.gz com ``mtime=0`` para build determinístico."""
-
     xml = root / "sitemap.xml"
     gz = root / "sitemap.xml.gz"
-    if not xml.exists():
-        return
+    if xml.exists():
+        gz.write_bytes(gzip.compress(xml.read_bytes(), mtime=0))
 
-    gz.write_bytes(gzip.compress(xml.read_bytes(), mtime=0))
-
+def install_docs_htaccess(destination: Path) -> None:
+    if not DOCS_HTACCESS_SOURCE.is_file():
+        raise RuntimeError(f"Fonte do .htaccess não encontrada: {DOCS_HTACCESS_SOURCE}")
+    shutil.copy2(DOCS_HTACCESS_SOURCE, destination / ".htaccess")
 
 def run_mkdocs(destination: Path) -> None:
-    """Executa o MkDocs em modo estrito para ``destination``."""
-
     command = [
         sys.executable,
         "-m",
@@ -65,42 +86,30 @@ def run_mkdocs(destination: Path) -> None:
         "--clean",
         "--strict",
     ]
-
-    try:
-        process = subprocess.run(command, cwd=PROJECT_ROOT)
-    except FileNotFoundError as exc:
-        raise RuntimeError(
-            "MkDocs não encontrado. Ative a .venv e execute "
-            "`python -m pip install -e .`."
-        ) from exc
-
+    process = subprocess.run(command, cwd=PROJECT_ROOT)
     if process.returncode != 0:
         raise RuntimeError("mkdocs build falhou.")
 
     normalize_sitemap_gzip(destination)
-
+    install_docs_htaccess(destination)
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Gera e confere a documentação técnica MkDocs."
-    )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Compara um build temporário com site/docs sem alterar arquivos.",
-    )
-    parser.add_argument(
-        "--hook",
-        action="store_true",
-        help="Retorna 3 quando o build do hook modificar site/docs.",
-    )
+    parser = argparse.ArgumentParser(description="Gera e confere a documentação MkDocs.")
+    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--hook", action="store_true")
     args = parser.parse_args()
 
-    if not CONFIG.exists():
-        print(f"Configuração MkDocs não encontrada: {CONFIG}")
-        return 1
+    for required in (CONFIG, SCRIPTS_SOURCE, DOCS_HTACCESS_SOURCE):
+        if not required.is_file():
+            print(f"Arquivo obrigatório ausente: {required}")
+            return 1
 
     if args.check:
+        if sync_scripts_doc(write=False):
+            print("Cópia MkDocs de SCRIPTS.md está desatualizada.")
+            print("Execute: python scripts/build_docs.py")
+            return 2
+
         with tempfile.TemporaryDirectory(prefix="mkdocs-check-") as temporary:
             temp_output = Path(temporary) / "site"
             try:
@@ -110,16 +119,15 @@ def main() -> int:
                 return 1
 
             if snapshot(temp_output) != snapshot(OUTPUT):
-                print(
-                    "Documentação gerada está desatualizada. "
-                    "Execute: python scripts/build_docs.py"
-                )
+                print("Documentação gerada está desatualizada.")
+                print("Execute: python scripts/build_docs.py")
                 return 2
 
-        print("MkDocs: site/docs está atualizado.")
+        print("MkDocs: site/docs e o espelho de SCRIPTS.md estão atualizados.")
         return 0
 
-    before = snapshot(OUTPUT)
+    before_output = snapshot(OUTPUT)
+    scripts_changed = sync_scripts_doc(write=True)
 
     try:
         run_mkdocs(OUTPUT)
@@ -127,21 +135,24 @@ def main() -> int:
         print(exc)
         return 1
 
-    after = snapshot(OUTPUT)
+    output_changed = before_output != snapshot(OUTPUT)
 
-    if before != after:
+    if scripts_changed:
+        print("MkDocs: espelho de SCRIPTS.md foi atualizado.")
+    if output_changed:
         print("MkDocs: site/docs foi atualizado.")
-        if args.hook:
-            print(
-                "Commit interrompido: o build da documentação alterou "
-                "arquivos em site/docs. Revise, faça git add -A e repita."
-            )
-            return 3
-    else:
+
+    if args.hook and (scripts_changed or output_changed):
+        print(
+            "Commit interrompido: o build da documentação alterou arquivos. "
+            "Revise, execute git add -A e repita o commit."
+        )
+        return 3
+
+    if not scripts_changed and not output_changed:
         print("MkDocs: nenhum arquivo precisou ser alterado.")
 
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

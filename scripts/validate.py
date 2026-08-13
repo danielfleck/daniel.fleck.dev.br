@@ -1,91 +1,67 @@
-"""Executa validações estruturais, de SEO e de integridade de ``site/``.
+"""Validação estática do site, MkDocs, documentos legais e cabeçalhos.
 
-O validador foi pensado para rodar antes de commits e também manualmente. Ele
-verifica metadados dos conteúdos, links locais, JSON-LD, canonical, sitemap,
-recursos externos automáticos e se o rebuild está atualizado.
+Complemento dinâmico:
+    python scripts/validate.py --network
+
+Verificação do ambiente publicado:
+    python scripts/validate.py --production-url https://daniel.fleck.dev.br
 """
 
 from __future__ import annotations
 
-import hashlib
+import argparse
 import json
 import re
 import subprocess
 import sys
+import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from urllib.parse import urlparse
 
-from site_utils import (
-    PROJECT_ROOT,
-    SITE_ROOT,
-    resolve_local_target,
-    scan_content,
-    tag_slug,
-)
+from site_utils import PROJECT_ROOT, SITE_ROOT, resolve_local_target, scan_content, tag_slug
 
+DOCS_ROOT = SITE_ROOT / "docs"
+MKDOCS_CONFIG = PROJECT_ROOT / "mkdocs" / "mkdocs.yml"
+ROOT_HTACCESS = SITE_ROOT / ".htaccess"
+DOCS_HTACCESS_SOURCE = PROJECT_ROOT / "mkdocs" / ".htaccess"
+DOCS_HTACCESS_OUTPUT = DOCS_ROOT / ".htaccess"
+SCRIPTS_SOURCE = PROJECT_ROOT / "SCRIPTS.md"
+SCRIPTS_DOC = PROJECT_ROOT / "mkdocs" / "docs" / "desenvolvimento" / "scripts-python.md"
 
 HTML_ATTR_RE = re.compile(r'(?:href|src)=["\']([^"\']+)["\']', re.I)
 JSON_LD_RE = re.compile(
     r'<script\s+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
     re.I | re.S,
 )
-
-# Carregamentos automáticos externos são proibidos pela arquitetura do site.
-# Links comuns <a href="https://..."> continuam permitidos.
-
-VERSIONED_PUBLIC_ASSETS = (
-    "/css/base.css",
-    "/css/layout.css",
-    "/css/components.css",
-    "/css/pages.css",
-    "/js/main.js",
+META_CSP_RE = re.compile(
+    r'<meta[^>]+http-equiv=["\']Content-Security-Policy["\'][^>]*>',
+    re.I,
 )
-
-
-def expected_asset_url(public_path: str) -> str:
-    """Calcula a URL versionada que deve aparecer nos HTMLs públicos."""
-
-    path = SITE_ROOT / public_path.lstrip("/")
-    digest = hashlib.sha256(path.read_bytes()).hexdigest()[:12]
-    return f"{public_path}?v={digest}"
-
 
 AUTO_EXTERNAL_RE = [
     re.compile(r'<script[^>]+src=["\']https?://', re.I),
     re.compile(r'<img[^>]+src=["\']https?://', re.I),
     re.compile(r'<iframe[^>]+src=["\']https?://', re.I),
-    re.compile(
-        r'<link[^>]+rel=["\']stylesheet["\'][^>]+href=["\']https?://',
-        re.I,
-    ),
+    re.compile(r'<link[^>]+rel=["\']stylesheet["\'][^>]+href=["\']https?://', re.I),
+    re.compile(r'<link[^>]+rel=["\']preconnect["\'][^>]+href=["\']https?://', re.I),
+    re.compile(r'<link[^>]+rel=["\']dns-prefetch["\'][^>]+href=["\']https?://', re.I),
 ]
 
-
-
 def public_html_files():
-    """Itera pelos HTMLs próprios do site, excluindo o build do MkDocs.
-
-    ``site/docs/`` possui convenções de HTML do Material for MkDocs e não deve
-    ser submetido às regras internas de canonical/AI-MAINTENANCE do site.
-    """
-
-    docs_root = (SITE_ROOT / "docs").resolve()
-
+    docs_resolved = DOCS_ROOT.resolve()
     for path in SITE_ROOT.rglob("*.html"):
         try:
-            path.resolve().relative_to(docs_root)
+            path.resolve().relative_to(docs_resolved)
         except ValueError:
             yield path
 
-
 def validate_content_metadata(errors: list[str], warnings: list[str]):
-    """Valida CONTENT-META e retorna conteúdos e mapa de slugs de tags."""
-
     try:
         items = scan_content(SITE_ROOT)
-    except Exception as exc:  # noqa conceitual: erro precisa virar relatório.
+    except Exception as exc:
         errors.append(str(exc))
-        items = []
+        return [], {}
 
     seen: set[tuple[str, str]] = set()
     tag_slugs: dict[str, str] = {}
@@ -111,200 +87,207 @@ def validate_content_metadata(errors: list[str], warnings: list[str]):
 
         for tag in item.tags:
             slug = tag_slug(tag)
-            if slug in tag_slugs and tag_slugs[slug] != tag:
-                errors.append(
-                    f"Colisão de slug de tag: {tag_slugs[slug]!r} x {tag!r} -> {slug}"
-                )
+            previous = tag_slugs.get(slug)
+            if previous and previous != tag:
+                errors.append(f"Colisão de slug de tag: {previous!r} x {tag!r} -> {slug}")
             tag_slugs[slug] = tag
-
-        page = item.path.read_text(encoding="utf-8")
-        required_markers = (
-            "CONTENT-META",
-            "CONTENT-BODY:START",
-            "CONTENT-BODY:END",
-            "AI-CONTENT-MAINTENANCE",
-        )
-        for marker in required_markers:
-            if marker not in page:
-                errors.append(
-                    f"{item.path.relative_to(SITE_ROOT)}: "
-                    f"marcador/instrução ausente: {marker}"
-                )
 
     return items, tag_slugs
 
-
 def validate_html_pages(errors: list[str]) -> dict[str, Path]:
-    """Valida páginas públicas e retorna ``canonical -> caminho``."""
-
     canonicals: dict[str, Path] = {}
-    generated_indexes = {
-        SITE_ROOT / "blog/index.html",
-        SITE_ROOT / "portfolio/index.html",
-        SITE_ROOT / "erros/index.html",
-    }
 
     for path in public_html_files():
         text = path.read_text(encoding="utf-8")
         relative = path.relative_to(SITE_ROOT)
 
-        if path in generated_indexes and "GENERATED:" not in text:
-            errors.append(f"Marcadores de geração ausentes em {relative}")
-
-        if re.search(r"\{\{[A-Z_]+\}\}", text):
-            errors.append(f"Placeholder de template não resolvido: {relative}")
-
-        if "<h1" not in text.lower():
-            errors.append(f"H1 ausente: {relative}")
-
-        if text.lower().count("<title>") != 1:
-            errors.append(f"{relative}: esperado exatamente 1 <title>")
-
-        canonical_matches = re.findall(
-            r'<link\s+rel=["\']canonical["\']\s+href=["\']([^"\']+)["\']',
-            text,
-            re.I,
-        )
-        if len(canonical_matches) != 1:
-            errors.append(
-                f"{relative}: esperado exatamente 1 canonical; "
-                f"encontrados {len(canonical_matches)}"
-            )
-        else:
-            canonical = canonical_matches[0]
-            if canonical in canonicals:
-                errors.append(
-                    f"Canonical duplicado: {relative} e {canonicals[canonical]} "
-                    f"-> {canonical}"
-                )
-            canonicals[canonical] = relative
-
-        descriptions = re.findall(
-            r'<meta\s+name=["\']description["\']',
-            text,
-            re.I,
-        )
-        if len(descriptions) != 1:
-            errors.append(f"{relative}: esperado exatamente 1 meta description")
-
-        has_ai_instruction = (
-            "AI-MAINTENANCE" in text
-            or "AI-LEGAL-MAINTENANCE" in text
-            or "GENERATED-TAG-PAGE" in text
-        )
-        if not has_ai_instruction:
-            errors.append(f"{relative}: instrução de manutenção por IA ausente")
-
-        for raw_json_ld in JSON_LD_RE.findall(text):
-            try:
-                json.loads(raw_json_ld)
-            except Exception as exc:
-                errors.append(f"JSON-LD inválido em {relative}: {exc}")
-
-        # CSS/JS próprios precisam carregar uma versão baseada em hash.
-        # Isso impede regressões em que o HTML continue apontando para um
-        # stylesheet antigo armazenado em cache no navegador ou em proxy.
-        for public_asset in VERSIONED_PUBLIC_ASSETS:
-            if public_asset in text:
-                expected = expected_asset_url(public_asset)
-                if expected not in text:
-                    errors.append(
-                        f"Asset sem versão atual em {relative}: "
-                        f"{public_asset} (esperado {expected})"
-                    )
-
-        for reference in HTML_ATTR_RE.findall(text):
-            target = resolve_local_target(path, reference, SITE_ROOT)
-            if target is None:
-                continue
-
-            # Depois da separação entre raiz do projeto e raiz pública, um
-            # link relativo não pode escapar de site/. Caso contrário, ele
-            # poderia existir no disco local (por exemplo README.md), mas não
-            # estaria disponível quando somente site/ fosse publicado.
-            try:
-                target.resolve().relative_to(SITE_ROOT.resolve())
-            except ValueError:
-                errors.append(
-                    f"Link/recurso sai da raiz pública: {relative} -> {reference}"
-                )
-                continue
-
-            if not target.exists():
-                errors.append(
-                    f"Link/recurso local inexistente: {relative} -> {reference}"
-                )
-
-        if any(regex.search(text) for regex in AUTO_EXTERNAL_RE):
-            errors.append(f"Recurso externo automático: {relative}")
+        for pattern in AUTO_EXTERNAL_RE:
+            if pattern.search(text):
+                errors.append(f"Carregamento automático externo em {relative}")
+                break
 
         if "data:image" in text.lower():
-            errors.append(f"Imagem base64/data URI: {relative}")
+            errors.append(f"Imagem base64/data URI no site principal: {relative}")
+
+        for csp_tag in META_CSP_RE.findall(text):
+            if "frame-ancestors" in csp_tag.lower():
+                errors.append(
+                    f"{relative}: frame-ancestors não deve permanecer em CSP via <meta>; "
+                    "use o cabeçalho HTTP do .htaccess."
+                )
+
+        if "showSection(" in text or 'onclick="showSection' in text:
+            errors.append(f"Vestígio de SPA/showSection em {relative}")
+
+        title = re.search(r"<title>(.*?)</title>", text, re.I | re.S)
+        h1 = re.search(r"<h1\b", text, re.I)
+        desc = re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']*)', text, re.I)
+        canonical = re.search(r'<link\s+rel=["\']canonical["\']\s+href=["\']([^"\']+)', text, re.I)
+
+        if not title:
+            errors.append(f"{relative}: <title> ausente")
+        if not h1 and relative.name != "404.html":
+            errors.append(f"{relative}: <h1> ausente")
+        if not desc:
+            errors.append(f"{relative}: meta description ausente")
+        if canonical:
+            url = canonical.group(1)
+            if url in canonicals:
+                errors.append(
+                    f"Canonical duplicado: {url} em {relative} e "
+                    f"{canonicals[url].relative_to(SITE_ROOT)}"
+                )
+            canonicals[url] = path
+        elif relative.name != "404.html":
+            errors.append(f"{relative}: canonical ausente")
+
+        for block in JSON_LD_RE.findall(text):
+            try:
+                json.loads(block)
+            except json.JSONDecodeError as exc:
+                errors.append(f"{relative}: JSON-LD inválido: {exc}")
+
+        for href in HTML_ATTR_RE.findall(text):
+            if href.startswith(("http://", "https://", "mailto:", "tel:", "#", "data:", "javascript:")):
+                continue
+            target = resolve_local_target(path, href)
+            if target is not None and not target.exists():
+                errors.append(f"{relative}: recurso/link local ausente: {href}")
 
     return canonicals
 
+def validate_legal_documents(errors: list[str]) -> None:
+    privacy = SITE_ROOT / "privacidade" / "index.html"
+    terms = SITE_ROOT / "termos" / "index.html"
 
-def validate_sitemap(errors: list[str], canonicals: dict[str, Path]) -> None:
-    """Compara as URLs do sitemap com o conjunto de URLs canônicas."""
-
-    try:
-        tree = ET.parse(SITE_ROOT / "sitemap.xml")
-        namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-        locations = [
-            element.text
-            for element in tree.findall(".//s:loc", namespace)
-            if element.text
-        ]
-
-        if len(locations) != len(set(locations)):
-            errors.append("sitemap.xml possui URLs duplicadas")
-
-        expected = set(canonicals)
-        # A página 404 é pública para o servidor, mas não deve ser indexada.
-        expected.discard("https://daniel.fleck.dev.br/404.html")
-
-        missing = expected - set(locations)
-        extra = set(locations) - expected
-
-        if missing:
-            errors.append(
-                "sitemap.xml sem URLs canônicas: " + ", ".join(sorted(missing))
-            )
-        if extra:
-            errors.append(
-                "sitemap.xml possui URLs sem página canônica correspondente: "
-                + ", ".join(sorted(extra))
-            )
-    except Exception as exc:
-        errors.append(f"sitemap.xml inválido: {exc}")
-
-
-
-def validate_mkdocs_output(errors: list[str]) -> None:
-    """Valida a existência, isolamento e atualização do build MkDocs."""
-
-    docs_root = SITE_ROOT / "docs"
-    required = (
-        docs_root / "index.html",
-        docs_root / "sitemap.xml",
-    )
-
-    for path in required:
+    for path in (privacy, terms):
         if not path.is_file():
-            errors.append(
-                f"Build MkDocs ausente/incompleto: {path.relative_to(PROJECT_ROOT)}"
-            )
+            errors.append(f"Documento legal ausente: {path.relative_to(PROJECT_ROOT)}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        if "AI-LEGAL-MAINTENANCE" not in text:
+            errors.append(f"{path.relative_to(PROJECT_ROOT)}: marcador legal ausente")
 
-    if docs_root.exists():
-        forbidden_suffixes = {".md", ".py"}
-        for path in docs_root.rglob("*"):
+    if privacy.is_file():
+        text = privacy.read_text(encoding="utf-8")
+        for required in (
+            "Versão 5",
+            "localStorage",
+            "sessionStorage",
+            "Material for MkDocs",
+            "connect-src",
+            "13/08/2026",
+        ):
+            if required not in text:
+                errors.append(f"Política V5 sem referência esperada: {required}")
+
+    if terms.is_file():
+        text = terms.read_text(encoding="utf-8")
+        for required in ("Versão 4", "Web Storage", "/privacidade/", "Material for MkDocs"):
+            if required not in text:
+                errors.append(f"Termos V4 sem referência esperada: {required}")
+        if 'href="#privacidade"' in text:
+            errors.append("Termos ainda contêm link SPA antigo para #privacidade")
+
+def validate_mkdocs_config(errors: list[str]) -> None:
+    if not MKDOCS_CONFIG.is_file():
+        errors.append("mkdocs/mkdocs.yml ausente")
+        return
+
+    text = MKDOCS_CONFIG.read_text(encoding="utf-8")
+    forbidden = ("repo_url:", "repo_name:", "google_analytics:", "analytics:")
+    for marker in forbidden:
+        if re.search(rf"^\s*{re.escape(marker)}", text, re.M):
+            errors.append(f"mkdocs.yml contém integração não permitida: {marker}")
+
+    if not re.search(r"^\s*font:\s*false\s*$", text, re.M):
+        errors.append("mkdocs.yml deve manter theme.font: false")
+
+    if "Repositório no GitHub:" not in text:
+        errors.append("mkdocs.yml deve manter o GitHub apenas como link normal de navegação")
+
+def expected_scripts_doc() -> str:
+    notice = """<!--
+GENERATED FROM /SCRIPTS.md
+NÃO EDITAR MANUALMENTE ESTA CÓPIA.
+Execute: python scripts/build_docs.py
+-->
+
+"""
+    return notice + SCRIPTS_SOURCE.read_text(encoding="utf-8")
+
+def validate_scripts_mirror(errors: list[str]) -> None:
+    if not SCRIPTS_SOURCE.is_file():
+        errors.append("SCRIPTS.md ausente na raiz")
+        return
+    if not SCRIPTS_DOC.is_file():
+        errors.append("Espelho MkDocs de SCRIPTS.md ausente")
+        return
+    if SCRIPTS_DOC.read_text(encoding="utf-8") != expected_scripts_doc():
+        errors.append(
+            "mkdocs/docs/desenvolvimento/scripts-python.md não corresponde a SCRIPTS.md; "
+            "execute python scripts/build_docs.py"
+        )
+
+def validate_htaccess(errors: list[str]) -> None:
+    required_root = {
+        "Content-Security-Policy": "frame-ancestors 'none'",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "no-referrer",
+        "X-Content-Type-Options": "nosniff",
+    }
+
+    if not ROOT_HTACCESS.is_file():
+        errors.append("site/.htaccess ausente")
+    else:
+        text = ROOT_HTACCESS.read_text(encoding="utf-8")
+        for header, value in required_root.items():
+            if header not in text or value not in text:
+                errors.append(f"site/.htaccess sem {header}: {value}")
+
+    if not DOCS_HTACCESS_SOURCE.is_file():
+        errors.append("mkdocs/.htaccess ausente")
+        return
+
+    docs_source = DOCS_HTACCESS_SOURCE.read_text(encoding="utf-8")
+    for required in (
+        "connect-src 'self'",
+        "frame-ancestors 'none'",
+        "script-src 'self' 'unsafe-inline'",
+        "Referrer-Policy",
+        "X-Frame-Options",
+    ):
+        if required not in docs_source:
+            errors.append(f"mkdocs/.htaccess sem diretiva esperada: {required}")
+
+    if not DOCS_HTACCESS_OUTPUT.is_file():
+        errors.append("site/docs/.htaccess ausente; execute python scripts/build_docs.py")
+    elif DOCS_HTACCESS_OUTPUT.read_text(encoding="utf-8") != docs_source:
+        errors.append("site/docs/.htaccess difere de mkdocs/.htaccess")
+
+def validate_docs_output(errors: list[str]) -> None:
+    for required in (DOCS_ROOT / "index.html", DOCS_ROOT / "sitemap.xml"):
+        if not required.is_file():
+            errors.append(f"Build MkDocs incompleto: {required.relative_to(PROJECT_ROOT)}")
+
+    if DOCS_ROOT.exists():
+        for path in DOCS_ROOT.rglob("*"):
             if not path.is_file():
                 continue
-            if path.name == "mkdocs.yml" or path.suffix.lower() in forbidden_suffixes:
+            if path.name == "mkdocs.yml" or path.suffix.lower() in {".md", ".py"}:
                 errors.append(
-                    "Arquivo-fonte indevido dentro da saída pública MkDocs: "
+                    "Arquivo-fonte indevido na saída pública MkDocs: "
                     f"{path.relative_to(PROJECT_ROOT)}"
                 )
+            if path.suffix.lower() == ".html":
+                text = path.read_text(encoding="utf-8")
+                for pattern in AUTO_EXTERNAL_RE:
+                    if pattern.search(text):
+                        errors.append(
+                            "HTML MkDocs carrega recurso externo explicitamente: "
+                            f"{path.relative_to(PROJECT_ROOT)}"
+                        )
+                        break
 
     process = subprocess.run(
         [sys.executable, str(PROJECT_ROOT / "scripts/build_docs.py"), "--check"],
@@ -320,9 +303,31 @@ def validate_mkdocs_output(errors: list[str]) -> None:
             + (f" Detalhes: {details}" if details else "")
         )
 
-def validate_rebuild_state(errors: list[str]) -> None:
-    """Confirma que uma nova execução do rebuild não produziria alterações."""
+def validate_sitemap(errors: list[str], canonicals: dict[str, Path]) -> None:
+    sitemap = SITE_ROOT / "sitemap.xml"
+    if not sitemap.is_file():
+        errors.append("site/sitemap.xml ausente")
+        return
+    try:
+        tree = ET.parse(sitemap)
+        ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        locations = [
+            element.text
+            for element in tree.findall(".//s:loc", ns)
+            if element.text
+        ]
+        if len(locations) != len(set(locations)):
+            errors.append("sitemap.xml possui URLs duplicadas")
 
+        expected = set(canonicals)
+        expected.discard("https://daniel.fleck.dev.br/404.html")
+        missing = expected - set(locations)
+        if missing:
+            errors.append("sitemap.xml sem URLs canônicas: " + ", ".join(sorted(missing)))
+    except Exception as exc:
+        errors.append(f"sitemap.xml inválido: {exc}")
+
+def validate_rebuild_state(errors: list[str]) -> None:
     process = subprocess.run(
         [sys.executable, str(PROJECT_ROOT / "scripts/rebuild.py"), "--check"],
         cwd=PROJECT_ROOT,
@@ -330,22 +335,76 @@ def validate_rebuild_state(errors: list[str]) -> None:
         text=True,
     )
     if process.returncode != 0:
-        errors.append(
-            "Arquivos gerados estão desatualizados. Execute python scripts/rebuild.py."
-        )
+        errors.append("Arquivos gerados estão desatualizados. Execute python scripts/rebuild.py.")
 
+def header_value(headers, name: str) -> str:
+    return headers.get(name, "")
+
+def validate_production_headers(base_url: str, errors: list[str]) -> None:
+    base = base_url.rstrip("/")
+    checks = {
+        "/": {
+            "Content-Security-Policy": "frame-ancestors 'none'",
+            "X-Frame-Options": "DENY",
+            "Referrer-Policy": "no-referrer",
+            "X-Content-Type-Options": "nosniff",
+        },
+        "/docs/": {
+            "Content-Security-Policy": "connect-src 'self'",
+            "X-Frame-Options": "DENY",
+            "Referrer-Policy": "no-referrer",
+            "X-Content-Type-Options": "nosniff",
+        },
+    }
+
+    for path, required in checks.items():
+        url = base + path
+        request = urllib.request.Request(url, method="GET", headers={"User-Agent": "site-validator/1.0"})
+        try:
+            with urllib.request.urlopen(request, timeout=15) as response:
+                headers = response.headers
+                for name, fragment in required.items():
+                    value = header_value(headers, name)
+                    if fragment not in value:
+                        errors.append(
+                            f"{url}: header {name!r} não contém {fragment!r}; "
+                            f"recebido={value!r}"
+                        )
+        except Exception as exc:
+            errors.append(f"Falha ao validar headers de {url}: {exc}")
+
+def run_network_audit(base_url: str | None, errors: list[str]) -> None:
+    command = [sys.executable, str(PROJECT_ROOT / "scripts/audit_network.py"), "--all"]
+    if base_url:
+        command.extend(["--base-url", base_url.rstrip("/")])
+    process = subprocess.run(command, cwd=PROJECT_ROOT)
+    if process.returncode != 0:
+        errors.append("Auditoria headless de rede falhou.")
 
 def main() -> int:
-    """Executa todas as validações e retorna código adequado ao shell/Git."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--network", action="store_true", help="Executa também a auditoria headless.")
+    parser.add_argument("--production-url", help="Valida headers HTTP do site já publicado.")
+    args = parser.parse_args()
 
     errors: list[str] = []
     warnings: list[str] = []
 
-    items, tag_slugs = validate_content_metadata(errors, warnings)
+    items, tags = validate_content_metadata(errors, warnings)
     canonicals = validate_html_pages(errors)
+    validate_legal_documents(errors)
+    validate_mkdocs_config(errors)
+    validate_scripts_mirror(errors)
+    validate_htaccess(errors)
+    validate_docs_output(errors)
     validate_sitemap(errors, canonicals)
-    validate_mkdocs_output(errors)
     validate_rebuild_state(errors)
+
+    if args.production_url:
+        validate_production_headers(args.production_url, errors)
+
+    if args.network:
+        run_network_audit(args.production_url, errors)
 
     if errors:
         print("VALIDAÇÃO FALHOU")
@@ -356,14 +415,12 @@ def main() -> int:
         return 1
 
     print(
-        f"VALIDAÇÃO OK: {len(items)} conteúdos, {len(tag_slugs)} tags e "
-        "links/SEO locais consistentes."
+        f"VALIDAÇÃO OK: {len(items)} conteúdos, {len(tags)} tags, "
+        "documentos legais, MkDocs e controles de segurança consistentes."
     )
     for warning in warnings:
         print("WARN:", warning)
-
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

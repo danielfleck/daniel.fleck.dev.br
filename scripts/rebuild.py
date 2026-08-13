@@ -314,7 +314,7 @@ def tag_page(tag: str, members) -> str:
         'content="default-src \'self\'; script-src \'self\'; style-src \'self\' '
         "'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; "
         "object-src 'none'; base-uri 'self'; form-action 'none'; "
-        "frame-ancestors 'none'; upgrade-insecure-requests\">"
+        "upgrade-insecure-requests\">"
         f"<title>{escape(tag)} | Tags | Daniel Fleck</title>"
         f'<meta name="description" content="Conteúdos relacionados à tag '
         f'{escape(tag, quote=True)}.">'
@@ -353,7 +353,7 @@ def tag_index(items) -> str:
         'content="default-src \'self\'; script-src \'self\'; style-src \'self\' '
         "'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; "
         "object-src 'none'; base-uri 'self'; form-action 'none'; "
-        "frame-ancestors 'none'; upgrade-insecure-requests\">"
+        "upgrade-insecure-requests\">"
         "<title>Tags | Daniel Fleck</title>"
         '<meta name="description" content="Índice de tags do conteúdo técnico.">'
         f'<link rel="canonical" href="{BASE_URL}/tags/">'

@@ -1,2 +1,0 @@
-mkdocs<2,>=1.6
-mkdocs-material<10,>=9

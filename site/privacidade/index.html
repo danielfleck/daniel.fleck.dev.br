@@ -4,23 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
-
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <title>Política de Privacidade | Daniel Fleck</title>
 <meta name="description" content="Política de Privacidade do site daniel.fleck.dev.br.">
 <link rel="canonical" href="https://daniel.fleck.dev.br/privacidade/">
-<meta property="og:type" content="website"><meta property="og:title" content="Política de Privacidade | Daniel Fleck"><meta property="og:description" content="Política de Privacidade do site daniel.fleck.dev.br."><meta property="og:url" content="https://daniel.fleck.dev.br/privacidade/">
-<link rel="stylesheet" href="/css/base.css?v=a5f1f02a639c"><link rel="stylesheet" href="/css/layout.css?v=de03a1bd5f22"><link rel="stylesheet" href="/css/components.css?v=887216fcb9e5"><link rel="stylesheet" href="/css/pages.css?v=f45fabcbca22">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Política de Privacidade | Daniel Fleck">
+<meta property="og:description" content="Política de Privacidade do site daniel.fleck.dev.br.">
+<meta property="og:url" content="https://daniel.fleck.dev.br/privacidade/">
+<link rel="stylesheet" href="/css/base.css?v=a5f1f02a639c">
+<link rel="stylesheet" href="/css/layout.css?v=de03a1bd5f22">
+<link rel="stylesheet" href="/css/components.css?v=887216fcb9e5">
+<link rel="stylesheet" href="/css/pages.css?v=f45fabcbca22">
 <script src="/js/main.js?v=3fee4234a726" defer></script>
 </head>
-<body class="">
-<!--
-AI-MAINTENANCE
-- Este site é publicado como HTML/CSS/JS estático. Python é usado somente no desenvolvimento/rebuild.
-- Navegação e rodapé vêm de templates/partials/ e são replicados por scripts/rebuild.py.
-- NÃO edite manualmente conteúdo entre marcadores GENERATED:*; altere a fonte indicada e execute: python scripts/rebuild.py.
-- Para alterações de conteúdo, pesquise referências no repositório e execute python scripts/validate.py antes do commit.
-- Instruções completas: /docs/AI-MAINTENANCE.md no repositório.
+<body>
+<!-- AI-MAINTENANCE
+- Site publicado como HTML/CSS/JS estático.
+- Navegação e rodapé são replicados por scripts/rebuild.py.
+- Execute rebuild, build_docs, validate e auditoria de rede conforme SCRIPTS.md.
 -->
 <!-- GENERATED:SITE-NAV:START --><nav class="topbar">
   <div class="container nav">
@@ -41,16 +43,28 @@ AI-MAINTENANCE
     </div>
   </div>
 </nav><!-- GENERATED:SITE-NAV:END -->
-<main class="container"><section class="section"><!--
-AI-LEGAL-MAINTENANCE
-- Documento jurídico público. Versão atual: 4. Última alteração: 2026-08-10T00:58:00-03:00.
-- Qualquer alteração textual neste documento, inclusive redacional, exige nova versão sequencial, data/hora real de publicação e nova entrada cumulativa no histórico.
-- Não altere o outro documento jurídico se ele não tiver sido modificado.
-- Mudanças apenas de layout, navegação, canonical ou estrutura de arquivos não alteram por si só o conteúdo jurídico.
---><header class="page-header"><div class="section-kicker">Transparência e governança</div><h1>Política de Privacidade</h1><p class="page-summary"><strong>Versão 4 — 10/08/2026 às 00:58 (BRT, UTC-3).</strong> Esta política descreve o funcionamento atual do site, os tratamentos de dados pessoais que podem ocorrer, as estatísticas disponibilizadas pela hospedagem e as medidas adotadas para reduzir coleta e exposição desnecessárias.</p></header><div class="legal-page">
-<div class="legal-summary">
-<strong>Resumo:</strong> este site é estático e não possui cadastro, formulário próprio de coleta, publicidade, cookies próprios de rastreamento, ferramenta própria de analytics, pixel de marketing ou mecanismo de perfilização. A infraestrutura da KingHost/LWSA gera dados técnicos e disponibiliza ao responsável acesso autenticado a estatísticas de hospedagem. O responsável pode consultar essas estatísticas para finalidades técnicas e de segurança, mas não mantém banco próprio de visitantes nem utiliza esses dados para publicidade ou perfil comportamental.
-                </div>
+<main class="container"><section class="section">
+<!-- AI-LEGAL-MAINTENANCE
+- Documento jurídico público. Versão atual: 5. Última alteração: 2026-08-13T18:11:00-03:00.
+- Qualquer alteração textual exige nova versão sequencial e nova entrada cumulativa no histórico.
+- A data/hora deve corresponder à publicação efetiva. Se a publicação ocorrer depois do horário acima, ajuste antes do deploy.
+-->
+<header class="page-header">
+<div class="section-kicker">Transparência e governança</div>
+<h1>Política de Privacidade</h1>
+<p class="page-summary"><strong>Versão 5 — 13/08/2026 às 18:11 (BRT, UTC-3).</strong> Esta política descreve o funcionamento atual do site, incluindo a documentação em MkDocs, Web Storage funcional, registros de hospedagem, controles de segurança e medidas adotadas para reduzir coleta e exposição desnecessárias.</p>
+</header>
+<div class="legal-page">
+<div class="legal-summary"><strong>Resumo:</strong> este site é estático e não possui cadastro, formulário próprio de coleta,
+publicidade, ferramenta própria de analytics, pixel de marketing ou mecanismo próprio de perfilização.
+A infraestrutura da KingHost/LWSA pode gerar registros técnicos da hospedagem. A área
+<code>/docs/</code>, gerada com Material for MkDocs, contém mecanismos funcionais de armazenamento
+no navegador por meio de Web Storage (<code>localStorage</code> e <code>sessionStorage</code>),
+utilizados pelo tema para estados e preferências de interface quando os recursos correspondentes estão
+habilitados. Esses valores não são utilizados pelo responsável para publicidade, analytics ou
+perfilização e não são deliberadamente transmitidos a terceiros. A configuração desta versão remove
+a integração automática de repositório do Material e restringe conexões programáticas da documentação
+ao próprio domínio.</div>
 <article class="card legal-card">
 <h3>1. Responsável, controlador e canal de contato</h3>
 <p>O <strong>daniel.fleck.dev.br</strong> é um site pessoal mantido por <strong>Daniel Rodrigo Fleck</strong>. Para assuntos relacionados a privacidade, proteção de dados, correção de informações, segurança, notificações ou exercício de direitos, o canal de contato é <a href="mailto:danielfleck@gmail.com"><strong>danielfleck@gmail.com</strong></a>.</p>
@@ -59,17 +73,25 @@ AI-LEGAL-MAINTENANCE
 <p>Considerando o funcionamento atual, de pequena escala e sem tratamento de alto risco identificado, não foi designado encarregado formal pelo tratamento de dados. O canal acima permanece disponível para comunicação direta com titulares, nos termos da regulamentação aplicável aos agentes de tratamento de pequeno porte.</p>
 </article>
 <article class="card legal-card">
-<h3>2. Arquitetura de privacidade e o que o site não faz</h3>
+<h3>2. Arquitetura de privacidade, Web Storage e o que o site não faz</h3>
 <ul>
 <li>não existe cadastro de usuários, conta, login ou área de publicação por visitantes;</li>
 <li>não existe formulário próprio para coleta de nome, CPF, telefone, endereço ou outros dados pessoais;</li>
 <li>o código do site não cria cookies próprios de publicidade, rastreamento ou perfilização;</li>
 <li>não há Google Analytics, Meta Pixel, ferramenta própria de analytics comportamental ou publicidade programática;</li>
-<li>não há scripts, fontes, bibliotecas, imagens, iframes ou outros recursos automaticamente carregados de domínios de terceiros;</li>
+<li>não há scripts, fontes, bibliotecas, imagens, iframes ou outros recursos configurados para carregamento automático de domínios de terceiros;</li>
 <li>não é criado banco de dados próprio com histórico individual de visitantes;</li>
-<li>não há venda de dados, enriquecimento de perfis ou combinação deliberada de IPs com informações obtidas em outras fontes para identificar visitantes.</li>
+<li>não há venda de dados, enriquecimento de perfis ou combinação deliberada de IPs com informações externas para identificar visitantes.</li>
 </ul>
-<p>O site utiliza política de referência restritiva para reduzir o envio do endereço de origem ao acessar links externos. Os links de terceiros somente são acessados por ação do visitante e os serviços de destino passam a aplicar suas próprias políticas.</p>
+<h4>2.1. Armazenamento local funcional na área <code>/docs/</code></h4>
+<p>A documentação técnica em <code>/docs/</code> é gerada com <strong>Material for MkDocs</strong>. O tema inclui mecanismos baseados na API Web Storage do navegador, especialmente <code>localStorage</code> e <code>sessionStorage</code>. Web Storage mantém pares de chave e valor no navegador, no contexto do domínio, e é tecnicamente distinto de cookies HTTP.</p>
+<p>O código do Material for MkDocs possui suporte para persistir estados funcionais e preferências da interface, conforme os recursos efetivamente habilitados, como seleção de paleta de cores, vínculo entre abas de conteúdo, dispensa de avisos, escolhas relacionadas ao componente de consentimento e estados temporários de determinadas integrações. <strong>Na configuração publicada nesta versão, a paleta é fixa, não há analytics, não há componente de consentimento configurado, não está habilitado o vínculo persistente entre abas e a integração automática de repositório por <code>repo_url</code> foi removida.</strong></p>
+<p>A presença das rotinas de Web Storage no JavaScript do tema não significa que todas as possibilidades acima sejam gravadas em cada visita. O armazenamento efetivamente utilizado depende dos componentes ativos e das interações realizadas pelo visitante.</p>
+<p><strong>Os valores mantidos em <code>localStorage</code> e <code>sessionStorage</code> não são enviados automaticamente em requisições HTTP como ocorre com cookies.</strong> No código e na configuração desta versão, não existe mecanismo destinado a transmitir deliberadamente esses valores a terceiros. Eles não são utilizados pelo responsável para publicidade, analytics, perfilização, prospecção comercial ou identificação deliberada do visitante.</p>
+<p>Valores de <code>localStorage</code> podem permanecer no navegador entre sessões até serem substituídos, removidos pelo código, limpos pelo navegador ou apagados pelo próprio usuário. Valores de <code>sessionStorage</code> são vinculados à sessão correspondente do navegador. O visitante pode limpar esses dados pelas ferramentas do próprio navegador.</p>
+<h4>2.2. Busca e navegação na documentação</h4>
+<p>A busca da área <code>/docs/</code> utiliza índice estático gerado junto com o site e processamento no navegador; não foi configurado mecanismo remoto de busca, analytics ou indexação comportamental. Links externos permanecem links comuns e somente são acessados quando o visitante decide segui-los.</p>
+<p>Como salvaguardas técnicas, a configuração da documentação desabilita o carregamento automático de informações do GitHub associado a <code>repo_url</code>, utiliza fontes locais do sistema, aplica Content Security Policy própria para <code>/docs/</code> com <code>connect-src 'self'</code> e adota auditoria em navegador headless para detectar tentativas de conexão com hosts não autorizados.</p>
 </article>
 <article class="card legal-card">
 <h3>3. Dados técnicos gerados pela hospedagem e acesso às estatísticas</h3>
@@ -111,25 +133,28 @@ AI-LEGAL-MAINTENANCE
 </article>
 <article class="card legal-card">
 <h3>8. Links e serviços externos</h3>
-<p>O site contém links para GitHub, LinkedIn, Atlassian, documentos oficiais, publicações jornalísticas e outros serviços externos. Esses destinos não são incorporados automaticamente ao site e possuem termos e políticas próprios. O acesso ocorre somente quando o visitante escolhe seguir o link.</p>
-<p>A configuração atual utiliza <code>no-referrer</code> e, nos links abertos em nova aba, <code>noopener noreferrer</code>, reduzindo o envio do endereço de origem e o acesso da página de destino ao contexto da aba que abriu o link. Essas medidas não controlam os tratamentos realizados depois que o visitante passa a navegar no serviço externo.</p>
+<p>O site contém links para GitHub, LinkedIn, Atlassian, documentos oficiais, publicações jornalísticas e outros serviços externos. Esses destinos possuem termos e políticas próprios e são acessados somente quando o visitante escolhe seguir o link.</p>
+<p>Na configuração desta versão, a área <code>/docs/</code> não utiliza <code>repo_url</code> do Material for MkDocs; o acesso ao repositório é apresentado como link comum. Essa escolha evita a consulta automática à API do GitHub que o tema pode realizar para obter informações públicas como versão, estrelas e forks.</p>
+<p>As respostas do site são configuradas para utilizar <code>Referrer-Policy: no-referrer</code>, e os links abertos em nova aba utilizam <code>noopener noreferrer</code> quando aplicável. Essas medidas reduzem o envio do endereço de origem e o acesso da página de destino ao contexto da aba que abriu o link. Elas não controlam os tratamentos realizados depois que o visitante passa a navegar no serviço externo.</p>
 </article>
 <article class="card legal-card">
-<h3>9. Segurança e controle de acesso</h3>
-<p>São adotadas medidas proporcionais ao baixo nível de coleta direta, incluindo <strong>HTTPS</strong>, Content Security Policy, ausência de dependências externas automáticas, política de referência restritiva, controle de acesso às estatísticas, versionamento do código-fonte em repositório Git e manutenção de serviços administrativos desabilitados quando não necessários.</p>
-<p>O <strong>e-mail principal do responsável</strong>, a <strong>conta do GitHub</strong> utilizada para versionamento e publicação do código e a <strong>conta administrativa da hospedagem</strong> utilizam credenciais individuais e são protegidos por <strong>pelo menos dois fatores de autenticação, quando o serviço oferece esse recurso</strong>. As senhas são individuais, não compartilhadas entre os serviços e permanecem sob guarda do responsável.</p>
-<p>Os servidores e serviços web utilizados pelo site seguem os <strong>protocolos, configurações e controles de segurança disponibilizados pela provedora de hospedagem</strong>. O responsável mantém ativados, no painel de controle, os <strong>recursos de segurança que estejam disponíveis ao seu nível de administração e sejam compatíveis com o serviço contratado</strong>, sem declarar como ativo recurso que dependa de contratação adicional ou que não esteja disponibilizado no plano utilizado.</p>
-<p>O <strong>acesso FTP permanece desativado por padrão</strong>. Quando excepcionalmente necessário para uma atividade administrativa específica, é habilitado apenas pelo período indispensável à execução da tarefa e <strong>desativado imediatamente após o término do uso</strong>. O mesmo princípio de redução de superfície de ataque é aplicado a outros serviços administrativos que não precisem permanecer continuamente disponíveis.</p>
-<p>Como requisitos permanentes de segurança administrativa, credenciais de hospedagem, repositório e e-mail devem permanecer fortes, exclusivas e sob guarda do responsável; softwares e ferramentas administrativas devem ser mantidos em versões suportadas e atualizadas; cópias independentes do conteúdo importante devem ser mantidas quando necessárias; e qualquer acesso temporário concedido para suporte ou migração deve ser revogado ou ter suas credenciais substituídas após o encerramento da finalidade.</p>
-<p>A área de estatísticas é disponibilizada pela provedora como componente da hospedagem. Embora a rota permaneça alcançável pela Internet conforme a arquitetura do serviço, <strong>seu conteúdo é mantido protegido por credenciais</strong> utilizando o mecanismo fornecido no painel. O acesso deve ser limitado ao responsável ou a quem tenha necessidade legítima e autorização específica.</p>
-<p>Nenhum sistema conectado à Internet pode ser declarado absolutamente imune a incidentes. Caso seja identificado incidente envolvendo dados pessoais, serão adotadas medidas de contenção, investigação, mitigação e registro, e será avaliada a necessidade de comunicação à ANPD e aos titulares nos prazos e hipóteses previstos na regulamentação vigente.</p>
+<h3>9. Segurança, cabeçalhos HTTP e controle de acesso</h3>
+<p>São adotadas medidas proporcionais ao baixo nível de coleta direta, incluindo HTTPS, políticas de segurança de conteúdo, política de referência restritiva, restrição de carregamentos automáticos de terceiros, controle de acesso às estatísticas, versionamento do código-fonte e manutenção de serviços administrativos desabilitados quando não necessários.</p>
+<p>A proteção contra incorporação do site em páginas de terceiros é configurada por cabeçalho HTTP <code>Content-Security-Policy</code> com <code>frame-ancestors 'none'</code>, acompanhada de <code>X-Frame-Options: DENY</code>. A diretiva <code>frame-ancestors</code> não é mantida apenas em <code>&lt;meta http-equiv="Content-Security-Policy"&gt;</code>, pois essa forma não produz o efeito pretendido para a diretiva.</p>
+<p>A raiz do site mantém a política de recursos do HTML estático e recebe os cabeçalhos comuns de segurança. A área <code>/docs/</code> possui política própria compatível com Material for MkDocs, inclusive porque o tema utiliza JavaScript inline de inicialização. Nessa área, <code>connect-src 'self'</code> restringe conexões programáticas ao próprio domínio.</p>
+<p>Em atendimento de suporte da KingHost em 13/08/2026, foi confirmado que o ambiente Linux permite diretivas <code>Header always set</code> via <code>.htaccess</code>, inclusive para HTML estático, e que as regras da raiz são normalmente herdadas por subdiretórios. O suporte informou, porém, que a documentação disponível não permite garantir de forma categórica como todas as eventuais camadas intermediárias de cache/proxy tratam cada cabeçalho de segurança. Por esse motivo, a configuração é acompanhada de validação prática dos cabeçalhos efetivamente recebidos pelo navegador após cada alteração relevante.</p>
+<p>O projeto também mantém auditoria automatizada em navegador headless. O teste observa as requisições que o JavaScript tenta executar em tempo de uso e falha quando identifica host não autorizado, complementando a análise estática de HTML.</p>
+<p>O e-mail principal do responsável, a conta do GitHub e a conta administrativa da hospedagem utilizam credenciais individuais e são protegidos por múltiplos fatores de autenticação quando o serviço oferece esse recurso. O FTP permanece desativado por padrão e somente é habilitado de modo temporário quando estritamente necessário.</p>
+<p>Nenhum sistema conectado à Internet pode ser declarado absolutamente imune a incidentes. Caso seja identificado incidente envolvendo dados pessoais, serão adotadas medidas de contenção, investigação, mitigação, registro e avaliação das comunicações exigidas pela regulamentação vigente.</p>
 </article>
 <article class="card legal-card">
 <h3>10. Registro das operações e registro de incidentes</h3>
 <p>O responsável mantém ou deverá manter <strong>registro simplificado das operações de tratamento</strong> sob sua responsabilidade, compatível com o porte e o risco atuais do site. Esse inventário administrativo descreve categorias de dados, titulares, finalidades, bases legais, agentes envolvidos, compartilhamentos, retenção e medidas de segurança; ele <strong>não é um cadastro com os IPs de cada visitante</strong>.</p>
 <p>Incidentes de segurança com dados pessoais também serão documentados conforme a regulamentação da ANPD. O registro deve abranger inclusive incidentes que não tenham gerado comunicação à ANPD ou aos titulares e, conforme o Regulamento de Comunicação de Incidente de Segurança vigente, deve ser conservado por <strong>no mínimo cinco anos</strong>, ressalvada obrigação adicional que exija prazo superior.</p>
 <p>Qualquer nova funcionalidade que envolva formulário, autenticação, analytics, publicidade, cookies, banco de dados de usuários, comentários, upload de conteúdo ou integração automática com terceiros deverá ser analisada antes da ativação e refletida neste inventário e nesta política.</p>
-</article>
+<p>Alterações no Material for MkDocs, nos plugins, nos recursos de Web Storage, na política CSP,
+nas integrações externas ou nos cabeçalhos HTTP são tratadas como mudança de arquitetura relevante e
+devem ser submetidas a nova validação estática e dinâmica antes da publicação.</p></article>
 <article class="card legal-card">
 <h3>11. Direitos dos titulares</h3>
 <p>Nos limites e condições previstos na LGPD, o titular pode solicitar confirmação da existência de tratamento, acesso, correção, informações sobre compartilhamento e demais direitos aplicáveis por meio de <a href="mailto:danielfleck@gmail.com"><strong>danielfleck@gmail.com</strong></a>.</p>
@@ -159,13 +184,14 @@ AI-LEGAL-MAINTENANCE
 </article>
 <article class="card legal-card">
 <h3>14. Gestão dos documentos e serviços da KingHost</h3>
-<p>A KingHost informa em sua documentação de LGPD que mantém documentos próprios relativos à proteção de dados e que novas versões podem ser encaminhadas aos clientes para novo aceite. O responsável pelo site deve conservar evidências dos documentos aplicáveis ao serviço efetivamente contratado e revisar esta Política quando uma alteração do provedor modificar materialmente o tratamento de dados, a segurança, a retenção ou os agentes envolvidos.</p>
-<p><strong>Documentos destinados a produtos distintos</strong> — como VPS, revenda de hospedagem, gerenciador de redes sociais, programa de afiliados, licenciamento de software ou ofertas promocionais — não são automaticamente incorporados a esta Política nem tratados como condições do serviço atual. Somente serão considerados se e quando forem efetivamente aplicáveis à contratação ou à funcionalidade utilizada.</p>
-<p>O contrato aplicável de hospedagem é acompanhado como parte da gestão do fornecedor. Em especial, a cláusula 14.3 é mantida como <strong>ponto de atenção de governança</strong> por prever finalidades próprias do provedor relacionadas à melhoria de sistemas e criação de softwares ou serviços. Alterações futuras dessa cláusula ou da Política de Privacidade da LWSA serão reavaliadas quanto a impacto sobre esta Política e sobre o registro interno das operações de tratamento.</p>
+<p>A KingHost informa em sua documentação de LGPD que mantém documentos próprios relativos à proteção de dados e que novas versões podem ser encaminhadas aos clientes para novo aceite. O responsável conserva evidências dos documentos e atendimentos relevantes para o serviço efetivamente contratado e revisa esta Política quando uma alteração do provedor modificar materialmente tratamento de dados, segurança, retenção ou agentes envolvidos.</p>
+<p>Em 13/08/2026, o suporte confirmou a disponibilidade de <code>mod_headers</code>/<code>Header always set</code> no contexto de hospedagem Linux para configuração de cabeçalhos HTTP por <code>.htaccess</code> e indicou a aplicação a HTML estático e subdiretórios, ressalvados contextos mais específicos. O próprio suporte registrou que sua documentação não traz descrição exaustiva da precedência ou eventual intervenção de todas as camadas de cache/proxy sobre CSP, X-Frame-Options e Referrer-Policy. Essa limitação documental é tratada por validação pós-publicação com inspeção do response final.</p>
+<p>Documentos destinados a produtos distintos — como VPS, revenda, gerenciador de redes sociais, programa de afiliados ou ofertas promocionais — não são automaticamente incorporados a esta Política. Somente são considerados quando efetivamente aplicáveis ao serviço utilizado.</p>
+<p>O contrato aplicável de hospedagem continua acompanhado como parte da gestão do fornecedor, inclusive a cláusula 14.3 e eventuais alterações futuras que possam impactar a qualificação dos agentes, finalidades próprias da provedora ou tratamento dos registros.</p>
 </article>
 <article class="card legal-card">
 <h3>15. Atualizações desta política</h3>
-<p>Esta política será revisada quando houver mudança relevante de hospedagem, tratamento, funcionalidade, finalidade, serviço externo, documentação aplicável do provedor ou legislação. A versão, a data e a hora vigentes permanecem indicadas no início desta página.</p>
+<p>Esta política será revisada quando houver mudança relevante de hospedagem, tratamento, funcionalidade, Web Storage, integração externa, política de segurança, finalidade, documentação do provedor ou legislação. A versão, a data e a hora vigentes permanecem indicadas no início desta página.</p>
 <p>Alterações que modifiquem materialmente a forma de tratamento serão refletidas com transparência antes ou tão logo se tornem aplicáveis, conforme a natureza da mudança. Este documento descreve o funcionamento atual do site e não constitui certificação absoluta de conformidade ou renúncia a direitos legalmente assegurados.</p>
 </article>
 <article class="card legal-card">
@@ -176,16 +202,17 @@ AI-LEGAL-MAINTENANCE
 <li><strong>Versão 2 — 08/08/2026 às 23:29 (BRT, UTC-3):</strong> detalhamento das medidas de segurança efetivamente adotadas: credenciais individuais para e-mail principal, GitHub e hospedagem; proteção por múltiplos fatores de autenticação quando disponível; utilização dos controles de segurança disponibilizados pela provedora; e manutenção do FTP desativado por padrão, com habilitação apenas temporária para uso administrativo específico.</li>
 <li><strong>Versão 3 — 09/08/2026 às 12:59 (BRT, UTC-3):</strong> inclusão de transparência específica sobre finalidades próprias da KingHost/LWSA previstas no Contrato de Hospedagem, com destaque para a cláusula 14.3; registro desse ponto como matéria de governança do fornecedor; inclusão de referência direta ao contrato aplicável; e refinamento do aviso simplificado de privacidade no rodapé.</li>
 <li><strong>Versão 4 — 10/08/2026 às 00:58 (BRT, UTC-3):</strong> ajuste da descrição do site para natureza pessoal; esclarecimento técnico e jurídico sobre hospedagem compartilhada, controle efetivo dos registros e distinção entre registros de conexão e de acesso a aplicações; explicitação de que a área de estatísticas é disponibilizada pela provedora e protegida pelos mecanismos de autenticação fornecidos no painel; e revisão da descrição dos mecanismos de publicação automatizada para não equiparar o canal técnico de deploy a acesso SSH administrativo.</li>
-</ul>
+<li><strong>Versão 5 — 13/08/2026 às 18:11 (BRT, UTC-3):</strong> inclusão da área <code>/docs/</code> e do Material for MkDocs no escopo explícito de privacidade; transparência sobre <code>localStorage</code> e <code>sessionStorage</code>, seus usos funcionais possíveis e limites da configuração vigente; remoção da integração automática de repositório do Material por <code>repo_url</code>; registro de busca local; adoção de CSP específica para a documentação com <code>connect-src 'self'</code>; implementação de auditoria de rede em navegador headless; correção da proteção <code>frame-ancestors</code> para cabeçalho HTTP; e incorporação das confirmações e limitações informadas pela KingHost em 13/08/2026 sobre <code>mod_headers</code>, herança de <code>.htaccess</code> e necessidade de validação prática dos cabeçalhos finais.</li></ul>
 </article>
-</div></section></main>
+</div>
+</section></main>
 <!-- GENERATED:SITE-FOOTER:START --><footer class="footer">
   <div class="container footer-inner">
     <div><strong>Daniel Rodrigo Fleck</strong><br><span class="generated-note">Site pessoal, portfólio técnico e registros de aprendizado.</span></div>
     <div class="footer-links">
       <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/docs/">Docs</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="mailto:danielfleck@gmail.com">Contato</a>
     </div>
-    <div class="footer-note"><strong>Privacidade:</strong> o código deste site não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A infraestrutura de hospedagem pode processar registros técnicos conforme o serviço e seus documentos aplicáveis. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
+    <div class="footer-note"><strong>Privacidade:</strong> o site não utiliza analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A área <code>/docs/</code> incorpora Web Storage funcional do tema, sem uso próprio para publicidade ou perfilização. A hospedagem pode processar registros técnicos. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
   </div>
 </footer><!-- GENERATED:SITE-FOOTER:END -->
 </body></html>
