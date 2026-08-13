@@ -125,6 +125,10 @@
          <lastmod>2026-08-13</lastmod>
     </url>
     <url>
+         <loc>https://daniel.fleck.dev.br/docs/governanca/privacidade-termos-mkdocs-2026-08-13/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
          <loc>https://daniel.fleck.dev.br/docs/governanca/procedimento-titulares-requisicoes/</loc>
          <lastmod>2026-08-13</lastmod>
     </url>
@@ -189,7 +193,15 @@
          <lastmod>2026-08-13</lastmod>
     </url>
     <url>
+         <loc>https://daniel.fleck.dev.br/docs/infraestrutura/kinghost-cabecalhos-http/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
          <loc>https://daniel.fleck.dev.br/docs/operacao/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/operacao/auditoria-rede-headless/</loc>
          <lastmod>2026-08-13</lastmod>
     </url>
     <url>
@@ -229,6 +241,10 @@
          <lastmod>2026-08-13</lastmod>
     </url>
     <url>
+         <loc>https://daniel.fleck.dev.br/docs/seguranca/csp-cabecalhos-http/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
          <loc>https://daniel.fleck.dev.br/docs/seguranca/csp-recursos-externos/</loc>
          <lastmod>2026-08-13</lastmod>
     </url>
@@ -246,6 +262,10 @@
     </url>
     <url>
          <loc>https://daniel.fleck.dev.br/docs/seguranca/superficie-exposicao/</loc>
+         <lastmod>2026-08-13</lastmod>
+    </url>
+    <url>
+         <loc>https://daniel.fleck.dev.br/docs/seguranca/web-storage-mkdocs/</loc>
          <lastmod>2026-08-13</lastmod>
     </url>
 </urlset>
