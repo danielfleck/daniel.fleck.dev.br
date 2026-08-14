@@ -15,10 +15,10 @@ Qualquer alteração textual deve:
 
 As versões são independentes.
 
-## 2. Estado público atual
+## 2. Estado público após esta correção
 
-- **Política de Privacidade: Versão 5 — 13/08/2026 às 18:11 (BRT, UTC-3)**.
-- **Termos de Uso: Versão 4 — 13/08/2026 às 18:11 (BRT, UTC-3)**.
+- **Política de Privacidade: Versão 6 — 13/08/2026 às HH:MM (BRT, UTC-3)**.
+- **Termos de Uso: Versão 5 — 13/08/2026 às HH:MM (BRT, UTC-3)**.
 
 ## 3. Histórico — Política de Privacidade
 
@@ -37,6 +37,9 @@ Refinamento de hospedagem compartilhada, logs, `/stats`, DNS, domínio alternati
 ### V5 — 13/08/2026 às 18:11
 Inclusão explícita de `/docs/` e Material for MkDocs; transparência sobre `localStorage` e `sessionStorage`; remoção de `repo_url`; busca local; CSP própria da documentação; `frame-ancestors` por header HTTP; auditoria headless; e registro da resposta da KingHost sobre `mod_headers`, herança do `.htaccess` e necessidade de verificação prática dos headers finais.
 
+### V6 — 13/08/2026 às HH:MM (BRT, UTC-3)
+Explicitação dos direitos do art. 18 da LGPD; reforço do enquadramento atual de pequeno porte sem afastar obrigações da LGPD; e transparência adicional sobre o serviço de e-mail e a diligência de eventual transferência internacional.
+
 ## 4. Histórico — Termos de Uso
 
 ### V1 — 08/08/2026 às 22:21
@@ -51,10 +54,13 @@ Refinamento da hospedagem, logs e deploy.
 ### V4 — 13/08/2026 às 18:11
 Inclusão de `/docs/`, Web Storage funcional, busca local, remoção de `repo_url`, CSP/headers específicos, auditoria headless e correção do link direto para a Política de Privacidade.
 
+### V5 — 13/08/2026 às HH:MM (BRT, UTC-3)
+Formalização proporcional do sistema de notificações, confirmação de recebimento, análise fundamentada, reconsideração e relatório anual simplificado de transparência, considerando que o site não intermedeia conteúdo de usuários, não possui anúncios pagos nem impulsionamento.
+
 ## 5. Alteração estrutural
 
 Correção de links, canonical, navegação, layout ou diretório sem alteração da redação jurídica não incrementa por si só a versão textual.
 
 ## 6. Publicação efetiva
 
-O horário registrado nos documentos deve corresponder à publicação efetiva. Se o webhook/deploy falhar, registrar essa ocorrência e não presumir que o estado do Git já é o estado servido ao visitante.
+O marcador `13/08/2026 às HH:MM (BRT, UTC-3)` deve ser substituído imediatamente antes do deploy pelo horário que será registrado para a publicação. Se o webhook/deploy falhar, registrar a ocorrência e não presumir que o estado do Git já é o estado servido ao visitante.

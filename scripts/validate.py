@@ -176,7 +176,7 @@ def validate_legal_documents(errors: list[str]) -> None:
     if privacy.is_file():
         text = privacy.read_text(encoding="utf-8")
         for required in (
-            "Versão 5",
+            "Versão 6",
             "localStorage",
             "sessionStorage",
             "Material for MkDocs",
@@ -184,13 +184,13 @@ def validate_legal_documents(errors: list[str]) -> None:
             "13/08/2026",
         ):
             if required not in text:
-                errors.append(f"Política V5 sem referência esperada: {required}")
+                errors.append(f"Política V6 sem referência esperada: {required}")
 
     if terms.is_file():
         text = terms.read_text(encoding="utf-8")
-        for required in ("Versão 4", "Web Storage", "/privacidade/", "Material for MkDocs"):
+        for required in ("Versão 5", "Web Storage", "/privacidade/", "Material for MkDocs"):
             if required not in text:
-                errors.append(f"Termos V4 sem referência esperada: {required}")
+                errors.append(f"Termos V5 sem referência esperada: {required}")
         if 'href="#privacidade"' in text:
             errors.append("Termos ainda contêm link SPA antigo para #privacidade")
 
@@ -301,17 +301,17 @@ def validate_document_model(errors: list[str]) -> None:
 
     required_current = {
         GOVERNANCE_ROOT / "index.md": (
-            "Política de Privacidade: **Versão 5",
-            "Termos de Uso: **Versão 4",
+            "Política de Privacidade: **Versão 6",
+            "Termos de Uso: **Versão 5",
         ),
         GOVERNANCE_ROOT / "controle-versoes-documentos-legais.md": (
-            "Política de Privacidade: Versão 5",
-            "Termos de Uso: Versão 4",
+            "Política de Privacidade: Versão 6",
+            "Termos de Uso: Versão 5",
         ),
         GOVERNANCE_ROOT / "registro-operacoes-tratamento.md": (
             "Web Storage funcional",
-            "Política de Privacidade pública **V5**",
-            "Termos de Uso públicos **V4**",
+            "Política de Privacidade pública **V6**",
+            "Termos de Uso públicos **V5**",
         ),
         GOVERNANCE_ROOT / "due-diligence-kinghost.md": (
             "Header always set",
