@@ -12,8 +12,8 @@ O Confluence mantém apenas resumo, contexto, status e apontamento para o docume
 
 ## 2. Estado público de referência
 
-- Política de Privacidade: **Versão 6 — 13/08/2026 às HH:MM (BRT, UTC-3)**.
-- Termos de Uso: **Versão 5 — 13/08/2026 às HH:MM (BRT, UTC-3)**.
+- Aviso de Privacidade: **Versão 7 — 14/08/2026**.
+- Termos de Uso: **Versão 6 — 14/08/2026**.
 - Site principal: estático multipágina.
 - `/docs/`: Material for MkDocs, com Web Storage funcional documentado.
 - `repo_url`: removido; GitHub permanece como link comum.
@@ -22,7 +22,7 @@ O Confluence mantém apenas resumo, contexto, status e apontamento para o docume
 - auditoria dinâmica: Chromium headless antes do push.
 - direitos do titular: explicitados conforme art. 18 da LGPD.
 - notificações/devido processo: ajustados proporcionalmente ao site pessoal, sem conteúdo gerado por visitantes.
-- transferência internacional do canal Gmail: diligência registrada sem presumir país ou mecanismo não confirmado.
+- cadeia do serviço de e-mail KingHost/LWSA: localização integral não confirmada; eventual transferência internacional permanece em diligência.
 
 ## 3. Regra documental
 

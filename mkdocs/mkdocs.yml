@@ -45,6 +45,9 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/site-main.js
+
 nav:
   - Início: index.md
 
@@ -116,8 +119,38 @@ nav:
       - Retrospectiva Roadmap GitHub: governanca/retrospectiva-roadmap-github.md
       - Template de História de Usuário: governanca/template-historia-usuario.md
 
+  - Conformidade e Privacidade:
+      - Visão geral: conformidade/index.md
+      - Racional do Aviso de Privacidade V7: conformidade/racional-aviso-privacidade-v7.md
+      - Racional dos Termos de Uso V6: conformidade/racional-termos-uso-v6.md
+      - Matriz de fontes e evidências: conformidade/matriz-fontes-e-evidencias.md
+      - Matriz crítica das análises anexadas: conformidade/matriz-critica-analises-anexadas.md
+      - Política interna de privacidade: conformidade/politica-interna-privacidade.md
+      - Política de retenção e descarte: conformidade/politica-retencao-descarte.md
+      - Segurança SPF, DKIM e DMARC: conformidade/email-seguranca-spf-dkim-dmarc.md
+      - Crawlers, spam e mail-bombing: conformidade/crawler-spam-mailbomb.md
+      - Fornecedores e transferências: conformidade/fornecedores-transferencias.md
+      - Procedimento de titulares: conformidade/procedimento-titulares.md
+      - Procedimento de incidentes: conformidade/procedimento-incidentes.md
+      - Requisições de autoridades: conformidade/procedimento-requisicoes-autoridades.md
+      - Retenção legal / legal hold: conformidade/procedimento-legal-hold.md
+      - Revisão periódica: conformidade/revisao-periodica.md
+      - Modelos:
+          - Índice de modelos: conformidade/modelos/README.md
+          - Solicitação de titular: conformidade/modelos/modelo-solicitacao-titular.md
+          - Registro de incidente: conformidade/modelos/modelo-registro-incidente.md
+          - Avaliação de incidente: conformidade/modelos/modelo-avaliacao-incidente.md
+          - Legal hold: conformidade/modelos/modelo-legal-hold.md
+          - Revisão de fornecedor: conformidade/modelos/modelo-revisao-fornecedor.md
+          - Revisão DMARC: conformidade/modelos/modelo-revisao-dmarc.md
+          - Transparência anual: conformidade/modelos/modelo-relatorio-anual-transparencia.md
+          - Evidência pós-deploy: conformidade/modelos/modelo-evidencia-pos-deploy.md
+      - Exemplos fictícios:
+          - Incidente: conformidade/exemplos/exemplo-ficticio-incidente.md
+          - Titular: conformidade/exemplos/exemplo-ficticio-titular.md
+
   - Site principal: "https://daniel.fleck.dev.br/"
-  - Política de Privacidade: "https://daniel.fleck.dev.br/privacidade/"
+  - Aviso de Privacidade: "https://daniel.fleck.dev.br/privacidade/"
   - Termos de Uso: "https://daniel.fleck.dev.br/termos/"
   - Repositório no GitHub: "https://github.com/danielfleck/daniel.fleck.dev.br"
 

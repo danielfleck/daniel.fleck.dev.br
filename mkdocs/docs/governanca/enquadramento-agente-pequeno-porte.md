@@ -58,7 +58,7 @@ A Resolução nº 2/2022 dispensa agentes de pequeno porte da obrigação de ind
 
 O canal público atual é:
 
-`contato@fleck.dev.br`
+`contato [arroba] fleck.dev.br`
 
 ## 8. Conclusão
 

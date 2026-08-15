@@ -84,3 +84,183 @@
     let timer;
     window.addEventListener('resize', function(){window.clearTimeout(timer);timer=window.setTimeout(drawRadar,120);});
 })();
+
+/* PRIVACY-LINK-GUARD
+ * Racional:
+ * - links externos: transparência de saída, não consentimento LGPD;
+ * - contato: não manter mailto do endereço oficial no HTML estático;
+ * - nenhum fetch/preview/preload do destino;
+ * - racional completo em /docs/conformidade/.
+ */
+(function () {
+  "use strict";
+
+  const CONTACT_LOCAL = "contato";
+  const CONTACT_DOMAIN = "fleck.dev.br";
+  let active = null;
+  let previousFocus = null;
+
+  function officialMailto() {
+    return "mailto:" + CONTACT_LOCAL + "@" + CONTACT_DOMAIN;
+  }
+
+  function closeGuard() {
+    if (!active) return;
+    active.remove();
+    active = null;
+    if (previousFocus && typeof previousFocus.focus === "function") {
+      previousFocus.focus();
+    }
+    previousFocus = null;
+  }
+
+  function node(tag, text, className) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  }
+
+  function openGuard(trigger, kind, destination) {
+    closeGuard();
+    previousFocus = trigger;
+
+    const backdrop = node("div", undefined, "link-guard-backdrop");
+    const dialog = node("section", undefined, "link-guard-dialog");
+    dialog.setAttribute("role", "dialog");
+    dialog.setAttribute("aria-modal", "true");
+    dialog.setAttribute("aria-labelledby", "link-guard-title");
+
+    const title = node(
+      "h2",
+      kind === "email" ? "Antes de abrir o e-mail" : "Você está saindo deste site"
+    );
+    title.id = "link-guard-title";
+    dialog.appendChild(title);
+
+    if (kind === "email") {
+      dialog.appendChild(node(
+        "p",
+        "Ao continuar, seu aplicativo ou serviço de e-mail será aberto. " +
+        "Envie apenas o necessário para o assunto."
+      ));
+      const warning = node(
+        "p",
+        "Não envie senhas, tokens, dados bancários, documentos de identidade " +
+        "ou dados pessoais sensíveis sem necessidade.",
+        "link-guard-warning"
+      );
+      dialog.appendChild(warning);
+      dialog.appendChild(node(
+        "p",
+        "Dados técnicos de autenticação, transporte e entrega podem ser tratados " +
+        "pela infraestrutura do provedor de e-mail. O responsável pelo site trata " +
+        "os dados que efetivamente chegam à caixa postal para responder e adotar " +
+        "as providências cabíveis."
+      ));
+      dialog.appendChild(node(
+        "code",
+        CONTACT_LOCAL + " [arroba] " + CONTACT_DOMAIN,
+        "link-guard-destination"
+      ));
+    } else {
+      const url = new URL(destination, window.location.href);
+      dialog.appendChild(node(
+        "p",
+        "O destino pertence a outro site. A partir da saída, a navegação fica " +
+        "sujeita aos termos, política de privacidade, cookies e controles do serviço externo."
+      ));
+      dialog.appendChild(node("code", url.hostname, "link-guard-destination"));
+      dialog.appendChild(node(
+        "p",
+        "O conteúdo do destino não é consultado nem carregado para exibir este aviso. " +
+        "A navegação ocorre somente após sua confirmação.",
+        "link-guard-note"
+      ));
+    }
+
+    const actions = node("div", undefined, "link-guard-actions");
+    const cancel = node("button", "Cancelar");
+    cancel.type = "button";
+    cancel.addEventListener("click", closeGuard);
+
+    const proceed = node(
+      "a",
+      kind === "email" ? "Abrir aplicativo de e-mail" : "Continuar para o site externo"
+    );
+    proceed.dataset.linkGuardBypass = "true";
+    proceed.href = destination;
+
+    if (kind !== "email") {
+      const originalTarget = trigger.getAttribute("target");
+      if (originalTarget) proceed.setAttribute("target", originalTarget);
+      if (originalTarget === "_blank") {
+        proceed.setAttribute("rel", "noopener noreferrer");
+      }
+    }
+
+    proceed.addEventListener("click", function () {
+      window.setTimeout(closeGuard, 0);
+    });
+
+    actions.append(cancel, proceed);
+    dialog.appendChild(actions);
+    backdrop.appendChild(dialog);
+    document.body.appendChild(backdrop);
+    active = backdrop;
+
+    backdrop.addEventListener("click", function (event) {
+      if (event.target === backdrop) closeGuard();
+    });
+
+    proceed.focus();
+  }
+
+  function classify(anchor) {
+    if (!anchor || anchor.dataset.linkGuardBypass === "true") return null;
+    if (anchor.hasAttribute("download")) return null;
+
+    const raw = (anchor.getAttribute("href") || "").trim();
+    if (!raw || raw.startsWith("#") || raw.startsWith("tel:") ||
+        raw.startsWith("javascript:") || raw.startsWith("data:") ||
+        raw.startsWith("blob:")) return null;
+
+    if (/^mailto:/i.test(raw)) {
+      return { kind: "email", url: raw };
+    }
+
+    let parsed;
+    try {
+      parsed = new URL(raw, window.location.href);
+    } catch (_) {
+      return null;
+    }
+
+    if (!["http:", "https:"].includes(parsed.protocol)) return null;
+    if (parsed.origin === window.location.origin) return null;
+    return { kind: "external", url: parsed.href };
+  }
+
+  document.addEventListener("click", function (event) {
+    const contactTrigger = event.target.closest &&
+      event.target.closest("[data-contact-open]");
+    if (contactTrigger) {
+      event.preventDefault();
+      event.stopPropagation();
+      openGuard(contactTrigger, "email", officialMailto());
+      return;
+    }
+
+    const anchor = event.target.closest && event.target.closest("a[href]");
+    const info = classify(anchor);
+    if (!info) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    openGuard(anchor, info.kind, info.url);
+  }, true);
+
+  document.addEventListener("keydown", function (event) {
+    if (active && event.key === "Escape") closeGuard();
+  });
+})();

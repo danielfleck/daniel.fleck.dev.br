@@ -17,8 +17,8 @@ As versões são independentes.
 
 ## 2. Estado público após esta correção
 
-- **Política de Privacidade: Versão 6 — 13/08/2026 às HH:MM (BRT, UTC-3)**.
-- **Termos de Uso: Versão 5 — 13/08/2026 às HH:MM (BRT, UTC-3)**.
+- **Aviso de Privacidade: Versão 7 — 14/08/2026**.
+- **Termos de Uso: Versão 6 — 14/08/2026**.
 
 ## 3. Histórico — Política de Privacidade
 
@@ -37,8 +37,11 @@ Refinamento de hospedagem compartilhada, logs, `/stats`, DNS, domínio alternati
 ### V5 — 13/08/2026 às 18:11
 Inclusão explícita de `/docs/` e Material for MkDocs; transparência sobre `localStorage` e `sessionStorage`; remoção de `repo_url`; busca local; CSP própria da documentação; `frame-ancestors` por header HTTP; auditoria headless; e registro da resposta da KingHost sobre `mod_headers`, herança do `.htaccess` e necessidade de verificação prática dos headers finais.
 
-### V6 — 13/08/2026 às HH:MM (BRT, UTC-3)
+### V6 — 13/08/2026 — horário não registrado corretamente na publicação
 Explicitação dos direitos do art. 18 da LGPD; reforço do enquadramento atual de pequeno porte sem afastar obrigações da LGPD; e transparência adicional sobre o serviço de e-mail e a diligência de eventual transferência internacional.
+
+### V7 — 14/08/2026
+Adota o título público Aviso de Privacidade e consolida contato KingHost, localização não confirmada da cadeia do e-mail, retenção, links externos, anti-scraping, SPF/DKIM/DMARC, incidentes, fornecedores e racional de manutenção por seção.
 
 ## 4. Histórico — Termos de Uso
 
@@ -54,8 +57,11 @@ Refinamento da hospedagem, logs e deploy.
 ### V4 — 13/08/2026 às 18:11
 Inclusão de `/docs/`, Web Storage funcional, busca local, remoção de `repo_url`, CSP/headers específicos, auditoria headless e correção do link direto para a Política de Privacidade.
 
-### V5 — 13/08/2026 às HH:MM (BRT, UTC-3)
+### V5 — 13/08/2026 — horário não registrado corretamente na publicação
 Formalização proporcional do sistema de notificações, confirmação de recebimento, análise fundamentada, reconsideração e relatório anual simplificado de transparência, considerando que o site não intermedeia conteúdo de usuários, não possui anúncios pagos nem impulsionamento.
+
+### V6 — 14/08/2026
+Consolida aviso de saída, contato por e-mail, retenção, segurança do e-mail, KingHost, notificações/devido processo e racional.
 
 ## 5. Alteração estrutural
 
@@ -63,4 +69,4 @@ Correção de links, canonical, navegação, layout ou diretório sem alteraçã
 
 ## 6. Publicação efetiva
 
-O marcador `13/08/2026 às HH:MM (BRT, UTC-3)` deve ser substituído imediatamente antes do deploy pelo horário que será registrado para a publicação. Se o webhook/deploy falhar, registrar a ocorrência e não presumir que o estado do Git já é o estado servido ao visitante.
+A data pública corresponde à versão. O horário real em que o deploy ficou disponível deve ser registrado separadamente na evidência pós-deploy.

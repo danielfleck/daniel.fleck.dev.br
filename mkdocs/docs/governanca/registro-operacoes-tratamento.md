@@ -17,7 +17,7 @@ Não inserir IPs específicos, nomes de visitantes, linhas individualizadas de l
 | Entrega do site e registros técnicos | visitantes | IP, data/hora, requisição, status, bytes, Referer quando recebido, User-Agent e outros dados técnicos | infraestrutura KingHost | entrega, segurança, operação e diagnóstico | controla somente os usos que determinar; o código não implementa coleta própria | KingHost/LWSA conforme a operação | suporte informou 90 dias para logs brutos HTTP; não extrapolar para outros registros |
 | Consulta administrativa a `/stats` | visitantes | estatísticas e registros disponibilizados | painel de hospedagem | diagnóstico, segurança, suporte e investigação de abuso | controlador da consulta/uso que determinar | KingHost/LWSA | sem exportação rotineira; cópia excepcional pelo tempo necessário |
 | Web Storage funcional em `/docs/` | visitantes da documentação | pares chave/valor funcionais do tema no navegador, conforme recursos/interações habilitados | navegador do visitante / Material for MkDocs | estado e preferências da interface e caches temporários quando aplicável | responsável pela configuração publicada; não utiliza para publicidade, analytics ou perfilização | nenhum terceiro é destinatário deliberado desses valores na configuração atual | `localStorage`: conforme navegador/limpeza/substituição; `sessionStorage`: sessão correspondente |
-| Comunicação voluntária por e-mail | remetentes | e-mail, nome informado, conteúdo, anexos e metadados | mensagem do remetente | responder e tratar a comunicação | controlador | Google/Gmail; qualificação e eventual transferência internacional em diligência | conforme finalidade, obrigação e exercício de direitos; evitar retenção desnecessária |
+| Comunicação voluntária por e-mail | remetentes | e-mail, nome informado, conteúdo, anexos e metadados | mensagem do remetente | responder e tratar a comunicação | controlador | serviço de e-mail KingHost/LWSA; qualificação e eventual transferência internacional em diligência | conforme finalidade, obrigação e exercício de direitos; evitar retenção desnecessária |
 | Notificações extrajudiciais sobre conteúdo/direitos | notificantes e terceiros mencionados | identificação, contato, URL, fundamentos e documentos estritamente necessários | mensagem do notificante | analisar alegação, responder, corrigir/manter/remover conteúdo e prestar contas | controlador | provedor de e-mail | pelo tempo necessário à análise, defesa e prestação de contas, observadas obrigações aplicáveis |
 | Preservação/fornecimento por requisição válida | titulares relacionados | registros específicos existentes | KingHost e/ou evidência excepcional | obrigação, preservação e exercício de direitos | controlador das providências que determinar | KingHost/LWSA e autoridade competente | conforme ordem/requisição e legislação |
 | Registro de incidente com dados pessoais | titulares potencialmente afetados | circunstâncias, categorias, volume, risco e providências | investigação | prestação de contas e cumprimento regulatório | controlador | provedor/outros agentes quando envolvidos | mínimo de 5 anos para o registro do incidente, salvo prazo superior aplicável |
@@ -72,8 +72,8 @@ Revisar antes de ativar:
 
 ## 9. Evidências e referências
 
-- Política de Privacidade pública **V6**.
-- Termos de Uso públicos **V5**.
+- Aviso de Privacidade público **V7**.
+- Termos de Uso públicos **V6**.
 - Git/GitHub.
 - Due diligence da KingHost.
 - documentos contratuais/política dos provedores.
@@ -87,4 +87,4 @@ Revisar antes de ativar:
 - V2 — 09/08/2026: finalidades próprias do provedor e papéis por operação.
 - V3 — 13/08/2026: sincronização com a arquitetura multipágina e atualização normativa.
 - V4 — 13/08/2026: inclusão de `/docs/`, Web Storage funcional, controles de conexão do MkDocs e referências públicas V5/V4.
-- V5 — 13/08/2026: referências públicas V6/V5, operação de notificações extrajudiciais e diligência específica do Gmail/transferência internacional.
+- V5 — 13/08/2026: referências públicas V6/V5, operação de notificações extrajudiciais e diligência específica do serviço de e-mail/transferência internacional.

@@ -51,6 +51,7 @@ STATIC_WITH_PARTIALS = [
     SITE_ROOT / "ferramentas/index.html",
     SITE_ROOT / "privacidade/index.html",
     SITE_ROOT / "termos/index.html",
+    SITE_ROOT / "contato/index.html",
     SITE_ROOT / "404.html",
 ]
 

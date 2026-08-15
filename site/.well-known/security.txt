@@ -1,0 +1,5 @@
+Contact: https://daniel.fleck.dev.br/contato/
+Canonical: https://daniel.fleck.dev.br/.well-known/security.txt
+Policy: https://daniel.fleck.dev.br/termos/
+Preferred-Languages: pt-BR, en
+Expires: 2027-08-14T23:59:59Z

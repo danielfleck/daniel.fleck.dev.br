@@ -1,6 +1,6 @@
 # Procedimento de Titulares, Notificações e Requisições Oficiais
 
-**Canal público:** `contato@fleck.dev.br`  
+**Canal público:** `contato [arroba] fleck.dev.br`  
 **Revisão:** 13/08/2026  
 **Classificação:** procedimento completo de governança preservado no MkDocs. Registros de casos concretos permanecem restritos.
 
