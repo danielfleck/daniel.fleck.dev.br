@@ -1,11 +1,10 @@
-# CONFIGURAÇÃO FINAL — KingHost com Varnish/proxy.
-# Usa X-Forwarded-Proto conforme orientação da KingHost.
+# CONFIGURAÇÃO FINAL — Apache sem Varnish.
 RewriteEngine On
 
-RewriteCond %{HTTP:X-Forwarded-Proto} =https [NC]
+RewriteCond %{HTTPS} =on
 RewriteRule ^ - [E=IS_HTTPS:1]
 
-RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteCond %{SERVER_PORT} =80
 RewriteRule ^(.*)$ https://daniel.fleck.dev.br/$1 [R=301,L]
 
 # Cabeçalhos comuns do site estático.
