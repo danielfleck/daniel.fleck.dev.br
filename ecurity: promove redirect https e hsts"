@@ -1,0 +1,19 @@
+[1mdiff --git a/site/.htaccess b/site/.htaccess[m
+[1mindex 087143b..946267a 100644[m
+[1m--- a/site/.htaccess[m
+[1m+++ b/site/.htaccess[m
+[36m@@ -1,11 +1,10 @@[m
+[31m-# CONFIGURAÇÃO FINAL — KingHost com Varnish/proxy.[m
+[31m-# Usa X-Forwarded-Proto conforme orientação da KingHost.[m
+[32m+[m[32m# CONFIGURAÇÃO FINAL — Apache sem Varnish.[m
+ RewriteEngine On[m
+ [m
+[31m-RewriteCond %{HTTP:X-Forwarded-Proto} =https [NC][m
+[32m+[m[32mRewriteCond %{HTTPS} =on[m
+ RewriteRule ^ - [E=IS_HTTPS:1][m
+ [m
+[31m-RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC][m
+[32m+[m[32mRewriteCond %{SERVER_PORT} =80[m
+ RewriteRule ^(.*)$ https://daniel.fleck.dev.br/$1 [R=301,L][m
+ [m
+ # Cabeçalhos comuns do site estático.[m
