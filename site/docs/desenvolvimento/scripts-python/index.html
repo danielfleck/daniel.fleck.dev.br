@@ -4503,7 +4503,7 @@ Saída: <code>site/docs/</code>.</p>
 </code></pre></div>
 <p>Confere:
 - existência de <code>/contato/</code>;
-- ausência de <code>danielfleck@gmail.com</code>;
+- ausência do endereço de e-mail pessoal antigo;
 - ausência do endereço oficial em texto literal no HTML público/template;
 - presença do mecanismo <code>PRIVACY-LINK-GUARD</code>.</p>
 <p>O objetivo é reduzir coleta automática simples. Isso não torna o endereço secreto.</p>
@@ -4546,6 +4546,10 @@ Saída: <code>site/docs/</code>.</p>
 <a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>/varnish-stats/
 </code></pre></div>
 <p>Ele não tenta senha nem faz força bruta.</p>
+<p>Na hospedagem KingHost atualmente utilizada, <code>/stats/</code> pode redirecionar para
+o AWStats e responder HTTP 200 anonimamente. Esse comportamento é tratado
+como <strong>WARN conhecido da infraestrutura do provedor</strong> e não reprova sozinho
+a validação. <code>/varnish-stats/</code> continua sendo verificado normalmente.</p>
 <h2 id="30-validacao-de-producao-sem-depender-de-cache-do-crawler">30. Validação de produção sem depender de cache do crawler<a class="headerlink" href="#30-validacao-de-producao-sem-depender-de-cache-do-crawler" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>python<span class="w"> </span>scripts/validate_production_nocache.py<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">  </span>--base-url<span class="w"> </span>https://daniel.fleck.dev.br

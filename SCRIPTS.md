@@ -419,7 +419,7 @@ python scripts/validate_contact_surface.py
 
 Confere:
 - existência de `/contato/`;
-- ausência de `danielfleck@gmail.com`;
+- ausência do endereço de e-mail pessoal antigo;
 - ausência do endereço oficial em texto literal no HTML público/template;
 - presença do mecanismo `PRIVACY-LINK-GUARD`.
 
@@ -493,6 +493,12 @@ O script verifica anonimamente:
 ```
 
 Ele não tenta senha nem faz força bruta.
+
+Na hospedagem KingHost atualmente utilizada, `/stats/` pode redirecionar para
+o AWStats e responder HTTP 200 anonimamente. Esse comportamento é tratado
+como **WARN conhecido da infraestrutura do provedor** e não reprova sozinho
+a validação. `/varnish-stats/` continua sendo verificado normalmente.
+
 
 ## 30. Validação de produção sem depender de cache do crawler
 

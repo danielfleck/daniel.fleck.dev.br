@@ -34,6 +34,6 @@ fi
 "$PY" scripts/validate_docs.py || exit 1
 "$PY" scripts/validate_contact_surface.py || exit 1
 "$PY" scripts/validate_legal_rationale.py || exit 1
-"$PY" scripts/validate_transport_security.py --allow-test-stage || exit 1
+"$PY" scripts/validate_transport_security.py || exit 1
 
 exit 0
