@@ -1,12 +1,24 @@
+# CONFIGURAÇÃO FINAL — KingHost com Varnish/proxy.
+# Usa X-Forwarded-Proto conforme orientação da KingHost.
+RewriteEngine On
+
+RewriteCond %{HTTP:X-Forwarded-Proto} =https [NC]
+RewriteRule ^ - [E=IS_HTTPS:1]
+
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteRule ^(.*)$ https://daniel.fleck.dev.br/$1 [R=301,L]
+
 # Cabeçalhos comuns do site estático.
-# Confirmar após o deploy com:
-# curl -sS -D - -o /dev/null https://daniel.fleck.dev.br/
+# Confirmar após o deploy com curl e scripts/validate_transport_security.py.
 #
-# A CSP completa de recursos do site principal permanece também em <meta>.
+# A CSP completa do site principal permanece também em <meta>.
 # frame-ancestors precisa ser entregue como cabeçalho HTTP.
 
 Header always set Content-Security-Policy "frame-ancestors 'none'"
 Header always set X-Frame-Options "DENY"
 Header always set Referrer-Policy "no-referrer"
 Header always set X-Content-Type-Options "nosniff"
+Header always set X-DNS-Prefetch-Control "off"
 Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+Header always set Strict-Transport-Security "max-age=31536000" env=IS_HTTPS

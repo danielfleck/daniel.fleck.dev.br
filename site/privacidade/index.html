@@ -5,24 +5,31 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
-<title>Política de Privacidade | Daniel Fleck</title>
-<meta name="description" content="Política de Privacidade do site daniel.fleck.dev.br.">
+<title>Aviso de Privacidade | Daniel Fleck</title>
+<meta name="description" content="Como o site pessoal daniel.fleck.dev.br trata dados, e-mail, registros técnicos, fornecedores e direitos dos titulares.">
 <link rel="canonical" href="https://daniel.fleck.dev.br/privacidade/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Política de Privacidade | Daniel Fleck">
-<meta property="og:description" content="Política de Privacidade do site daniel.fleck.dev.br.">
+<meta property="og:title" content="Aviso de Privacidade | Daniel Fleck">
+<meta property="og:description" content="Como o site pessoal daniel.fleck.dev.br trata dados, e-mail, registros técnicos, fornecedores e direitos dos titulares.">
 <meta property="og:url" content="https://daniel.fleck.dev.br/privacidade/">
 <link rel="stylesheet" href="/css/base.css?v=a5f1f02a639c">
 <link rel="stylesheet" href="/css/layout.css?v=de03a1bd5f22">
-<link rel="stylesheet" href="/css/components.css?v=887216fcb9e5">
+<link rel="stylesheet" href="/css/components.css?v=02444959cf3e">
 <link rel="stylesheet" href="/css/pages.css?v=f45fabcbca22">
-<script src="/js/main.js?v=3fee4234a726" defer></script>
+<script src="/js/main.js?v=572394ddcb3d" defer></script>
 </head>
 <body>
-<!-- AI-MAINTENANCE
-- Site publicado como HTML/CSS/JS estático.
-- Navegação e rodapé são replicados por scripts/rebuild.py.
-- Execute rebuild, build_docs, validate e auditoria de rede conforme SCRIPTS.md.
+<!-- AI-LEGAL-MAINTENANCE
+- Documento jurídico público.
+- Versão: 7; data da versão: 15/08/2026.
+- O horário real do deploy pertence à evidência pós-publicação, não a placeholder neste HTML.
+- Mudança material APÓS publicação exige versão sequencial.
+-->
+<!-- AI-LEGAL-RATIONALE
+- Cada seção possui LEGAL-RATIONALE.
+- Racional completo: /docs/conformidade/racional-aviso-privacidade-v7/
+- Antes de editar: validar comportamento do site, fonte oficial vigente, fornecedor e histórico.
+- Comentários HTML são públicos. Não inserir segredos ou dados pessoais reais.
 -->
 <!-- GENERATED:SITE-NAV:START --><nav class="topbar">
   <div class="container nav">
@@ -43,209 +50,325 @@
   </div>
 </nav><!-- GENERATED:SITE-NAV:END -->
 <main class="container"><section class="section">
-<!-- AI-LEGAL-MAINTENANCE
-- Documento jurídico público. Versão atual: 6. Última alteração: 13/08/2026 às HH:MM (BRT, UTC-3).
-- Qualquer alteração textual exige nova versão sequencial e nova entrada cumulativa no histórico.
-- A data/hora deve corresponder à publicação efetiva. Substitua o marcador antes do deploy.
--->
 <header class="page-header">
 <div class="section-kicker">Transparência e governança</div>
-<h1>Política de Privacidade</h1>
-<p class="page-summary"><strong>Versão 6 — 13/08/2026 às HH:MM (BRT, UTC-3).</strong> Esta política descreve o funcionamento atual do site, os direitos dos titulares, a documentação em MkDocs, Web Storage funcional, registros de hospedagem e os controles adotados para reduzir coleta e exposição desnecessárias.</p>
+<h1>Aviso de Privacidade</h1>
+<p class="page-summary"><strong>Versão 7 — 15/08/2026.</strong> Como o site pessoal daniel.fleck.dev.br trata dados, e-mail, registros técnicos, fornecedores e direitos dos titulares.</p>
 </header>
 <div class="legal-page">
-<div class="legal-summary"><p><strong>Resumo:</strong> este site é estático e não possui cadastro, formulário próprio de coleta,
-publicidade, ferramenta própria de analytics, pixel de marketing ou mecanismo próprio de perfilização.
-A infraestrutura da KingHost/LWSA pode gerar registros técnicos da hospedagem. A área
-<code>/docs/</code>, gerada com Material for MkDocs, contém mecanismos funcionais de armazenamento
-no navegador por meio de Web Storage (<code>localStorage</code> e <code>sessionStorage</code>),
-utilizados pelo tema para estados e preferências de interface quando os recursos correspondentes estão
-habilitados. Esses valores não são utilizados pelo responsável para publicidade, analytics ou
-perfilização e não são deliberadamente transmitidos a terceiros. A configuração desta versão remove
-a integração automática de repositório do Material e restringe conexões programáticas da documentação
-ao próprio domínio.</p></div>
+<div class="legal-summary"><p>Este Aviso explica como o site pessoal <code>daniel.fleck.dev.br</code> trata dados pessoais, quais operações dependem da infraestrutura da KingHost/LWSA, como funciona o contato por e-mail e como exercer direitos.</p>
+<p>O site é estático, não possui cadastro de visitantes, formulário próprio de contato, publicidade, ferramenta própria de analytics, pixel de marketing ou mecanismo próprio de perfilização. A área <code>/docs/</code>, gerada com Material for MkDocs, utiliza mecanismos funcionais de Web Storage do navegador conforme os recursos do tema.</p></div>
+<!-- LEGAL-RATIONALE:PRIVACY:01
+PURPOSE: Identifica controlador/canal e preserva pequeno porte sem simplificar o papel da KingHost.
+FOUNDATION: LGPD arts. 9, 18, 37 e 39; Res. ANPD 2/2022.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>1. Responsável, controlador e canal de contato</h3>
-<p>O <strong>daniel.fleck.dev.br</strong> é um site pessoal mantido por <strong>Daniel Rodrigo Fleck</strong>. Para assuntos relacionados a privacidade, proteção de dados, correção de informações, segurança, notificações ou exercício de direitos, o canal de contato é <a href="mailto:contato@fleck.dev.br"><strong>contato@fleck.dev.br</strong></a>.</p>
-<p>Nos tratamentos em que define as finalidades e os meios essenciais, <strong>Daniel Rodrigo Fleck atua como controlador</strong> dos dados pessoais. A <strong>KingHost/LWSA pode atuar como operadora</strong> quando realiza tratamento em nome do responsável conforme o serviço contratado e pode atuar como controladora independente nos tratamentos em que determine finalidades próprias, inclusive para administração da plataforma, segurança, prevenção de fraudes, análise, aprimoramento de serviços e cumprimento de obrigações legais ou regulatórias. O papel jurídico é avaliado por operação de tratamento.</p>
-<p>Como elemento adicional de transparência, o <strong>Contrato de Hospedagem da KingHost</strong> prevê, em sua cláusula 14.3, autorização para utilização de dados, informações, registros, comportamentos, logs de acesso, dados de IP, dados cadastrais, imagens, arquivos e outros registros inseridos em sua base para atividades relacionadas à melhoria dos sistemas disponibilizados e para criação de novos softwares e/ou serviços. <strong>Essas finalidades são definidas pelo próprio provedor e não pelo responsável por este site</strong>; sua incidência e a qualificação da KingHost/LWSA como controladora independente devem ser avaliadas conforme o tratamento efetivamente realizado e os documentos vigentes do provedor.</p>
-<p>Considerando o funcionamento atual, de pequena escala e sem tratamento de alto risco identificado, não foi designado encarregado formal pelo tratamento de dados. O canal acima permanece disponível para comunicação direta com titulares, nos termos da regulamentação aplicável aos agentes de tratamento de pequeno porte.</p>
-<p>Para fins das flexibilizações previstas pela <strong>Resolução CD/ANPD nº 2/2022</strong>, o responsável
-documenta o enquadramento atual como <strong>pessoa natural agente de tratamento de pequeno porte</strong>,
-sem tratamento de alto risco identificado no funcionamento vigente. Esse enquadramento deve ser
-reavaliado se houver mudança de escala, finalidade, monetização estruturada, público, tecnologia
-ou categorias de dados e <strong>não afasta</strong> os princípios, as bases legais, os direitos dos titulares,
-as medidas de segurança e as demais obrigações aplicáveis da LGPD.</p>
+<h3>1. Responsável, controlador e canal de privacidade</h3>
+<p>O site é mantido por <strong>Daniel Rodrigo Fleck</strong>. Nas operações em que determina as finalidades e os meios essenciais do tratamento, Daniel Rodrigo Fleck atua como controlador.</p>
+<p>O canal público para privacidade, proteção de dados, segurança, notificações e exercício de direitos é:</p>
+<p><strong><code>/contato/</code> — contato [arroba] fleck.dev.br</strong></p>
+<p>O endereço é exibido de forma parcialmente ofuscada para reduzir coleta automatizada simples. Isso não significa que seja secreto.</p>
+<p>A KingHost/LWSA presta serviços de hospedagem e e-mail. Seu papel jurídico deve ser avaliado por operação: pode realizar tratamentos em nome do responsável e também possui tratamentos com finalidades próprias descritas em seus contratos e políticas.</p>
+<p>Considerando o funcionamento atual, de pequena escala e sem tratamento de alto risco identificado, o responsável adota o regime de governança proporcional aplicável aos agentes de tratamento de pequeno porte, sem afastar princípios, bases legais, direitos dos titulares e deveres de segurança.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:02
+PURPOSE: Mantém o texto aderente ao código: sem coleta direta, mas com Web Storage funcional no MkDocs.
+FOUNDATION: LGPD arts. 6 e 9; auditoria técnica.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>2. Arquitetura de privacidade, Web Storage e o que o site não faz</h3>
+<h3>2. O que o site faz e o que não faz</h3>
+<p>No funcionamento atual:</p>
 <ul>
-<li>não existe cadastro de usuários, conta, login ou área de publicação por visitantes;</li>
-<li>não existe formulário próprio para coleta de nome, CPF, telefone, endereço ou outros dados pessoais;</li>
-<li>o código do site não cria cookies próprios de publicidade, rastreamento ou perfilização;</li>
-<li>não há Google Analytics, Meta Pixel, ferramenta própria de analytics comportamental ou publicidade programática;</li>
-<li>não há scripts, fontes, bibliotecas, imagens, iframes ou outros recursos configurados para carregamento automático de domínios de terceiros;</li>
-<li>não é criado banco de dados próprio com histórico individual de visitantes;</li>
-<li>não há venda de dados, enriquecimento de perfis ou combinação deliberada de IPs com informações externas para identificar visitantes.</li>
+<li>não existe conta, login ou perfil de visitante;</li>
+<li>não existe formulário próprio para nome, telefone, CPF ou mensagem;</li>
+<li>não existe comentário, upload ou conteúdo publicado pelo visitante;</li>
+<li>não há analytics próprio, pixel de marketing ou publicidade programática;</li>
+<li>não há mecanismo próprio de perfilização;</li>
+<li>não há venda de dados;</li>
+<li>não há banco de dados próprio de visitantes;</li>
+<li>o código não configura carregamento automático de scripts, fontes, imagens ou iframes de terceiros;</li>
+<li>links externos somente são acessados após ação do visitante.</li>
 </ul>
-<h4>2.1. Armazenamento local funcional na área <code>/docs/</code></h4>
-<p>A documentação técnica em <code>/docs/</code> é gerada com <strong>Material for MkDocs</strong>. O tema inclui mecanismos baseados na API Web Storage do navegador, especialmente <code>localStorage</code> e <code>sessionStorage</code>. Web Storage mantém pares de chave e valor no navegador, no contexto do domínio, e é tecnicamente distinto de cookies HTTP.</p>
-<p>O código do Material for MkDocs possui suporte para persistir estados funcionais e preferências da interface, conforme os recursos efetivamente habilitados, como seleção de paleta de cores, vínculo entre abas de conteúdo, dispensa de avisos, escolhas relacionadas ao componente de consentimento e estados temporários de determinadas integrações. <strong>Na configuração publicada nesta versão, a paleta é fixa, não há analytics, não há componente de consentimento configurado, não está habilitado o vínculo persistente entre abas e a integração automática de repositório por <code>repo_url</code> foi removida.</strong></p>
-<p>A presença das rotinas de Web Storage no JavaScript do tema não significa que todas as possibilidades acima sejam gravadas em cada visita. O armazenamento efetivamente utilizado depende dos componentes ativos e das interações realizadas pelo visitante.</p>
-<p><strong>Os valores mantidos em <code>localStorage</code> e <code>sessionStorage</code> não são enviados automaticamente em requisições HTTP como ocorre com cookies.</strong> No código e na configuração desta versão, não existe mecanismo destinado a transmitir deliberadamente esses valores a terceiros. Eles não são utilizados pelo responsável para publicidade, analytics, perfilização, prospecção comercial ou identificação deliberada do visitante.</p>
-<p>Valores de <code>localStorage</code> podem permanecer no navegador entre sessões até serem substituídos, removidos pelo código, limpos pelo navegador ou apagados pelo próprio usuário. Valores de <code>sessionStorage</code> são vinculados à sessão correspondente do navegador. O visitante pode limpar esses dados pelas ferramentas do próprio navegador.</p>
-<h4>2.2. Busca e navegação na documentação</h4>
-<p>A busca da área <code>/docs/</code> utiliza índice estático gerado junto com o site e processamento no navegador; não foi configurado mecanismo remoto de busca, analytics ou indexação comportamental. Links externos permanecem links comuns e somente são acessados quando o visitante decide segui-los.</p>
-<p>Como salvaguardas técnicas, a configuração da documentação desabilita o carregamento automático de informações do GitHub associado a <code>repo_url</code>, utiliza fontes locais do sistema, aplica Content Security Policy própria para <code>/docs/</code> com <code>connect-src 'self'</code> e adota auditoria em navegador headless para detectar tentativas de conexão com hosts não autorizados.</p>
+<h3>2.1 Web Storage em <code>/docs/</code></h3>
+<p>O Material for MkDocs possui código capaz de usar <code>localStorage</code> e <code>sessionStorage</code> para estados/preferências funcionais. Esses mecanismos são tecnicamente diferentes de cookies HTTP e seus valores não são enviados automaticamente como cookies a cada requisição.</p>
+<p>A configuração atual não usa Web Storage para publicidade, analytics ou perfilização. A busca da documentação usa índice local.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:03
+PURPOSE: Evita a afirmação falsa de que nenhum IP é tratado e separa infraestrutura do provedor do acesso do responsável.
+FOUNDATION: LGPD arts. 6, 9 e 46; Marco Civil; KingHost stats.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>3. Dados técnicos gerados pela hospedagem e acesso às estatísticas</h3>
-<p>O site é hospedado na <strong>KingHost, integrante da LWSA</strong>. A infraestrutura de hospedagem pode processar e armazenar automaticamente dados técnicos necessários à entrega e proteção do serviço. Conforme a documentação e a Política de Privacidade da LWSA, esses dados podem incluir <strong>endereço IP, informações de localização aproximada, sistema operacional, navegador, identificadores técnicos, datas de uso, páginas visualizadas e outros dados de navegação</strong>.</p>
-<p>A KingHost disponibiliza, como funcionalidade da própria hospedagem e não do código deste site, uma área de estatísticas normalmente acessível em <code>/stats</code>, que pode apresentar, entre outras informações, <strong>IPs de visitantes, país, duração das visitas, páginas ou arquivos acessados, sistema operacional, navegador, mecanismos de busca e erros HTTP</strong>. No painel atualmente disponibilizado ao responsável, o mecanismo disponível permite proteger o conteúdo por credenciais; não foi identificado controle para eliminar a existência dessa rota na Internet. Por isso, o responsável utiliza a proteção de acesso fornecida pela própria hospedagem.</p>
-<p><strong>Daniel Rodrigo Fleck possui acesso administrativo a essas estatísticas.</strong> A consulta é realizada, quando necessária, para compreender o funcionamento técnico do site, verificar disponibilidade e erros, avaliar tráfego de forma técnica, investigar incidentes ou tentativas de abuso, apoiar diagnóstico e suporte e cumprir obrigações legalmente aplicáveis. O acesso a um dado individual é tratado como operação de tratamento e deve observar necessidade, finalidade, segurança e acesso restrito.</p>
-<p>As estatísticas da hospedagem <strong>não são utilizadas para publicidade comportamental, decisões automatizadas, avaliação individual de visitantes, contato com pessoas identificadas por IP ou formação de perfil comercial</strong>.</p>
-<p><strong>Transparência:</strong> afirmar que “nenhum IP é tratado” seria incorreto. O código do site não implementa coleta própria de IP, mas a infraestrutura da hospedagem pode gerar registros técnicos e o responsável pode visualizar parte deles por meio das ferramentas administrativas fornecidas pelo provedor.</p>
+<h3>3. Hospedagem, conexão e estatísticas</h3>
+<p>O site é hospedado na KingHost/LWSA. A conexão HTTP/HTTPS chega a infraestrutura administrada pelo provedor, que pode envolver servidor web, proxy, cache, balanceador e outros componentes.</p>
+<p>O responsável não administra nem consegue auditar diretamente toda a camada bruta de rede/servidor. Por isso, não afirma possuir ou conhecer integralmente campos como IP, porta lógica, identificadores internos ou logs que não lhe tenham sido disponibilizados.</p>
+<p>A KingHost disponibiliza ferramenta administrativa de estatísticas, normalmente em <code>/stats</code> e, quando aplicável, estatísticas próprias do Varnish em <code>/varnish-stats/</code>. Essas áreas podem apresentar informações técnicas como IP, páginas/arquivos, navegador, sistema, país aproximado e erros.</p>
+<p>O responsável pode consultar estatísticas disponibilizadas pelo provedor para segurança, diagnóstico, correção de erros, investigação de abuso e suporte. Elas não são usadas pelo responsável para publicidade comportamental, contato dirigido por IP ou criação de perfil comercial.</p>
+<p><strong>Transparência:</strong> seria incorreto afirmar que “nenhum IP é tratado”. Dados técnicos podem ser tratados pela infraestrutura do provedor; o responsável somente declara como sob seu acesso aquilo que efetivamente consegue consultar ou obter.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:04
+PURPOSE: Liga cada uso a finalidade/base concreta e evita consentimento fictício na navegação.
+FOUNDATION: LGPD arts. 6 e 7.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
 <h3>4. Finalidades e bases legais</h3>
-<p>O tratamento de dados técnicos sob responsabilidade do mantenedor é limitado às finalidades compatíveis com o funcionamento atual do site: <strong>segurança, prevenção e investigação de abuso, diagnóstico técnico, correção de erros, suporte, avaliação técnica de tráfego, proteção do serviço e exercício regular de direitos</strong>.</p>
-<p>Quando o responsável consultar ou utilizar dados técnicos para segurança, diagnóstico e funcionamento do site, o tratamento poderá apoiar-se em <strong>legítimo interesse</strong>, desde que presentes necessidade, proporcionalidade, compatibilidade com as expectativas do titular e salvaguardas adequadas. Em situações específicas também poderão ser aplicáveis <strong>cumprimento de obrigação legal ou regulatória</strong> e <strong>exercício regular de direitos em processo judicial, administrativo ou arbitral</strong>.</p>
-<p>O consentimento <strong>não é utilizado como justificativa genérica para a navegação</strong>. A mera utilização do site ou ciência destes termos não é tratada como consentimento para finalidades que legalmente dependam de manifestação específica do titular.</p>
+<p>Os dados sob controle do responsável são tratados somente para finalidades compatíveis com o contexto:</p>
+<ul>
+<li>receber, analisar e responder contatos espontâneos;</li>
+<li>atender solicitações acadêmicas ou profissionais;</li>
+<li>executar providências solicitadas pelo próprio titular;</li>
+<li>manter segurança e disponibilidade;</li>
+<li>investigar abuso ou incidente;</li>
+<li>realizar diagnóstico técnico;</li>
+<li>cumprir obrigação legal/regulatória;</li>
+<li>exercer ou defender direitos.</li>
+</ul>
+<p>A base legal depende da finalidade concreta. Podem ser aplicáveis, conforme o caso, procedimentos preliminares relacionados a contrato a pedido do titular, legítimo interesse com avaliação de necessidade/proporcionalidade, cumprimento de obrigação ou exercício regular de direitos.</p>
+<p><strong>A mera navegação ou o clique no botão de e-mail não são tratados como consentimento genérico.</strong></p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:05
+PURPOSE: Separa prazo legal, retenção do fornecedor e dado efetivamente disponível; 90 dias de logs não é prazo legal do e-mail.
+FOUNDATION: Marco Civil; Decreto 12.975/2026; suporte KingHost.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>5. Retenção das estatísticas, logs e Marco Civil da Internet</h3>
-<p>O responsável <strong>não mantém, por iniciativa própria, uma base paralela de logs ou histórico individual de visitantes</strong> e não realiza exportação periódica das estatísticas apenas para criar arquivo preventivo de navegação. Os registros técnicos permanecem, em regra, na infraestrutura administrada pelo provedor.</p>
-<p>Em atendimento humano realizado pela KingHost em <strong>08/08/2026</strong>, após solicitação específica sobre os <strong>logs brutos de acesso HTTP</strong>, o provedor informou que esses logs são mantidos por <strong>90 dias</strong>. O exemplo técnico fornecido pelo suporte apresenta, entre outros elementos, domínio solicitado, endereço IP de origem, data e hora com fuso, método e recurso HTTP solicitado, versão do protocolo, código de resposta, quantidade de bytes transferidos, endereço de referência (<code>Referer</code>) quando informado pelo navegador e identificação do agente de usuário (<code>User-Agent</code>).</p>
-<p>Essa informação de 90 dias refere-se aos logs de acesso HTTP conforme esclarecimento fornecido pelo suporte e <strong>não é ampliada nesta política para outros registros ou ferramentas sem confirmação específica</strong>. O prazo de exibição ou retenção de dados derivados apresentados na área <code>/stats</code> pode depender da implementação do serviço e não é presumido como idêntico quando não houver confirmação documental do provedor.</p>
-<p>O exemplo de log fornecido pelo suporte <strong>não demonstra a presença da porta lógica de origem</strong>. Por isso, o responsável não afirma que esse campo esteja ausente de toda a infraestrutura da KingHost nem que esteja sendo armazenado: permanece pendente confirmação específica do provedor sobre a guarda da porta lógica quando aplicável e sobre o procedimento formal de preservação de registros antes do término do prazo ordinário de retenção.</p>
-<p>As estatísticas administrativas disponibilizadas ao responsável não são presumidas como equivalentes, para todos os fins, aos registros técnicos brutos que o provedor eventualmente mantenha em sua infraestrutura. A existência, o conteúdo, o prazo e as condições de disponibilização desses registros dependem das obrigações legais, contratuais e técnicas aplicáveis ao provedor e ao caso concreto.</p>
-<p>Na arquitetura atual de <strong>hospedagem compartilhada</strong>, o responsável não administra o servidor web subjacente, os equipamentos de rede nem os sistemas de registro de baixo nível da provedora. Os acessos HTTP/HTTPS dos visitantes chegam à infraestrutura administrada pela hospedagem, e o responsável somente recebe os registros, estatísticas e interfaces que o serviço efetivamente lhe disponibiliza. Consequentemente, <strong>não é tecnicamente possível ao responsável preservar um campo de registro que não lhe seja disponibilizado nem colocado sob seu controle</strong>.</p>
-<p>Essa limitação técnica <strong>não significa que o dever legal de guarda seja definido apenas pela posse material do dado</strong>. O Marco Civil distingue registros de conexão dos registros de acesso a aplicações de internet e atribui obrigações conforme o enquadramento do agente e da operação concreta. Quando houver dever de guarda de endereço IP aplicável a determinado provedor, a regulamentação também abrange a porta lógica de origem quando necessária à identificação inequívoca e estabelece que esse dever recai autonomamente sobre cada provedor sujeito à obrigação. O responsável, portanto, preservará o que estiver efetivamente sob seu controle e, quando os registros brutos estiverem na infraestrutura da hospedagem, adotará as providências juridicamente cabíveis perante o provedor.</p>
-<p>O Marco Civil da Internet estabelece hipóteses próprias de guarda e preservação de registros de acesso. O responsável não cria coleta adicional apenas para reproduzir preventivamente prazos legais atribuídos a outros agentes. Se houver <strong>ordem judicial ou requisição cautelar de preservação juridicamente aplicável</strong> referente a fatos e período determinados, serão adotadas as providências cabíveis, inclusive solicitação imediata de preservação à KingHost/LWSA quando os registros estiverem sob controle do provedor.</p>
-<p>Quando houver dever legal de guarda de endereço IP aplicável ao agente responsável pelos registros, a regulamentação do Marco Civil pode exigir também a <strong>porta lógica de origem</strong> quando necessária à identificação inequívoca, nos termos do Decreto nº 12.975/2026. O site não implementa mecanismo próprio para coletar esse dado.</p>
-<p>Qualquer registro excepcionalmente exportado pelo responsável para suporte, investigação de incidente, preservação legal ou exercício de direitos será protegido, terá acesso limitado e será eliminado quando deixar de ser necessário, ressalvadas obrigações legais ou regulatórias e hipóteses legítimas de conservação.</p>
+<h3>5. Logs, retenção técnica e Marco Civil da Internet</h3>
+<p>O responsável não cria base paralela de logs brutos para guardar IPs de visitantes por precaução.</p>
+<p>O Marco Civil prevê deveres diferentes para provedores de conexão e provedores de aplicações, incluindo hipóteses específicas de guarda de registros. O Decreto nº 12.975/2026 também trata da porta lógica de origem quando o dever de guarda de IP for aplicável ao provedor.</p>
+<p>Em comunicação escrita via WhatsApp em 08/08/2026, o suporte KingHost informou retenção de 90 dias para logs HTTP. Essa informação é registrada como <strong>evidência de suporte</strong>, não como prazo legal, cláusula contratual ou garantia universal.</p>
+<p>Se uma ordem ou obrigação válida exigir preservação de dados que estejam exclusivamente na infraestrutura do provedor, o responsável adotará as providências cabíveis perante a KingHost/LWSA.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:06
+PURPOSE: O e-mail é a principal coleta voluntária; documenta categorias, retenção, sensíveis, fornecedor e pedidos.
+FOUNDATION: LGPD arts. 6, 7, 9, 15, 16, 18 e 19.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>6. Comunicações voluntárias por e-mail</h3>
-<p>O endereço de e-mail publicado no site é um canal de contato. <strong>O simples clique no link de e-mail não transmite o conteúdo de uma mensagem ao site.</strong> Quando o visitante decide enviar uma mensagem, o endereço do remetente, o nome eventualmente informado, o conteúdo, anexos e metadados associados poderão ser processados pelo serviço de e-mail utilizado e acessados pelo responsável.</p>
-<p>Esses dados serão utilizados para responder à comunicação, adotar providências solicitadas pelo próprio remetente, manter o histórico necessário da conversa, cumprir obrigação aplicável ou exercer direitos. O remetente deve evitar enviar dados pessoais sensíveis, credenciais, documentos ou informações de terceiros que não sejam necessários ao assunto tratado.</p>
-<h4>6.1. Serviço de e-mail e processamento fora do Brasil</h4>
-<p>O canal de contato publicado utiliza o serviço <strong>Gmail</strong>. O simples carregamento das páginas do site
-ou o clique no endereço de e-mail não envia automaticamente ao Gmail o conteúdo de uma mensagem.
-Quando o visitante decide enviar uma mensagem, o serviço de e-mail passa a processar os dados da
-comunicação segundo suas próprias condições e políticas.</p>
-<p>O Google informa publicamente que mantém servidores em diversos países e que informações podem ser
-processadas fora do país de residência do usuário. A caracterização de uma operação específica como
-<strong>transferência internacional de dados sob responsabilidade deste controlador</strong>, bem como a definição
-do mecanismo jurídico e dos países de destino exigidos pela Resolução CD/ANPD nº 19/2024, dependem da
-cadeia concreta de tratamento e da documentação aplicável ao serviço. O responsável mantém essa matéria
-em diligência e não presume nem publica país ou mecanismo que não tenha sido documentalmente confirmado.</p>
+<h3>6. Contato por e-mail, dados recebidos e retenção</h3>
+<p>O endereço oficial é <strong>contato [arroba] fleck.dev.br</strong>.</p>
+<p>O site apresenta aviso antes de abrir o aplicativo/serviço de e-mail. O visitante é orientado a <strong>não enviar senhas, credenciais, dados bancários, documentos ou dados pessoais sensíveis que não sejam necessários</strong>.</p>
+<p>Ao enviar uma mensagem, podem chegar ao responsável:</p>
+<ul>
+<li>endereço e nome do remetente;</li>
+<li>destinatários;</li>
+<li>assunto;</li>
+<li>corpo;</li>
+<li>anexos;</li>
+<li>data/hora;</li>
+<li>outros metadados que o serviço disponibilize.</li>
+</ul>
+<p>Dados técnicos de autenticação, transporte, roteamento, entrega ou conexão podem ser tratados pela infraestrutura do provedor. O responsável <strong>não afirma ter acesso a IP de conexão, porta lógica ou logs SMTP se esses dados não estiverem disponíveis na sua conta/painel</strong>.</p>
+<h3>6.1 Retenção das mensagens</h3>
+<p>Não existe prazo único para todos os e-mails.</p>
+<p>Regra interna:</p>
+<ul>
+<li>spam/phishing sem utilidade probatória: excluir após triagem;</li>
+<li>contato simples: excluir quando a finalidade terminar, preferencialmente logo após o encerramento e <strong>sem ultrapassar 90 dias após o encerramento</strong>, salvo razão documentada;</li>
+<li>tratativa em andamento: manter enquanto necessária;</li>
+<li>dados sensíveis/excessivos desnecessários: restringir e eliminar assim que seguro;</li>
+<li>disputa, preservação, obrigação ou exercício regular de direitos: aplicar retenção específica documentada (<code>legal hold</code>).</li>
+</ul>
+<p>Os 90 dias acima são <strong>limite interno de governança</strong>, não prazo imposto pela LGPD.</p>
+<h3>6.2 Mecânica do provedor</h3>
+<p>O contrato de e-mail da KingHost prevê que mensagens em <code>trash</code>, <code>lixeira</code> ou <code>spam</code> podem ser apagadas após 20 dias e descreve backup diário armazenado por até 7 dias. Esses são controles/limites do fornecedor e não substituem a política de retenção do responsável.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:07
+PURPOSE: Evita afirmar ausência absoluta de compartilhamento e obriga análise por operação.
+FOUNDATION: LGPD arts. 9, 18 e 39.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>7. Compartilhamento, operadores, suboperadores e autoridades</h3>
-<p>A prestação de hospedagem pode envolver a KingHost/LWSA e prestadores ou suboperadores utilizados por ela conforme seus contratos. O serviço de e-mail utilizado também poderá processar as mensagens voluntariamente encaminhadas pelo visitante.</p>
-<p>O responsável não vende dados pessoais nem compartilha estatísticas de visitantes para publicidade ou prospecção comercial. Informações poderão ser fornecidas quando necessárias à prestação de suporte, proteção do site, exercício regular de direitos ou <strong>cumprimento de obrigação legal, regulatória ou determinação de autoridade competente</strong>, observados os requisitos de validade, necessidade e sigilo.</p>
-<p>O fornecimento de registros de acesso sujeito ao Marco Civil observará as exigências legais aplicáveis, inclusive a necessidade de autorização judicial quando exigida para disponibilização dos registros ao requerente.</p>
+<h3>7. Compartilhamento e outros agentes</h3>
+<p>O responsável não vende dados pessoais.</p>
+<p>Dados podem ser envolvidos em operações com:</p>
+<ul>
+<li>KingHost/LWSA, na prestação e administração dos serviços;</li>
+<li>prestadores estritamente necessários, se futuramente contratados e documentados;</li>
+<li>autoridades ou partes legitimadas, quando houver fundamento válido;</li>
+<li>terceiros necessários ao exercício regular de direitos.</li>
+</ul>
+<p>O compartilhamento deve ser limitado ao necessário para a finalidade.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:08
+PURPOSE: Formaliza saída para terceiros sem preload e sem chamar o modal de consentimento.
+FOUNDATION: Transparência e privacy-by-design.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>8. Links e serviços externos</h3>
-<p>O site contém links para GitHub, LinkedIn, Atlassian, documentos oficiais, publicações jornalísticas e outros serviços externos. Esses destinos possuem termos e políticas próprios e são acessados somente quando o visitante escolhe seguir o link.</p>
-<p>Na configuração desta versão, a área <code>/docs/</code> não utiliza <code>repo_url</code> do Material for MkDocs; o acesso ao repositório é apresentado como link comum. Essa escolha evita a consulta automática à API do GitHub que o tema pode realizar para obter informações públicas como versão, estrelas e forks.</p>
-<p>As respostas do site são configuradas para utilizar <code>Referrer-Policy: no-referrer</code>, e os links abertos em nova aba utilizam <code>noopener noreferrer</code> quando aplicável. Essas medidas reduzem o envio do endereço de origem e o acesso da página de destino ao contexto da aba que abriu o link. Elas não controlam os tratamentos realizados depois que o visitante passa a navegar no serviço externo.</p>
+<h3>8. Links externos e aviso de saída</h3>
+<p>Links para GitHub, LinkedIn, Atlassian, KingHost, ANPD, Planalto e outros serviços levam a ambientes com termos, políticas, cookies e controles próprios.</p>
+<p>Quando JavaScript estiver disponível, o site exibe um <strong>aviso local de saída</strong> e exige uma nova ação para continuar. O modal não carrega, consulta nem pré-visualiza o destino.</p>
+<p>O aviso é transparência de navegação e <strong>não é consentimento LGPD</strong>.</p>
+<p>Links de e-mail recebem aviso próprio sobre tratamento e dados sensíveis.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:09
+PURPOSE: Registra controles proporcionais e autenticação de e-mail sem prometer segurança absoluta.
+FOUNDATION: LGPD arts. 46, 47 e 50; RFC 6797; RFC 9116; RFCs de e-mail.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>9. Segurança, cabeçalhos HTTP e controle de acesso</h3>
-<p>São adotadas medidas proporcionais ao baixo nível de coleta direta, incluindo HTTPS, políticas de segurança de conteúdo, política de referência restritiva, restrição de carregamentos automáticos de terceiros, controle de acesso às estatísticas, versionamento do código-fonte e manutenção de serviços administrativos desabilitados quando não necessários.</p>
-<p>A proteção contra incorporação do site em páginas de terceiros é configurada por cabeçalho HTTP <code>Content-Security-Policy</code> com <code>frame-ancestors 'none'</code>, acompanhada de <code>X-Frame-Options: DENY</code>. A diretiva <code>frame-ancestors</code> não é mantida apenas em <code>&lt;meta http-equiv=&quot;Content-Security-Policy&quot;&gt;</code>, pois essa forma não produz o efeito pretendido para a diretiva.</p>
-<p>A raiz do site mantém a política de recursos do HTML estático e recebe os cabeçalhos comuns de segurança. A área <code>/docs/</code> possui política própria compatível com Material for MkDocs, inclusive porque o tema utiliza JavaScript inline de inicialização. Nessa área, <code>connect-src 'self'</code> restringe conexões programáticas ao próprio domínio.</p>
-<p>Em atendimento de suporte da KingHost em 13/08/2026, foi confirmado que o ambiente Linux permite diretivas <code>Header always set</code> via <code>.htaccess</code>, inclusive para HTML estático, e que as regras da raiz são normalmente herdadas por subdiretórios. O suporte informou, porém, que a documentação disponível não permite garantir de forma categórica como todas as eventuais camadas intermediárias de cache/proxy tratam cada cabeçalho de segurança. Por esse motivo, a configuração é acompanhada de validação prática dos cabeçalhos efetivamente recebidos pelo navegador após cada alteração relevante.</p>
-<p>O projeto também mantém auditoria automatizada em navegador headless. O teste observa as requisições que o JavaScript tenta executar em tempo de uso e falha quando identifica host não autorizado, complementando a análise estática de HTML.</p>
-<p>O e-mail principal do responsável, a conta do GitHub e a conta administrativa da hospedagem utilizam credenciais individuais e são protegidos por múltiplos fatores de autenticação quando o serviço oferece esse recurso. O FTP permanece desativado por padrão e somente é habilitado de modo temporário quando estritamente necessário.</p>
-<p>Nenhum sistema conectado à Internet pode ser declarado absolutamente imune a incidentes. Caso seja identificado incidente envolvendo dados pessoais, serão adotadas medidas de contenção, investigação, mitigação, registro e avaliação das comunicações exigidas pela regulamentação vigente.</p>
+<h3>9. Segurança do site e do e-mail</h3>
+<p>São adotadas medidas proporcionais, incluindo:</p>
+<ul>
+<li>HTTPS;</li>
+<li>redirecionamento de HTTP para HTTPS;</li>
+<li>HTTP Strict Transport Security (HSTS), após validação do ambiente de hospedagem;</li>
+<li>Content Security Policy;</li>
+<li>política de referência restritiva;</li>
+<li>bloqueio de framing por header;</li>
+<li><code>X-Content-Type-Options</code>;</li>
+<li><code>Permissions-Policy</code>;</li>
+<li>desabilitação de DNS prefetch quando suportado;</li>
+<li>auditoria headless de conexões;</li>
+<li>proteção autenticada de <code>/stats</code>;</li>
+<li>senha exclusiva e MFA onde disponível;</li>
+<li>separação do e-mail público das contas administrativas;</li>
+<li>canal padronizado de relato de vulnerabilidades em <code>/.well-known/security.txt</code> e política pública em <code>/seguranca/</code>.</li>
+</ul>
+<p>O HSTS é uma proteção de transporte armazenada pelo navegador. A configuração final planejada usa <code>max-age=31536000</code> sem <code>includeSubDomains</code> e sem preload nesta etapa, após uma fase curta de validação para evitar persistência de configuração incorreta.</p>
+<p>O <code>security.txt</code> é um mecanismo de descoberta de canal para relatos de segurança. Ele não cria formulário, cadastro ou coleta automática adicional.</p>
+<h3>9.1 SPF</h3>
+<p>O domínio utiliza:</p>
+<p><code>v=spf1 include:_spf.kinghost.net -all</code></p>
+<h3>9.2 DKIM</h3>
+<p>A KingHost informa assinatura automática das mensagens de clientes usando a infraestrutura DKIM compartilhada, com domínio <code>dkim.kinghost.net</code>. O responsável não presume alinhamento DMARC apenas com essa informação; o resultado real deve ser conferido nos cabeçalhos de mensagens entregues.</p>
+<h3>9.3 DMARC</h3>
+<p>O registro atual é:</p>
+<p><code>v=DMARC1; p=none;</code></p>
+<p>Antes de adotar <code>quarantine</code> ou <code>reject</code>, serão avaliados relatórios agregados e autenticação real das mensagens legítimas.</p>
+<p>A política não solicita relatórios forenses (<code>ruf</code>) nesta etapa, por cautela com privacidade e volume.</p>
+<h3>9.4 Spam e mail-bombing</h3>
+<p>SPF/DKIM/DMARC não impedem, sozinhos, o recebimento massivo de mensagens. O responsável utiliza os filtros/antispam disponibilizados pelo provedor e pode acionar suporte em caso de abuso.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:10
+PURPOSE: Mantém accountability e incidentes sem publicar evidências individuais.
+FOUNDATION: LGPD arts. 37, 48 e 50; Res. ANPD 15/2024.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>10. Registro das operações e registro de incidentes</h3>
-<p>O responsável mantém ou deverá manter <strong>registro simplificado das operações de tratamento</strong> sob sua responsabilidade, compatível com o porte e o risco atuais do site. Esse inventário administrativo descreve categorias de dados, titulares, finalidades, bases legais, agentes envolvidos, compartilhamentos, retenção e medidas de segurança; ele <strong>não é um cadastro com os IPs de cada visitante</strong>.</p>
-<p>Incidentes de segurança com dados pessoais também serão documentados conforme a regulamentação da ANPD. O registro deve abranger inclusive incidentes que não tenham gerado comunicação à ANPD ou aos titulares e, conforme o Regulamento de Comunicação de Incidente de Segurança vigente, deve ser conservado por <strong>no mínimo cinco anos</strong>, ressalvada obrigação adicional que exija prazo superior.</p>
-<p>Qualquer nova funcionalidade que envolva formulário, autenticação, analytics, publicidade, cookies, banco de dados de usuários, comentários, upload de conteúdo ou integração automática com terceiros deverá ser analisada antes da ativação e refletida neste inventário e nesta política.</p>
-<p>Alterações no Material for MkDocs, nos plugins, nos recursos de Web Storage, na política CSP,
-nas integrações externas ou nos cabeçalhos HTTP são tratadas como mudança de arquitetura relevante e
-devem ser submetidas a nova validação estática e dinâmica antes da publicação.</p>
+<h3>10. Registro das operações e incidentes</h3>
+<p>O responsável mantém registro simplificado das operações de tratamento e procedimentos de governança compatíveis com seu porte.</p>
+<p>Os documentos de governança não são cadastro de visitantes. Não são publicados dados individuais apenas para demonstrar conformidade.</p>
+<p>Incidentes de segurança com dados pessoais são registrados e avaliados conforme a regulamentação vigente. Quando puderem acarretar risco ou dano relevante, a necessidade e o prazo de comunicação à ANPD e aos titulares serão verificados.</p>
+<p>Registros preenchidos de incidentes permanecem restritos.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:11
+PURPOSE: Explicita direitos do art. 18, canal e ANPD.
+FOUNDATION: LGPD arts. 9, 18 e 19; Res. ANPD 2/2022.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
 <h3>11. Direitos dos titulares</h3>
-<p>Nos termos do <strong>art. 18 da LGPD</strong>, observadas as condições aplicáveis a cada operação de tratamento,
-o titular pode solicitar ao responsável, gratuitamente e por meio do canal
-<a href="mailto:contato@fleck.dev.br"><strong>contato@fleck.dev.br</strong></a>:</p>
+<p>Nos termos da LGPD, observadas as condições de cada operação, o titular pode solicitar:</p>
 <ol>
-<li><strong>confirmação da existência de tratamento</strong>;</li>
-<li><strong>acesso aos dados pessoais</strong> tratados pelo responsável;</li>
-<li><strong>correção de dados incompletos, inexatos ou desatualizados</strong>;</li>
-<li><strong>anonimização, bloqueio ou eliminação</strong> de dados desnecessários, excessivos ou tratados em desconformidade com a LGPD;</li>
-<li><strong>portabilidade dos dados</strong> a outro fornecedor de serviço ou produto, quando aplicável e nos termos da regulamentação da ANPD, observados os segredos comercial e industrial;</li>
-<li><strong>eliminação dos dados pessoais tratados com consentimento</strong>, quando houver tratamento baseado em consentimento, ressalvadas as hipóteses legais de conservação;</li>
-<li><strong>informação sobre as entidades públicas e privadas com as quais tenha ocorrido uso compartilhado de dados</strong>;</li>
-<li><strong>informação sobre a possibilidade de não fornecer consentimento e sobre as consequências da negativa</strong>, quando o consentimento for solicitado; e</li>
-<li><strong>revogação do consentimento</strong>, quando essa for a base legal utilizada.</li>
+<li>confirmação da existência de tratamento;</li>
+<li>acesso;</li>
+<li>correção;</li>
+<li>anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade;</li>
+<li>portabilidade, quando aplicável;</li>
+<li>eliminação de dados tratados com consentimento, ressalvadas hipóteses legais;</li>
+<li>informação sobre entidades com as quais houve uso compartilhado;</li>
+<li>informação sobre possibilidade de negar consentimento e consequências, quando consentimento for solicitado;</li>
+<li>revogação do consentimento;</li>
+<li>oposição nas hipóteses legais.</li>
 </ol>
-<p>O titular também pode <strong>opor-se a tratamento realizado com fundamento em hipótese de dispensa de consentimento</strong>
-quando houver descumprimento da LGPD, bem como exercer o direito de peticionar perante a <strong>ANPD</strong> e, quando
-cabível, perante os organismos de defesa do consumidor. Se futuramente houver decisão tomada unicamente com
-base em tratamento automatizado que afete interesses do titular, serão observados também os direitos previstos
-no art. 20 da LGPD.</p>
-<p>Para proteger o próprio titular, poderão ser solicitadas somente as informações mínimas e proporcionais
-necessárias para confirmar sua identidade ou representação. O atendimento observará os prazos da LGPD e da
-regulamentação da ANPD, inclusive o regime diferenciado aplicável aos agentes de tratamento de pequeno porte
-quando presentes os respectivos requisitos.</p>
-<p>Alguns direitos dependem da natureza, da base legal e da existência concreta dos dados e podem sofrer
-limitações decorrentes de obrigação legal ou regulatória, preservação de registros, exercício regular de
-direitos, segredos protegidos por lei ou impossibilidade técnica legítima. Se os dados estiverem exclusivamente
-sob responsabilidade direta da KingHost/LWSA ou de outro agente independente, o responsável indicará, quando
-possível, o canal apropriado e cooperará dentro dos limites de sua atuação.</p>
+<p>Canal: <strong><code>/contato/</code> — contato [arroba] fleck.dev.br</strong>.</p>
+<p>Para proteger o titular, pode ser feita verificação proporcional de identidade. O responsável pesquisará somente dados efetivamente sob seu controle e não inventará registros técnicos inexistentes no seu acesso.</p>
+<p>O titular também pode utilizar os canais da <strong>Autoridade Nacional de Proteção de Dados — ANPD</strong>, conforme os procedimentos aplicáveis.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:12
+PURPOSE: Registra cenário atual e gatilho de revisão caso o público/funcionalidade para menores mude.
+FOUNDATION: LGPD art. 14.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
 <h3>12. Crianças e adolescentes</h3>
-<p>O site não é direcionado especificamente a crianças ou adolescentes e não possui mecanismo próprio destinado à coleta de seus dados pessoais. Caso uma funcionalidade futura altere esse cenário, será realizada avaliação específica do melhor interesse e das exigências legais antes da disponibilização.</p>
+<p>O site não é direcionado especificamente a crianças e não possui cadastro/formulário próprio para esse público.</p>
+<p>Se futuramente forem ativadas funcionalidades dirigidas a crianças/adolescentes ou coleta correspondente, será feita revisão prévia deste Aviso, da base legal, do desenho técnico e dos controles aplicáveis.</p>
 </article>
+<!-- LEGAL-RATIONALE:PRIVACY:13
+PURPOSE: Permite auditabilidade das bases utilizadas.
+FOUNDATION: Fontes oficiais primárias.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
 <article class="card legal-card">
-<h3>13. Referências oficiais e do provedor</h3>
-<p><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">LGPD — Lei nº 13.709/2018</a>
-<a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm">Marco Civil da Internet — Lei nº 12.965/2014</a>
-<a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12975.htm">Decreto nº 12.975/2026</a>
-<a href="https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional/atos-normativos/regulamentacoes_anpd/resolucao-cd-anpd-no-2-de-27-de-janeiro-de-2022">ANPD — agentes de tratamento de pequeno porte</a>
-<a href="https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/comunicado-de-incidente-de-seguranca-cis">ANPD — comunicação de incidentes</a>
-<a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia-orientativo-sobre-seguranca-da-informacao-para-agentes-de-tratamento-de-pequeno-porte">ANPD — guia de segurança e registro simplificado</a>
-<a href="https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional/atos-normativos/regulamentacoes_anpd/resolucao-cd-anpd-no-19-de-23-de-agosto-de-2024">ANPD — Resolução CD/ANPD nº 19/2024 — Transferência Internacional de Dados</a>
-<a href="https://policies.google.com/privacy?hl=pt-BR">Google — Política de Privacidade e transferências de dados</a>
-<a href="https://king.host/politica-de-privacidade">Privacidade KingHost/LWSA</a>
-<a href="https://king.host/wiki/artigo/lgpd-kinghost/">KingHost — LGPD na hospedagem</a>
-<a href="https://king.host/contratos-e-politicas">Contratos e políticas KingHost</a>
-<a href="https://king.host/pdf/contrato-hospedagem.pdf">KingHost — Contrato de Hospedagem</a>
-<a href="https://king.host/wiki/artigo/como-verificar-as-estatisticas-de-acesso-do-site/">KingHost — acesso e proteção do /stats</a>
-<a href="https://king.host/wiki/artigo/estatisticas-de-acesso/">KingHost — dados apresentados nas estatísticas</a></p>
-</article>
-<article class="card legal-card">
-<h3>14. Gestão dos documentos e serviços da KingHost</h3>
-<p>A KingHost informa em sua documentação de LGPD que mantém documentos próprios relativos à proteção de dados e que novas versões podem ser encaminhadas aos clientes para novo aceite. O responsável conserva evidências dos documentos e atendimentos relevantes para o serviço efetivamente contratado e revisa esta Política quando uma alteração do provedor modificar materialmente tratamento de dados, segurança, retenção ou agentes envolvidos.</p>
-<p>Em 13/08/2026, o suporte confirmou a disponibilidade de <code>mod_headers</code>/<code>Header always set</code> no contexto de hospedagem Linux para configuração de cabeçalhos HTTP por <code>.htaccess</code> e indicou a aplicação a HTML estático e subdiretórios, ressalvados contextos mais específicos. O próprio suporte registrou que sua documentação não traz descrição exaustiva da precedência ou eventual intervenção de todas as camadas de cache/proxy sobre CSP, X-Frame-Options e Referrer-Policy. Essa limitação documental é tratada por validação pós-publicação com inspeção do response final.</p>
-<p>Documentos destinados a produtos distintos — como VPS, revenda, gerenciador de redes sociais, programa de afiliados ou ofertas promocionais — não são automaticamente incorporados a esta Política. Somente são considerados quando efetivamente aplicáveis ao serviço utilizado.</p>
-<p>O contrato aplicável de hospedagem continua acompanhado como parte da gestão do fornecedor, inclusive a cláusula 14.3 e eventuais alterações futuras que possam impactar a qualificação dos agentes, finalidades próprias da provedora ou tratamento dos registros.</p>
-</article>
-<article class="card legal-card">
-<h3>15. Atualizações desta política</h3>
-<p>Esta política será revisada quando houver mudança relevante de hospedagem, tratamento, funcionalidade, Web Storage, integração externa, política de segurança, finalidade, documentação do provedor ou legislação. A versão, a data e a hora vigentes permanecem indicadas no início desta página.</p>
-<p>Alterações que modifiquem materialmente a forma de tratamento serão refletidas com transparência antes ou tão logo se tornem aplicáveis, conforme a natureza da mudança. Este documento descreve o funcionamento atual do site e não constitui certificação absoluta de conformidade ou renúncia a direitos legalmente assegurados.</p>
-</article>
-<article class="card legal-card">
-<h3>16. Controle de versão e histórico</h3>
-<p>O histórico abaixo passa a ser mantido de forma cumulativa. Entradas anteriores não devem ser apagadas quando houver nova alteração.</p>
+<h3>13. Referências principais</h3>
+<p>São priorizadas fontes oficiais e primárias:</p>
 <ul>
-<li><strong>Versão 1 — 08/08/2026 às 22:21 (BRT, UTC-3):</strong> início do controle formal de versões; consolidação das informações sobre logs HTTP mantidos por 90 dias segundo atendimento da KingHost; transparência sobre acesso administrativo às estatísticas; reforço das medidas de segurança e governança; inclusão da gestão de documentos do provedor e explicitação do prazo mínimo de cinco anos para o registro de incidentes com dados pessoais.</li>
-<li><strong>Versão 2 — 08/08/2026 às 23:29 (BRT, UTC-3):</strong> detalhamento das medidas de segurança efetivamente adotadas: credenciais individuais para e-mail principal, GitHub e hospedagem; proteção por múltiplos fatores de autenticação quando disponível; utilização dos controles de segurança disponibilizados pela provedora; e manutenção do FTP desativado por padrão, com habilitação apenas temporária para uso administrativo específico.</li>
-<li><strong>Versão 3 — 09/08/2026 às 12:59 (BRT, UTC-3):</strong> inclusão de transparência específica sobre finalidades próprias da KingHost/LWSA previstas no Contrato de Hospedagem, com destaque para a cláusula 14.3; registro desse ponto como matéria de governança do fornecedor; inclusão de referência direta ao contrato aplicável; e refinamento do aviso simplificado de privacidade no rodapé.</li>
-<li><strong>Versão 4 — 10/08/2026 às 00:58 (BRT, UTC-3):</strong> ajuste da descrição do site para natureza pessoal; esclarecimento técnico e jurídico sobre hospedagem compartilhada, controle efetivo dos registros e distinção entre registros de conexão e de acesso a aplicações; explicitação de que a área de estatísticas é disponibilizada pela provedora e protegida pelos mecanismos de autenticação fornecidos no painel; e revisão da descrição dos mecanismos de publicação automatizada para não equiparar o canal técnico de deploy a acesso SSH administrativo.</li>
-<li><strong>Versão 5 — 13/08/2026 às 18:11 (BRT, UTC-3):</strong> inclusão da área <code>/docs/</code> e do Material for MkDocs no escopo explícito de privacidade; transparência sobre <code>localStorage</code> e <code>sessionStorage</code>, seus usos funcionais possíveis e limites da configuração vigente; remoção da integração automática de repositório do Material por <code>repo_url</code>; registro de busca local; adoção de CSP específica para a documentação com <code>connect-src 'self'</code>; implementação de auditoria de rede em navegador headless; correção da proteção <code>frame-ancestors</code> para cabeçalho HTTP; e incorporação das confirmações e limitações informadas pela KingHost em 13/08/2026 sobre <code>mod_headers</code>, herança de <code>.htaccess</code> e necessidade de validação prática dos cabeçalhos finais.</li>
-<li><strong>Versão 6 — 13/08/2026 às HH:MM (BRT, UTC-3):</strong> explicitação integral dos direitos do titular previstos no art. 18 da LGPD; reforço do enquadramento atual como agente de tratamento de pequeno porte, sem afastar as demais obrigações; e transparência adicional sobre o uso do Gmail e a diligência relativa a eventual transferência internacional de dados, sem presumir país de destino ou mecanismo não documentalmente confirmado.</li>
+<li>Lei nº 13.709/2018 — LGPD;</li>
+<li>Lei nº 12.965/2014 — Marco Civil da Internet;</li>
+<li>Decreto nº 8.771/2016, alterado pelo Decreto nº 12.975/2026;</li>
+<li>regulamentações da ANPD, incluindo Resoluções nº 2/2022, nº 15/2024 e nº 19/2024;</li>
+<li>RFCs atuais de SPF, DKIM e DMARC;</li>
+<li>contratos, políticas e documentação oficial KingHost/LWSA.</li>
+</ul>
+</article>
+<!-- LEGAL-RATIONALE:PRIVACY:14
+PURPOSE: Distingue contrato, política, suporte e pendência; trata transferência internacional e finalidades próprias.
+FOUNDATION: LGPD arts. 33-36 e 39; Res. ANPD 19/2024; KingHost/LWSA.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
+<article class="card legal-card">
+<h3>14. KingHost/LWSA, transferências e qualidade das evidências</h3>
+<p>O serviço de hospedagem/e-mail depende da KingHost/LWSA.</p>
+<h3>14.1 Localização do e-mail</h3>
+<p>Em atendimento escrito via WhatsApp em 14/08/2026, o suporte informou não possuir acesso à informação de localização física dos servidores de e-mail do plano e não poder afirmar se estão exclusivamente no Brasil.</p>
+<p>Por isso, este Aviso <strong>não declara que todo o processamento do e-mail ocorre no Brasil</strong>.</p>
+<p>A Política de Privacidade da LWSA informa que alguns dados pessoais podem ser transferidos a prestadores localizados no exterior. Isso não prova que todo conteúdo deste plano seja transferido, mas impede afirmar ausência de transferência sem documentação adicional.</p>
+<p>Se houver transferência internacional sob responsabilidade do controlador, serão avaliados os mecanismos e deveres de transparência aplicáveis.</p>
+<h3>14.2 Finalidades próprias</h3>
+<p>Os contratos da KingHost possuem cláusulas que autorizam uso de dados, registros, comportamentos, logs de acesso, IP, dados cadastrais, arquivos e outros registros inseridos em sua base para processamento, melhoria de sistemas e criação de softwares/serviços.</p>
+<p>Essas finalidades são definidas pelo provedor e não são apresentadas como finalidades determinadas pelo responsável pelo site.</p>
+<h3>14.3 Evidência de suporte</h3>
+<p>Informações recebidas pelo WhatsApp sobre retenção de logs, headers, SPF, DKIM, DMARC e outros aspectos são classificadas como <strong>comunicação escrita de suporte</strong>. Não substituem contrato ou documentação pública.</p>
+</article>
+<!-- LEGAL-RATIONALE:PRIVACY:15
+PURPOSE: Cria obrigação interna de reavaliar quando o tratamento ou a norma mudar.
+FOUNDATION: LGPD art. 50; governança.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
+<article class="card legal-card">
+<h3>15. Atualizações e revisão</h3>
+<p>Este Aviso é revisado:</p>
+<ul>
+<li>quando muda o tratamento;</li>
+<li>quando muda fornecedor ou arquitetura;</li>
+<li>quando é introduzido formulário, login, analytics, publicidade ou terceiro automático;</li>
+<li>após incidente relevante;</li>
+<li>quando normas aplicáveis mudam;</li>
+<li>no mínimo dentro da cadência interna trimestral de conformidade.</li>
+</ul>
+</article>
+<!-- LEGAL-RATIONALE:PRIVACY:16
+PURPOSE: Preserva rastreabilidade e reconhece o erro histórico de placeholder sem inventar dado retroativo.
+FOUNDATION: Accountability e versionamento.
+FULL-RATIONALE: /docs/conformidade/racional-aviso-privacidade-v7/
+MAINTENANCE: Leia o racional antes de remover, resumir ou alterar. Comentários HTML são públicos; não inserir segredos, dados pessoais reais ou evidências restritas.
+-->
+<article class="card legal-card">
+<h3>16. Histórico</h3>
+<ul>
+<li><strong>V1 a V6:</strong> versões anteriores publicadas sob o título “Política de Privacidade”.</li>
+<li><strong>V6 — 13/08/2026:</strong> a versão mantida no repositório continha um horário-modelo não preenchido; o erro é reconhecido no histórico e não é corrigido com horário inventado.</li>
+<li><strong>V7 — 15/08/2026:</strong> adota o título público <strong>Aviso de Privacidade</strong>; consolida e-mail KingHost, localização não confirmada, retenção, direitos, links externos, modal de e-mail, anti-scraping, SPF/DKIM/DMARC, <code>/stats</code>, transferências, contratos do provedor, incidentes, redirecionamento HTTPS, HSTS, <code>security.txt</code>, canal <code>/seguranca/</code> e racional de manutenção por seção.</li>
 </ul>
 </article>
 </div>
@@ -254,9 +377,10 @@ possível, o canal apropriado e cooperará dentro dos limites de sua atuação.<
   <div class="container footer-inner">
     <div><strong>Daniel Rodrigo Fleck</strong><br><span class="generated-note">Site pessoal, portfólio técnico e registros de aprendizado.</span></div>
     <div class="footer-links">
-      <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/docs/">Docs</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos</a><a href="mailto:contato@fleck.dev.br">Contato</a>
+      <a href="/portfolio/">Portfólio</a><a href="/blog/">Blog</a><a href="/erros/">Erros &amp; Soluções</a><a href="/tags/">Tags</a><a href="/docs/">Docs</a><a href="/privacidade/">Aviso de Privacidade</a><a href="/termos/">Termos de Uso</a><a href="/seguranca/">Segurança</a><a href="/contato/">Contato</a>
     </div>
-    <div class="footer-note"><strong>Privacidade:</strong> o site não utiliza analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A área <code>/docs/</code> incorpora Web Storage funcional do tema, sem uso próprio para publicidade ou perfilização. A hospedagem pode processar registros técnicos. Consulte a <a href="/privacidade/">Política de Privacidade</a>.</div>
+    <div class="footer-note"><strong>Privacidade:</strong> o site não utiliza analytics próprio, pixels, publicidade ou cookies próprios de rastreamento. A área <code>/docs/</code> incorpora Web Storage funcional do tema, sem uso próprio para publicidade ou perfilização. A hospedagem pode processar registros técnicos. Consulte o <a href="/privacidade/">Aviso de Privacidade</a>.</div>
   </div>
 </footer><!-- GENERATED:SITE-FOOTER:END -->
-</body></html>
+</body>
+</html>

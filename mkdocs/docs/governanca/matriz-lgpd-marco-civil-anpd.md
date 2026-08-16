@@ -57,7 +57,7 @@ O art. 16-P autoriza a autoridade competente a definir critérios diferenciados 
 
 A Resolução CD/ANPD nº 19/2024 exige análise da cadeia concreta e, quando houver transferência internacional sob responsabilidade do controlador, mecanismo válido e transparência específica, inclusive quanto ao país de destino.
 
-O canal Gmail exige diligência própria. A informação pública do Google confirma processamento possível em servidores fora do país, mas não permite inventar um único país de destino para toda mensagem. A governança registra a pendência até que a relação concreta e o mecanismo aplicável sejam documentalmente confirmados.
+O canal serviço de e-mail exige diligência própria. A informação pública do Google confirma processamento possível em servidores fora do país, mas não permite inventar um único país de destino para toda mensagem. A governança registra a pendência até que a relação concreta e o mecanismo aplicável sejam documentalmente confirmados.
 
 ## 6. Incidentes
 

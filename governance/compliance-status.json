@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "last_full_review": "2026-08-15",
+  "next_full_review": "2026-11-15",
+  "warning_days_before": 15,
+  "maximum_overdue_days": 30,
+  "privacy_version": 7,
+  "terms_version": 6,
+  "public_privacy_name": "Aviso de Privacidade",
+  "official_contact_path": "/contato/",
+  "official_contact_display": "contato [arroba] fleck.dev.br",
+  "notes": "Atualize por scripts/ack_compliance_review.py após revisão completa."
+}

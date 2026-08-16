@@ -1,0 +1,8 @@
+# PURPOSE: indicar canal e política para relato responsável de vulnerabilidades.
+# FOUNDATION: RFC 9116. Contact e Expires são campos obrigatórios; Canonical/Policy/Preferred-Languages apoiam manutenção e descoberta.
+# MAINTENANCE: revisar antes do Expires; não inserir senha, token ou dados pessoais de terceiros.
+Contact: https://daniel.fleck.dev.br/contato/
+Expires: 2027-08-01T00:00:00Z
+Canonical: https://daniel.fleck.dev.br/.well-known/security.txt
+Policy: https://daniel.fleck.dev.br/seguranca/
+Preferred-Languages: pt-BR, en

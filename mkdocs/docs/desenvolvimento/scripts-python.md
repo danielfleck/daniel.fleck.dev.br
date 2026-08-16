@@ -370,3 +370,303 @@ validação de produção
   ↓
 evidência restrita
 ```
+
+<!-- COMPLIANCE-MAINTENANCE:START -->
+
+## 23. Gate de conformidade em todo commit
+
+O pre-commit executa:
+
+```bash
+python scripts/compliance_gate.py --staged --enforce
+```
+
+O objetivo é **lembrar e bloquear inconsistências locais óbvias**, não declarar que a legislação continua vigente sem pesquisa.
+
+O gate:
+- informa a data da última revisão completa;
+- avisa quando a revisão trimestral se aproxima;
+- bloqueia quando a revisão está muito atrasada;
+- detecta mudança em documentos legais sem racional/controle correspondente;
+- lembra de revisar coleta, e-mail, terceiros, CSP, MkDocs e rede.
+
+Depois de concluir uma revisão completa:
+
+```bash
+python scripts/ack_compliance_review.py
+git add governance/compliance-status.json
+```
+
+Para registrar uma data específica:
+
+```bash
+python scripts/ack_compliance_review.py --date 2026-11-14
+```
+
+## 24. Validar racional dos documentos legais
+
+```bash
+python scripts/validate_legal_rationale.py
+```
+
+Exige:
+- `AI-LEGAL-RATIONALE`;
+- 16 marcadores da V7 do Aviso de Privacidade;
+- 18 marcadores da V6 dos Termos;
+- documentos de racional no MkDocs.
+
+Comentários HTML são públicos. Não coloque neles evidência sensível.
+
+## 25. Validar superfície pública de contato
+
+```bash
+python scripts/validate_contact_surface.py
+```
+
+Confere:
+- existência de `/contato/`;
+- ausência de `danielfleck@gmail.com`;
+- ausência do endereço oficial em texto literal no HTML público/template;
+- presença do mecanismo `PRIVACY-LINK-GUARD`.
+
+O objetivo é reduzir coleta automática simples. Isso não torna o endereço secreto.
+
+## 26. Conferir DNS do e-mail
+
+Requer `dig`:
+
+```bash
+python scripts/check_email_dns.py
+```
+
+O estado documentado desta release é:
+
+```text
+SPF:   v=spf1 include:_spf.kinghost.net -all
+DMARC: v=DMARC1; p=none;
+```
+
+O script não altera DNS.
+
+## 27. Conferir autenticação de uma mensagem entregue
+
+Salve localmente uma mensagem de teste como `.eml` e **não faça commit** do arquivo:
+
+```bash
+python scripts/check_email_auth.py caminho/privado/teste.eml
+```
+
+O script resume:
+- `Authentication-Results`;
+- SPF;
+- DKIM;
+- DMARC;
+- domínios `d=` encontrados.
+
+Ele não faz validação criptográfica independente; usa os resultados adicionados pelo servidor recebedor.
+
+## 28. Relatórios agregados DMARC
+
+Se futuramente for configurado:
+
+```text
+rua=mailto:dmarc-reports@fleck.dev.br
+```
+
+guarde os relatórios em diretório privado/ignorado e use:
+
+```bash
+python scripts/parse_dmarc_report.py dmarc-reports/relatorio.xml
+python scripts/parse_dmarc_report.py dmarc-reports/relatorio.xml.gz
+```
+
+Não habilite `ruf` apenas para “ter mais dados”. Relatórios de falha podem aumentar exposição de dados e volume operacional.
+
+## 29. Superfícies administrativas da KingHost
+
+Após deploy ou revisão mensal:
+
+```bash
+python scripts/check_admin_surfaces.py \
+  --base-url https://daniel.fleck.dev.br
+```
+
+O script verifica anonimamente:
+
+```text
+/stats/
+/varnish-stats/
+```
+
+Ele não tenta senha nem faz força bruta.
+
+## 30. Validação de produção sem depender de cache do crawler
+
+```bash
+python scripts/validate_production_nocache.py \
+  --base-url https://daniel.fleck.dev.br
+```
+
+O script usa:
+- query string única;
+- `Cache-Control: no-cache, no-store`;
+- `Pragma: no-cache`.
+
+Depois execute também a auditoria Chromium:
+
+```bash
+python scripts/audit_network.py \
+  --base-url https://daniel.fleck.dev.br \
+  --all \
+  --report dist/network-audit-production.json
+```
+
+## 31. Fluxo completo de uma release jurídica
+
+Antes do commit:
+
+```bash
+python -m unittest discover -s tests -v
+python scripts/rebuild.py
+python scripts/build_docs.py
+python scripts/validate.py
+python scripts/validate_docs.py
+python scripts/validate_contact_surface.py
+python scripts/validate_legal_rationale.py
+python scripts/check_email_dns.py
+python scripts/audit_network.py --all
+python scripts/serve.py
+```
+
+Revise visualmente:
+- home;
+- currículo;
+- `/contato/`;
+- Aviso de Privacidade;
+- Termos;
+- `/docs/`;
+- modal de link externo;
+- modal de e-mail;
+- navegação por teclado;
+- tela pequena.
+
+Depois:
+
+```bash
+git status
+git diff
+git add -A
+git diff --cached
+git commit -m "feat: consolida privacidade e segurança do contato"
+git push
+```
+
+Após deploy:
+
+```bash
+python scripts/validate_production_nocache.py \
+  --base-url https://daniel.fleck.dev.br
+
+python scripts/validate.py \
+  --production-url https://daniel.fleck.dev.br \
+  --network
+
+python scripts/validate_docs.py \
+  --production-url https://daniel.fleck.dev.br/docs/
+
+python scripts/check_admin_surfaces.py \
+  --base-url https://daniel.fleck.dev.br
+```
+
+Preencha uma cópia **privada** do modelo de evidência pós-deploy.
+
+## 32. Revisão trimestral
+
+A fonte de estado é:
+
+```text
+governance/compliance-status.json
+```
+
+A revisão completa deve conferir:
+- normas oficiais vigentes;
+- contratos/políticas KingHost;
+- cadeia do serviço de e-mail;
+- transferências internacionais;
+- SPF/DKIM/DMARC;
+- antispam;
+- retenção;
+- `/stats`;
+- terceiros automáticos;
+- CSP/headers;
+- auditoria de rede;
+- Aviso de Privacidade;
+- Termos;
+- MkDocs/Confluence.
+
+O arquivo `calendar/revisoes-conformidade.ics` do pacote pode ser importado no calendário.
+
+<!-- COMPLIANCE-MAINTENANCE:END -->
+
+## Validação de HTTPS, HSTS e security.txt
+
+**Motivo:** detectar regressão no redirecionamento HTTP→HTTPS, ausência/encurtamento de HSTS e expiração ou remoção do canal padronizado de segurança.
+
+**Fundamento técnico:** RFC 6797, RFC 9116, configuração Apache/KingHost e política pública `/seguranca/`.
+
+Validação local:
+
+```bash
+python scripts/validate_transport_security.py
+```
+
+A validação local confere:
+- existência de `site/.htaccess`;
+- regra HTTPS;
+- HSTS com `max-age` final mínimo de 31536000;
+- `security.txt`;
+- `Contact`, `Expires` e `Canonical`;
+- página `/seguranca/`;
+- inclusão da página no rebuild/sitemap.
+
+Produção:
+
+```bash
+python scripts/validate_transport_security.py \
+  --production-url https://daniel.fleck.dev.br
+```
+
+A validação de produção:
+- acessa HTTP sem seguir o redirect;
+- exige `301` ou `308`;
+- confirma preservação de caminho e query;
+- verifica HSTS na resposta HTTPS;
+- verifica `security.txt`;
+- verifica `Content-Type: text/plain`;
+- verifica `/seguranca/`.
+
+### Fase de implantação
+
+Durante a fase curta com `302` e `max-age=300`, execute:
+
+```bash
+python scripts/validate_transport_security.py --allow-test-stage
+```
+
+O script aceita esse estado somente como etapa temporária.
+
+Depois dos testes, aplique o `.htaccess` final e execute sem a opção:
+
+```bash
+python scripts/validate_transport_security.py
+```
+
+### Pre-commit
+
+Depois que a configuração definitiva estiver publicada e estável:
+
+```sh
+"$PY" scripts/validate_transport_security.py || exit 1
+```
+
+Não coloque `--production-url` no pre-commit.

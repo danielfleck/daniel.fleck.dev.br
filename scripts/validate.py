@@ -176,21 +176,20 @@ def validate_legal_documents(errors: list[str]) -> None:
     if privacy.is_file():
         text = privacy.read_text(encoding="utf-8")
         for required in (
-            "Versão 6",
+            "Versão 7",
             "localStorage",
             "sessionStorage",
             "Material for MkDocs",
             "connect-src",
-            "13/08/2026",
         ):
             if required not in text:
-                errors.append(f"Política V6 sem referência esperada: {required}")
+                errors.append(f"Aviso de Privacidade V7 sem referência esperada: {required}")
 
     if terms.is_file():
         text = terms.read_text(encoding="utf-8")
-        for required in ("Versão 5", "Web Storage", "/privacidade/", "Material for MkDocs"):
+        for required in ("Versão 6", "Web Storage", "/privacidade/", "Material for MkDocs"):
             if required not in text:
-                errors.append(f"Termos V5 sem referência esperada: {required}")
+                errors.append(f"Termos V6 sem referência esperada: {required}")
         if 'href="#privacidade"' in text:
             errors.append("Termos ainda contêm link SPA antigo para #privacidade")
 
@@ -240,6 +239,7 @@ def validate_htaccess(errors: list[str]) -> None:
         "X-Frame-Options": "DENY",
         "Referrer-Policy": "no-referrer",
         "X-Content-Type-Options": "nosniff",
+        "X-DNS-Prefetch-Control": "off",
     }
 
     if not ROOT_HTACCESS.is_file():
@@ -301,21 +301,20 @@ def validate_document_model(errors: list[str]) -> None:
 
     required_current = {
         GOVERNANCE_ROOT / "index.md": (
-            "Política de Privacidade: **Versão 6",
-            "Termos de Uso: **Versão 5",
+            "Aviso de Privacidade: **Versão 7",
+            "Termos de Uso: **Versão 6",
         ),
         GOVERNANCE_ROOT / "controle-versoes-documentos-legais.md": (
-            "Política de Privacidade: Versão 6",
-            "Termos de Uso: Versão 5",
+            "Aviso de Privacidade: Versão 7",
+            "Termos de Uso: Versão 6",
         ),
         GOVERNANCE_ROOT / "registro-operacoes-tratamento.md": (
             "Web Storage funcional",
-            "Política de Privacidade pública **V6**",
-            "Termos de Uso públicos **V5**",
+            "Aviso de Privacidade público **V7**",
+            "Termos de Uso públicos **V6**",
         ),
         GOVERNANCE_ROOT / "due-diligence-kinghost.md": (
             "Header always set",
-            "13/08/2026",
         ),
     }
 
@@ -369,7 +368,7 @@ def validate_mkdocs_navigation(errors: list[str]) -> None:
         "seguranca/csp-cabecalhos-http.md",
         "operacao/auditoria-rede-headless.md",
         "desenvolvimento/scripts-python.md",
-        'Política de Privacidade: "https://daniel.fleck.dev.br/privacidade/"',
+        'Aviso de Privacidade: "https://daniel.fleck.dev.br/privacidade/"',
         'Termos de Uso: "https://daniel.fleck.dev.br/termos/"',
     )
     for item in required:
@@ -431,8 +430,30 @@ def validate_sitemap(errors: list[str], canonicals: dict[str, Path]) -> None:
         if len(locations) != len(set(locations)):
             errors.append("sitemap.xml possui URLs duplicadas")
 
-        expected = set(canonicals)
-        expected.discard("https://daniel.fleck.dev.br/404.html")
+        # O sitemap deve conter apenas páginas indexáveis.
+        # Uma página pode possuir canonical e, ao mesmo tempo, declarar
+        # robots=noindex (por exemplo /contato/). Nesse caso ela não deve
+        # ser exigida no sitemap.
+        expected = set()
+
+        for url, path in canonicals.items():
+            if url == "https://daniel.fleck.dev.br/404.html":
+                continue
+
+            html = path.read_text(encoding="utf-8")
+
+            robots = re.search(
+                r'<meta[^>]+name=["\']robots["\'][^>]+'
+                r'content=["\']([^"\']+)["\']',
+                html,
+                re.I,
+            )
+
+            if robots and "noindex" in robots.group(1).lower():
+                continue
+
+            expected.add(url)
+
         missing = expected - set(locations)
         if missing:
             errors.append("sitemap.xml sem URLs canônicas: " + ", ".join(sorted(missing)))

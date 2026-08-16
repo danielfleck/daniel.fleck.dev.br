@@ -4,3 +4,8 @@ __pycache__/
 dist/
 .DS_Store
 *.egg-info/
+private/
+evidencias-restritas/
+dmarc-reports/
+*.eml
+*.msg

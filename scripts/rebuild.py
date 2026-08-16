@@ -51,6 +51,8 @@ STATIC_WITH_PARTIALS = [
     SITE_ROOT / "ferramentas/index.html",
     SITE_ROOT / "privacidade/index.html",
     SITE_ROOT / "termos/index.html",
+    SITE_ROOT / "contato/index.html",
+    SITE_ROOT / "seguranca/index.html",
     SITE_ROOT / "404.html",
 ]
 
@@ -497,6 +499,7 @@ def build(write: bool = True) -> list[Path]:
         BASE_URL + "/ferramentas/",
         BASE_URL + "/privacidade/",
         BASE_URL + "/termos/",
+        BASE_URL + "/seguranca/",
     ]
     urls += [BASE_URL + item.url for item in items]
     urls += [f"{BASE_URL}/tags/{slug}/" for slug in sorted(desired)]

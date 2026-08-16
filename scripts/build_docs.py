@@ -30,6 +30,8 @@ OUTPUT = PROJECT_ROOT / "site" / "docs"
 SCRIPTS_SOURCE = PROJECT_ROOT / "SCRIPTS.md"
 SCRIPTS_DOC = PROJECT_ROOT / "mkdocs" / "docs" / "desenvolvimento" / "scripts-python.md"
 DOCS_HTACCESS_SOURCE = PROJECT_ROOT / "mkdocs" / ".htaccess"
+SITE_MAIN_JS = PROJECT_ROOT / "site" / "js" / "main.js"
+DOCS_MAIN_JS = PROJECT_ROOT / "mkdocs" / "docs" / "javascripts" / "site-main.js"
 
 GENERATED_NOTICE = """<!--
 GENERATED FROM /SCRIPTS.md
@@ -50,6 +52,17 @@ def sync_scripts_doc(write: bool) -> bool:
     if write:
         SCRIPTS_DOC.parent.mkdir(parents=True, exist_ok=True)
         SCRIPTS_DOC.write_text(expected, encoding="utf-8")
+    return True
+
+def sync_site_main_js(write: bool) -> bool:
+    """Mantém no MkDocs uma cópia local do JS compartilhado do site."""
+    expected = SITE_MAIN_JS.read_text(encoding="utf-8")
+    current = DOCS_MAIN_JS.read_text(encoding="utf-8") if DOCS_MAIN_JS.exists() else None
+    if current == expected:
+        return False
+    if write:
+        DOCS_MAIN_JS.parent.mkdir(parents=True, exist_ok=True)
+        DOCS_MAIN_JS.write_text(expected, encoding="utf-8")
     return True
 
 def snapshot(root: Path) -> dict[str, str]:
@@ -110,6 +123,11 @@ def main() -> int:
             print("Execute: python scripts/build_docs.py")
             return 2
 
+        if sync_site_main_js(write=False):
+            print("Cópia MkDocs de site/js/main.js está desatualizada.")
+            print("Execute: python scripts/build_docs.py")
+            return 2
+
         with tempfile.TemporaryDirectory(prefix="mkdocs-check-") as temporary:
             temp_output = Path(temporary) / "site"
             try:
@@ -128,6 +146,7 @@ def main() -> int:
 
     before_output = snapshot(OUTPUT)
     scripts_changed = sync_scripts_doc(write=True)
+    main_js_changed = sync_site_main_js(write=True)
 
     try:
         run_mkdocs(OUTPUT)
@@ -139,17 +158,19 @@ def main() -> int:
 
     if scripts_changed:
         print("MkDocs: espelho de SCRIPTS.md foi atualizado.")
+    if main_js_changed:
+        print("MkDocs: cópia de site/js/main.js foi atualizada.")
     if output_changed:
         print("MkDocs: site/docs foi atualizado.")
 
-    if args.hook and (scripts_changed or output_changed):
+    if args.hook and (scripts_changed or main_js_changed or output_changed):
         print(
             "Commit interrompido: o build da documentação alterou arquivos. "
             "Revise, execute git add -A e repita o commit."
         )
         return 3
 
-    if not scripts_changed and not output_changed:
+    if not scripts_changed and not main_js_changed and not output_changed:
         print("MkDocs: nenhum arquivo precisou ser alterado.")
 
     return 0

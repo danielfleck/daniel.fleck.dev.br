@@ -6,8 +6,12 @@
   <title>Daniel Rodrigo Fleck | Sistemas, Sustentação e Requisitos</title>
   <meta name="description" content="Currículo de Daniel Rodrigo Fleck: experiência em sistemas críticos, sustentação, SQL/PostgreSQL, Linux, requisitos, suporte N2/N3 e gestão técnico-operacional.">
   <link rel="canonical" href="https://daniel.fleck.dev.br/curriculo.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Daniel Rodrigo Fleck | Sistemas, Sustentação e Requisitos">
+  <meta property="og:description" content="Currículo de Daniel Rodrigo Fleck: experiência em sistemas críticos, sustentação, SQL/PostgreSQL, Linux, requisitos, suporte N2/N3 e gestão técnico-operacional.">
+  <meta property="og:url" content="https://daniel.fleck.dev.br/curriculo.html">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
   <style>
     :root {
       --bg: #f8fafc;
@@ -72,7 +76,78 @@
     .cv-legal a { color: var(--accent); font-weight: 700; }
     @media (max-width: 900px) { .grid, .mini-grid, .positioning { grid-template-columns: 1fr; } header { padding: 36px 0; } .card { padding: 18px; } }
     @media print { body { background: #fff; } .card { box-shadow: none; break-inside: avoid; } header { background: #fff; color: #000; border-bottom: 1px solid #ddd; } header p, .headline { color: #222; } .navlinks { display: none; } }
+
+/* PRIVACY-LINK-GUARD: modal local; sem assets externos. */
+.link-guard-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, .66);
+}
+.link-guard-dialog {
+  width: min(640px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+}
+.link-guard-dialog h2 { margin: 0 0 12px; }
+.link-guard-dialog p { line-height: 1.55; }
+.link-guard-destination {
+  display: block;
+  margin: 12px 0;
+  padding: 10px 12px;
+  overflow-wrap: anywhere;
+  border-radius: 10px;
+  background: #f1f5f9;
+}
+.link-guard-warning {
+  padding: 12px;
+  border-left: 4px solid #b45309;
+  border-radius: 8px;
+  background: #fff7ed;
+}
+.link-guard-note { color: #475569; font-size: .92rem; }
+.link-guard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+.link-guard-actions button,
+.link-guard-actions a {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.link-guard-actions a {
+  border-color: #1f4e79;
+  background: #1f4e79;
+  color: #fff;
+}
+@media (max-width: 520px) {
+  .link-guard-dialog { padding: 18px; }
+  .link-guard-actions { flex-direction: column-reverse; }
+  .link-guard-actions button,
+  .link-guard-actions a { width: 100%; text-align: center; }
+}
   </style>
+  <script src="/js/main.js" defer></script>
 </head>
 <body>
 <!-- AI-MAINTENANCE: currículo é página estática independente. Alterou contato, links ou posicionamento? Pesquise referências no repositório e execute python scripts/validate.py. Política e Termos ficam em /privacidade/ e /termos/. -->
@@ -80,13 +155,13 @@
   <div class="wrap">
     <h1>DANIEL RODRIGO FLECK</h1>
     <p class="headline">Analista de Sistemas e Sustentação | SQL/PostgreSQL • Linux • Requisitos • Sistemas Críticos • Gestão Técnico-Operacional</p>
-    <p>Email: contato@fleck.dev.br</p>
+    <p>Email: contato [arroba] fleck.dev.br</p>
     <p>Site: daniel.fleck.dev.br | GitHub: github.com/danielfleck | LinkedIn: linkedin.com/in/daniel-rodrigo-fleck</p>
     <div class="navlinks">
       <a href="/">Voltar ao site</a>
       <a href="https://github.com/danielfleck" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://github.com/danielfleck/roadmap-transicao-ti" target="_blank" rel="noopener noreferrer">Roadmap técnico</a>
-      <a href="mailto:contato@fleck.dev.br">Contato</a>
+      <a href="/contato/">Contato</a>
     </div>
     <p style="margin-top:14px;color:#e0f2fe"><strong>Momento atual:</strong> atualização técnica estruturada, organização de evidências públicas e sondagem de mercado. Disponibilidade profissional planejada para dezembro de 2027.</p>
   </div>
@@ -279,7 +354,7 @@
 <footer>
   <div class="wrap">
     <div>Daniel Rodrigo Fleck — Sistemas, sustentação, requisitos e atualização técnica. Última versão: agosto de 2026.</div>
-    <div class="cv-legal">Este currículo integra o site público <strong>daniel.fleck.dev.br</strong>. O arquivo não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento; a infraestrutura de hospedagem pode processar registros técnicos de acesso e outros dados de navegação conforme seus documentos aplicáveis. Consulte a <a href="/privacidade/">Política de Privacidade</a> e os <a href="/termos/">Termos de Uso</a> do site.</div>
+    <div class="cv-legal">Este currículo integra o site público <strong>daniel.fleck.dev.br</strong>. O arquivo não implementa formulário próprio de captação, analytics próprio, pixels, publicidade ou cookies próprios de rastreamento; a infraestrutura de hospedagem pode processar registros técnicos de acesso e outros dados de navegação conforme seus documentos aplicáveis. Consulte o <a href="/privacidade/">Aviso de Privacidade</a>, os <a href="/termos/">Termos de Uso</a>, a <a href="/seguranca/">política de segurança</a> e o <a href="/contato/">canal de contato</a> do site.</div>
   </div>
 </footer>
 </body>
